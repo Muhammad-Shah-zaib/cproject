@@ -21,7 +21,9 @@ int main ( void) {
                 break;
 
             case 2: 
-                hotel_login();
+                if( hotel_login() ){ // hotel_login() => returns either true or false
+                    post_login(); // Present in prompts.h
+                }
                 break;
         }
 
