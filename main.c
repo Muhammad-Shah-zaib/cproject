@@ -3,6 +3,7 @@
 #include "structHotel.h"
 #include "initilizeHotel.h"
 #include "registration.h"
+#include "hotelLogin.h"
 #include "read.h"
 #include "prompts.h"
 

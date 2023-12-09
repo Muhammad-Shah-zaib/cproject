@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "structHotel.h"
+// #include "structHotel.h"
 
 void prompt (int *id, char *username) {
     
@@ -23,7 +23,7 @@ bool check_credentials (unsigned int id, char *username, unsigned int hotel_id, 
     }
     return false;
 }
-void main ( void ) {
+void hotel_login ( void ) {
     // declairing the variables
     unsigned int id;
     char username[30];
