@@ -28,7 +28,7 @@ int starting_prompt(){
 
 
 
-void post_login( void ) {
+void post_login( int id ) {
 
 
     int choice; // will store the user choice in this var
@@ -44,13 +44,13 @@ void post_login( void ) {
     switch (choice)
         {
         case 1:
-            // add_room();
+            add_room();
             break;
         case 2:
-            // edit_room();
+            edit_room();
             break;
         case 3:
-            // room_details();
+            room_details( id );
             break;
         case 0:
             return;
