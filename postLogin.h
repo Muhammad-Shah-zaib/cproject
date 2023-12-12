@@ -2,6 +2,9 @@
 // #include "structHotel.h"
 
 
+
+
+// This will show room details
 void room_details ( int id ) {
 
     FILE *fptr;
@@ -16,13 +19,29 @@ void room_details ( int id ) {
     fseek (fptr, (id-1) * sizeof (Hotel), SEEK_SET);
     fread (&hotel, sizeof(Hotel), 1, fptr);
 
-    printf ("%-25s : %-25s : %-25s : %-25s : %-25s : %-25s\n", 
-    "Total rooms", "Available rooms", "Booked rooms", "num. of Standard rooms",
-    "num of Delux rooms", "num of Luxury rooms");
-
-    printf ("%25d : %25d : %25d : %25d  :%25d : %25d", 
-        hotel.n_total_rooms, hotel.available_roams, hotel.booked_rooms,
-        hotel.n_standard_rooms, hotel.n_delux_rooms, hotel.n_luxury_rooms);
+    printf( "+-------------------------+\n"
+            "       Room Details        \n"
+            "+-------------------------+\n"
+            "\nTotal rooms: %d\n"
+            "Available rooms: %d\n"
+            "Total rooms booked: %d\n"
+            "---------------------------"
+            "\n\tStandard Room\n"
+            "Available Rooms: %d\n"
+            "Price per Room: %d\n"
+            "---------------------------"
+            "\n\tDeluxe Rooms\n"
+            "Available Rooms: %d\n"
+            "Price per Room: %d\n"
+            "---------------------------"
+            "\n\tLuxury Rooms\n"
+            "Available Rooms: %d\n"
+            "Price per Room: %d\n"
+            "---------------------------\n",
+            hotel.n_total_rooms, hotel.available_roams, hotel.booked_rooms,
+            hotel.n_standard_rooms, hotel.p_standard_room, 
+            hotel.n_delux_rooms, hotel.p_delux_room, 
+            hotel.n_luxury_rooms, hotel.p_luxury_room);
 
 
 }
@@ -53,7 +72,8 @@ void add_room( int id ) {
     rewind(fptr);
 
     // pormpting the user
-    printf("Please Select the Room Type:\n"
+    printf("Please Select the Room Type (to add):\n"
+        "0.\tExit\n"
         "1.\tStandard Room\n"
         "2.\tDeluxe Room\n"
         "3.\tLuxury Room\n");
@@ -112,7 +132,7 @@ void add_room( int id ) {
         fwrite(&hotel, sizeof( Hotel ), 1, fptr); // overwriting th hotel details
 
         // again prompting user to read the choice
-        printf("Please Select the Room Type:\n"
+        printf("Please Select the Room Type (to add):\n"
             "0.\tExit"
             "\n1.\tStandard Room\n"
             "2.\tDeluxe Room\n"

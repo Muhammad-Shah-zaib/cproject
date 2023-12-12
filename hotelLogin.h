@@ -4,15 +4,6 @@
 #include <stdbool.h>
 // #include "structHotel.h"
 
-void prompt (int *id, char *username) {
-    
-    printf ("%s", "Enter your id: ");
-    scanf ("%d", id);
-
-    printf ("%s", "Enter your username: ");
-    scanf ("%s", username);
-
-}
 
 
 bool check_credentials (unsigned int id, char *username, unsigned int hotel_id, char*hotel_username){
@@ -27,13 +18,9 @@ bool check_credentials (unsigned int id, char *username, unsigned int hotel_id, 
 
 
 
-bool hotel_login ( void ) {
-    // declairing the variables
-    unsigned int id;
-    char username[30];
-    
+bool hotel_login ( unsigned int id, char *username ) {    
     // getting the id and username
-    prompt ( &id , username);
+    // prompt ( &id , username);
 
 
     // making a file pointer for our hotels.dat

@@ -21,12 +21,21 @@ int main ( void) {
                 hotel_registration();
                 break;
 
-            case 2: 
-                if(hotel_login ()) {
-                    room_details(1);
-                    add_room(1);
-                    delete_room(1);
-                }
+            case 2:
+                    // declairing the credentials
+                    unsigned int id;
+                    char name[20];
+
+                do {
+                    // reading the credentials
+                    printf ("Enter id: ");
+                    scanf ("%d", &id);
+                    printf ("Enter name: ");
+                    scanf ("%19s", name);
+
+                } while ( !(hotel_login(id, name)) );
+                
+                post_login ( id );
                 break;
         }
 

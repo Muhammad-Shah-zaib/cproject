@@ -28,35 +28,39 @@ int starting_prompt(){
 
 
 
-// void post_login( int id ) {
+void post_login( unsigned int id ) {
 
 
-//     int choice; // will store the user choice in this var
-//     // prompting user
-//     printf("Please Select:\n"
-//         "1.\tAdd Rooms\n"
-//         "2.\tChange or Delete Rooms\n"
-//         "3.\tView Room Details");
+    int choice; // will store the user choice in this var
+    // prompting user
+    do {
+        printf("\n1.\tAdd Rooms\n"
+            "2.\tChange or Delete Rooms\n"
+            "3.\tView Room Details\n"
+            " *or enter zero to exit*\n\n"
+            "Please Select: ");
 
 
-//     scanf("%d", &choice); // reading choice
 
-//     switch (choice)
-//         {
-//         case 1:
-//             add_room();
-//             break;
-//         case 2:
-//             // edit_room();
-//             break;
-//         case 3:
-//             room_details( id );
-//             break;
-//         case 0:
-//             return;
-            
-//         default:
-//             puts("Wrong Input!");
-//             break;
-//         }
-// }
+        scanf("%d", &choice); // reading choice
+
+        switch (choice)
+            {
+            case 1:
+                add_room( id );
+                break;
+            case 2:
+                delete_room( id );
+                break;
+            case 3:
+                room_details( id );
+                break;
+            case 0:
+                return;
+                
+            default:
+                puts("Wrong Input!");
+                break;
+            }
+    }while ( choice != 0 );
+}
