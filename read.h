@@ -14,7 +14,11 @@ void hotel_read ( void ) {
         int result = fread ( &hotel, sizeof (Hotel), 1, fptr );
 
         if ( result != 0 && hotel.id != 0) {
-            printf ("%d, %s, %s\n", hotel.id, hotel.username, hotel.hotel_name);
+            printf ("%d, %s, %s, %u, %u, %u, %u, %u, %u\n",
+                hotel.id, hotel.username, hotel.hotel_name,
+                hotel.n_standard_rooms, hotel.p_standard_room,
+                hotel.n_delux_rooms, hotel.p_delux_room,
+                hotel.n_luxury_rooms,hotel.p_luxury_room);
         }
     }
 

@@ -4,6 +4,7 @@
 #include "initilizeHotel.h"
 #include "registration.h"
 #include "hotelLogin.h"
+#include "postLogin.h"
 #include "read.h"
 #include "prompts.h"
 
@@ -21,7 +22,11 @@ int main ( void) {
                 break;
 
             case 2: 
-                hotel_login ();
+                if(hotel_login ()) {
+                    room_details(1);
+                    add_room(1);
+                    delete_room(1);
+                }
                 break;
         }
 
