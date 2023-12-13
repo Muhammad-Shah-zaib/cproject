@@ -1,3 +1,2 @@
 # cproject
-This is shahzaib's directory
-HAHA
+this is just cheking
