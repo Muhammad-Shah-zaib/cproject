@@ -30,6 +30,7 @@ int starting_prompt(){
 
 void post_login( unsigned int id ) {
 
+    clearScreen();
 
     int choice; // will store the user choice in this var
     // prompting user

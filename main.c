@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "structHotel.h"
 #include "initilizeHotel.h"
 #include "registration.h"
@@ -6,6 +8,7 @@
 #include "postLogin.h"
 #include "read.h"
 #include "prompts.h"
+#include "clearScreen.h"
 
 int main ( void) {
 

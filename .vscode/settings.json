@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "structhotel.h": "c",
-        "wrtiedata.h": "c"
+        "wrtiedata.h": "c",
+        "initilizehotel.h": "c"
     }
 }
