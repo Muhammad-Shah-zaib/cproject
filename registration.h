@@ -61,7 +61,7 @@ void hotel_registration( void ) {
     } 
 
     // ? Creating a hotel object
-    Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, ""};
 
 
     // ! EXTRACT ID AND THEN UPDATE IT FROM Id.txt
@@ -80,10 +80,12 @@ void hotel_registration( void ) {
     printf ("%s", "Enter Hotel name (dont put white-space): ");
     scanf ("%s", hotel.hotel_name);
 
-
+    printf ("%s", "Enter the city name(dont push white-space): ");
+    scanf ("%s", hotel.city_name);
     // Pointing the correct place and reserving bytes accordingly
     fseek (fptr, (hotel.id-1) * sizeof (Hotel), SEEK_SET);
     fwrite (&hotel, sizeof (Hotel), 1, fptr); // writing the data
+    fflush (fptr);
 
     printf ("%d %s %s\n",hotel.id, hotel.username, hotel.hotel_name);
     printf ("Rememebr your id (id : %d), you will login using thiss id!\n", hotel.id);

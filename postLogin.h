@@ -5,46 +5,46 @@
 
 
 // This will show room details
-void room_details ( int id ) {
-
+void room_details(int id) {
     FILE *fptr;
 
-    if( (fptr = fopen ("hotels.dat", "rb+")) == NULL ) {
-        puts ("File can not be opened.");
+    if ((fptr = fopen("hotels.dat", "rb+")) == NULL) {
+        puts("File cannot be opened.");
         return;
     }
 
     Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    fseek (fptr, (id-1) * sizeof (Hotel), SEEK_SET);
-    fread (&hotel, sizeof(Hotel), 1, fptr);
+    fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
+    fread(&hotel, sizeof(Hotel), 1, fptr);
 
-    printf( "+-------------------------+\n"
-            "       Room Details        \n"
-            "+-------------------------+\n"
-            "\nTotal rooms: %d\n"
-            "Available rooms: %d\n"
-            "Total rooms booked: %d\n"
-            "---------------------------"
-            "\n\tStandard Room\n"
-            "Available Rooms: %d\n"
-            "Price per Room: %d\n"
-            "---------------------------"
-            "\n\tDeluxe Rooms\n"
-            "Available Rooms: %d\n"
-            "Price per Room: %d\n"
-            "---------------------------"
-            "\n\tLuxury Rooms\n"
-            "Available Rooms: %d\n"
-            "Price per Room: %d\n"
-            "---------------------------\n",
-            hotel.n_total_rooms, hotel.available_roams, hotel.booked_rooms,
-            hotel.n_standard_rooms, hotel.p_standard_room, 
-            hotel.n_delux_rooms, hotel.p_delux_room, 
-            hotel.n_luxury_rooms, hotel.p_luxury_room);
+    printf("\n\033[1;34m+-------------------------+\033[0m\n");
+    printf("\033[1;34m|      Room Details       |\033[0m\n");
+    printf("\033[1;34m+-------------------------+\033[0m\n");
+    printf("\n\033[1;32mTotal rooms: %u\n", hotel.n_total_rooms);
+    printf("Available rooms: %u\n", hotel.available_roams);
+    printf("Total rooms booked: %u\n", hotel.booked_rooms);
+    printf("\033[1;34m---------------------------\033[0m\n");
+    printf("\033[1;34m        Standard Room      \033[0m\n");
+    printf("\033[1;34m---------------------------\033[0m\n");
+    printf("\033[1;32mAvailable Rooms: %u\n", hotel.n_standard_rooms);
+    printf("Price per Room: %u\n", hotel.p_standard_room);
+    printf("\033[1;34m---------------------------\033[0m\n");
+    printf("\033[1;34m         Deluxe Rooms       \033[0m\n");
+    printf("\033[1;34m---------------------------\033[0m\n");
+    printf("\033[1;32mAvailable Rooms: %u\n", hotel.n_delux_rooms);
+    printf("Price per Room: %u\n", hotel.p_delux_room);
+    printf("\033[1;34m---------------------------\033[0m\n");
+    printf("\033[1;34m         Luxury Rooms       \033[0m\n");
+    printf("\033[1;34m---------------------------\033[0m\n");
+    printf("\033[1;32mAvailable Rooms: %u\n", hotel.n_luxury_rooms);
+    printf("Price per Room: %u\n", hotel.p_luxury_room);
+    printf("\033[1;34m---------------------------\033[0m\n");
 
-
+    fclose(fptr);
 }
+
+
 
 
 
