@@ -48,16 +48,13 @@ void room_details ( int id ) {
 
 
 
-void add_room( int id ) {
-
-    unsigned int choice; // selecting for room type 
-
-
-    unsigned int n_room, price_per_room; // Temporarily temp id 
+void add_room(int id) {
+    unsigned int choice; // selecting for room type
+    unsigned int n_room, price_per_room; // Temporarily temp id
 
     // making a file pointer to open hotels.dat
-    FILE *fptr; 
-    if ( (fptr = fopen("hotels.dat", "rb+")) == NULL ){
+    FILE *fptr;
+    if ((fptr = fopen("hotels.dat", "rb+")) == NULL) {
         puts("File Not Found!");
         return;
     }
@@ -67,38 +64,38 @@ void add_room( int id ) {
 
     // offsetting the file pointer
     fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
-    fread (&hotel, sizeof(Hotel), 1, fptr); // reading 
+    fread(&hotel, sizeof(Hotel), 1, fptr); // reading
 
-    rewind(fptr);
+    printf("EXTRACTED: %d: %d", hotel.n_total_rooms, hotel.n_standard_rooms);
+    // prompting the user
 
-    // pormpting the user
-    printf("Please Select the Room Type (to add):\n"
-        "0.\tExit\n"
-        "1.\tStandard Room\n"
-        "2.\tDeluxe Room\n"
-        "3.\tLuxury Room\n");
-
-    // reading the user choice
-    scanf("%d", &choice);
-
-
-    while (choice != 0)
-    {
-        // checking whether the choice provided by the suer is valid or not
-        if ((choice < 0) || (choice > 3)) {
-            puts ("Invalid input");
-
-            // pormpting the user
-            printf("Please Select the Room Type ( to add ):\n"
+    do {
+        printf("Please Select the Room Type (to add):\n"
+                "0.\tExit\n"
                 "1.\tStandard Room\n"
                 "2.\tDeluxe Room\n"
                 "3.\tLuxury Room\n");
+
+        // reading the user choice
+        scanf("%d", &choice);
+
+        if (choice == 0)
+            return;
+
+        // checking whether the choice provided by the user is valid or not
+        if ((choice < 0) || (choice > 3)) {
+            puts("Invalid input");
+
+            // prompting the user
+            printf("Please Select the Room Type ( to add ):\n"
+                    "1.\tStandard Room\n"
+                    "2.\tDeluxe Room\n"
+                    "3.\tLuxury Room\n");
 
             // reading the user choice
             scanf("%d", &choice);
             continue;
         }
-
 
         // reading rooms and price_per_room per room
         printf("Enter number of rooms to add:\n");
@@ -106,41 +103,53 @@ void add_room( int id ) {
         printf("Enter price per room:\n");
         scanf("%d", &price_per_room);
 
+        switch (choice) {
+            case 1: // FOR STANDARD ROOMS
+                hotel.n_standard_rooms += n_room;
+                hotel.n_total_rooms += n_room;
+                hotel.available_roams += n_room;
+                hotel.p_standard_room = price_per_room;
+                puts("\nrooms added successfully");
+                printf("=>total standard rooms: %d\n", hotel.n_standard_rooms);
+                printf("=>price per standard rooms: %d\n\n", hotel.p_standard_room);
+                break;
 
-        switch (choice)
-        {
-        case 1: // FOR STANDARD ROOMS
-            hotel.n_standard_rooms += n_room;
-            hotel.p_standard_room = price_per_room;
-            break;
+            case 2: // FOR DELUX ROOMS
+                hotel.n_delux_rooms += n_room;
+                hotel.n_total_rooms += n_room;
+                hotel.available_roams += n_room;
+                hotel.p_delux_room = price_per_room;
+                puts("\nrooms added successfully");
+                printf("=>total delux rooms: %d\n", hotel.n_delux_rooms);
+                printf("=>price per delux rooms: %d\n\n", hotel.p_delux_room);
+                break;
 
-        case 2: // FOR DELUX ROOMS
-            hotel.n_delux_rooms += n_room;
-            hotel.p_delux_room = price_per_room;
-            break;
+            case 3: // FOR LUXURY ROOMS
+                hotel.n_luxury_rooms += n_room;
+                hotel.n_total_rooms += n_room;
+                hotel.available_roams += n_room;
+                hotel.p_luxury_room = price_per_room;
+                puts("\nrooms added successfully");
+                printf("=>total luxury rooms: %d\n", hotel.n_luxury_rooms);
+                printf("=>price per luxury rooms: %d\n\n", hotel.p_luxury_room);
+                break;
 
-        case 3: // FOR LUXURY ROOMS
-            hotel.n_luxury_rooms += n_room;
-            hotel.p_luxury_room = price_per_room;
-            break;
-
-        default:
-            printf("Wrong Input!");
+            default:
+                printf("Wrong Input!");
         }
-        // again offsetting my pointer to the correct place
+
+        // offsetting the pointer to the correct place
+        rewind ( fptr );
         fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
-        fwrite(&hotel, sizeof( Hotel ), 1, fptr); // overwriting th hotel details
+        fwrite(&hotel, sizeof(Hotel), 1, fptr); // overwriting the hotel details
+        fflush(fptr); // flushing the file buffer
 
-        // again prompting user to read the choice
-        printf("Please Select the Room Type (to add):\n"
-            "0.\tExit"
-            "\n1.\tStandard Room\n"
-            "2.\tDeluxe Room\n"
-            "3.\tLuxury Room\n");
+    } while (choice != 0);
 
-        scanf("%d", &choice);
-    }
+    // close the file
+    fclose(fptr);
 }
+
 
 
 
@@ -204,7 +213,6 @@ void delete_room(int id) {
                 hotel.n_delux_rooms, hotel.p_delux_room, 
                 hotel.n_luxury_rooms, hotel.p_luxury_room);
 
-        // jump_point if deletion exceed available room
         do {
 
             printf ("%s", "Enter no of rooms to delete: ");
@@ -222,6 +230,8 @@ void delete_room(int id) {
                             continue;
                     }
                     hotel.n_standard_rooms -= n_room;
+                    hotel.n_total_rooms -= n_room;
+                    hotel.available_roams -= n_room;
                     printf ("rooms Deleted successfully\n"
                     "=>Updated number of standard-rooms: %d\n\n", hotel.n_standard_rooms);
                     break;
@@ -237,6 +247,8 @@ void delete_room(int id) {
                     }
 
                     hotel.n_delux_rooms -= n_room;
+                    hotel.n_total_rooms -= n_room;
+                    hotel.available_roams -= n_room;
                     printf ("rooms Deleted successfully\n"
                     "=>Updated number of delux-rooms: %d\n\n", hotel.n_delux_rooms);
                     break;
@@ -251,6 +263,8 @@ void delete_room(int id) {
                             continue;
                     }
                     hotel.n_luxury_rooms -= n_room;
+                    hotel.n_total_rooms -= n_room;
+                    hotel.available_roams -= n_room;
                     printf ("rooms Deleted successfully\n"
                     "=>Updated number of luxury-rooms: %d\n\n", hotel.n_luxury_rooms);
                     break;
@@ -265,6 +279,7 @@ void delete_room(int id) {
         // offsetting the pointer again
         fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
         fwrite(&hotel, sizeof(Hotel), 1, fptr); // write the taken data
+        fflush ( fptr );
 
         // prompt again
         printf("Please Choose Room Type:\n"

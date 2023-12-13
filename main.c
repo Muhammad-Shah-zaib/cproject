@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 #include "structHotel.h"
 #include "initilizeHotel.h"
 #include "registration.h"
