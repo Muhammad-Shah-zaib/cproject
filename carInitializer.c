@@ -11,7 +11,7 @@ void car_init ( int max_cars ) {
         return;
     }
 
-    Car_Rental empty_car = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Car_Rental empty_car = {0, "", "", "", 0, 0, 0, 0, 0, 0, "", 0, 0, 0, "" ,0 ,0 ,0, ""};
 
     for ( unsigned int i = 0 ; i < max_cars; i++) {
         fwrite (&empty_car, sizeof (Car_Rental), 1, cfptr);
