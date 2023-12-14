@@ -30,11 +30,12 @@ int starting_prompt(){
 
 void post_login( unsigned int id ) {
 
-    clearScreen();
+    // clearScreen();
 
     int choice; // will store the user choice in this var
     // prompting user
     do {
+        clearScreen();
         printf("\n1.\tAdd Rooms\n"
             "2.\tChange or Delete Rooms\n"
             "3.\tView Room Details\n"

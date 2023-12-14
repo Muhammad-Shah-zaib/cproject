@@ -42,7 +42,8 @@ void room_details(int id) {
     printf("\033[1;34m---------------------------\033[0m\n");
 
 
-    // getchar(); // gnoring enter
+    getchar(); // ignoring enter
+
     printf ("\n\n Press enter to conitnue.\n");
     getchar();
     fclose(fptr);

@@ -83,7 +83,7 @@ void hotel_registration( void ) {
     printf ("%s", "Enter the city name(dont push white-space): ");
     scanf ("%s", hotel.city_name);
     // Pointing the correct place and reserving bytes accordingly
-    fseek (fptr, (hotel.id-1) * sizeof (Hotel), SEEK_SET);
+    fseek (fptr, (hotel.id - 1) * sizeof (Hotel), SEEK_SET);
     fwrite (&hotel, sizeof (Hotel), 1, fptr); // writing the data
     fflush (fptr);
 
