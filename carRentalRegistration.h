@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "structCarRental.h"
-
+// #include "structCarRental.h"
+// #include "emptyCarGenerator.h"
 
 
 
@@ -54,7 +54,7 @@ void car_rental_registration ( void ){
         return;
     }
 
-    Car_Rental car = {0, "", "", "", 0, 0, 0, 0, 0, 0, "", 0, 0, 0, "" ,0 ,0 ,0, ""};
+    Car_Rental car = generate_empty_car();
     
 
     // Providing th eunique id
@@ -75,7 +75,7 @@ void car_rental_registration ( void ){
     printf ("Enter your city name: ");
     scanf("%s", car.city_name);
 
-    fseek ( cfptr, (id - 1) * sizeof (Car_Rental), SEEK_SET );
+    fseek ( cfptr, (car.id - 1) * sizeof (Car_Rental), SEEK_SET );
     fwrite( &car, sizeof (Car_Rental), 1, cfptr );
     fflush (cfptr);
 
@@ -84,3 +84,4 @@ void car_rental_registration ( void ){
     printf ("=>username: %s", car.username);
     fclose ( cfptr );
 }
+

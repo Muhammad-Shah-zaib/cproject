@@ -2,6 +2,10 @@
     "files.associations": {
         "structhotel.h": "c",
         "wrtiedata.h": "c",
-        "initilizehotel.h": "c"
+        "initilizehotel.h": "c",
+        "emptycargenerator.h": "c",
+        "hotelregistration.h": "c",
+        "carrentalregistration.h": "c",
+        "postlogin.h": "c"
     }
 }

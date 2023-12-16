@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "structCarRental.h"
+#include "emptyCarGenerator.h"
+
 
 void car_init ( int max_cars ) {
     
@@ -11,7 +13,7 @@ void car_init ( int max_cars ) {
         return;
     }
 
-    Car_Rental empty_car = {0, "", "", "", 0, 0, 0, 0, 0, 0, "", 0, 0, 0, "" ,0 ,0 ,0, ""};
+    Car_Rental empty_car = generate_empty_car();
 
     for ( unsigned int i = 0 ; i < max_cars; i++) {
         fwrite (&empty_car, sizeof (Car_Rental), 1, cfptr);

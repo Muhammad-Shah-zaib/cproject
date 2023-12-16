@@ -2,6 +2,15 @@
 
 #define MAX_CAR_RENTAL 100
 
+
+typedef struct  {
+    unsigned int modal;
+    unsigned int price;
+    char name[30];
+} Car_Modal;
+
+
+
 typedef struct {
     // ID b/w 1-100
     unsigned int id;
@@ -18,21 +27,16 @@ typedef struct {
     unsigned int available_cars;  
 
     // SUV cars price and number
-    unsigned int *n_suv;
-    unsigned int *p_suv;
-    unsigned int *suv_model;
-    char *suv_model_name [20];
+    unsigned int n_suv;
+    Car_Modal suv[50];
+    
 
     //Non-SUV cars price and number 
-    unsigned int *n_non_suv;
-    unsigned int *p_non_suv;
-    unsigned int *non_suv_model;
-    char *non_suv_model_name[30];
+    unsigned int n_non_suv;
+    Car_Modal non_suv[50];
 
     //premium cars and their prices
-    unsigned int *n_premium;
-    unsigned int *p_premium;
-    unsigned int *premium_model;
-    char *premium_model_name[30];
+    unsigned int n_premium;
+    Car_Modal premium[50];
     
 }Car_Rental;
