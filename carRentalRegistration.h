@@ -3,6 +3,11 @@
 // #include "structCarRental.h"
 // #include "emptyCarGenerator.h"
 
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
+#define YELLOW "\x1b[33m"
+#define BLUE "\x1b[34m"
+#define RESET "\x1b[0m"
 
 
 int extract_car_id ( void ) {
@@ -79,9 +84,18 @@ void car_rental_registration ( void ){
     fwrite( &car, sizeof (Car_Rental), 1, cfptr );
     fflush (cfptr);
 
-    printf ("Remember your following credentials, you need them while logging in.\n");
-    printf ("=>id: %d", car.id);
-    printf ("=>username: %s", car.username);
+    puts (BLUE"+--------------------------------------------------------------------+"RESET);
+    puts (BLUE"|                                                                    |"RESET);
+    printf (BLUE"|"RED"Remember your following credentials, you need them while logging in."BLUE"|\n"RESET);
+    puts (BLUE"|                                                                    |"RESET);
+    puts (BLUE"+--------------------------------------------------------------------+"RESET);
+
+    printf (GREEN"=>id: %d\n"RESET, car.id);
+    printf (GREEN"=>username: %s\n\n"RESET, car.username);
+
+    printf (YELLOW "Press enter to continue.\n" RESET   );
+    getchar(); // ignoring enter
+    getchar();
     fclose ( cfptr );
 }
 

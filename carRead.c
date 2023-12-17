@@ -9,32 +9,37 @@
 #define BLUE "\x1b[34m"
 #define RESET "\x1b[0m"
 
-void printCarDetails( const Car_Rental *car ) {
-    printf(BLUE "Car Rental Details:\n" RESET);
-    printf("ID: %u\n", car->id);
-    printf("Username: %s\n", car->username);
-    printf("Company Name: %s\n", car->company_name);
-    printf("City Name: %s\n", car->city_name);
-    printf("Total Cars: %u\n", car->n_total_cars);
-    printf("Booked Cars: %u\n", car->booked_cars);
+void printCarDetails(Car_Rental *car) {
+
+    printf("\n\033[1;34m+------------------------+\033[0m\n");
+    printf("\033[1;34m|     Car Rental Details |\033[0m\n");
+    printf("\033[1;34m+------------------------+\033[0m\n");
+    printf (GREEN"username: %s\n", car->username);
+    printf (GREEN"id: %d\n", car->id);
+    printf (GREEN"city: %s\n", car->city_name);
+    printf("\n\033[1;32mTotal Cars: %u\n", car->n_total_cars);
     printf("Available Cars: %u\n", car->available_cars);
-
-    // Display SUV details
-    printf("\n" GREEN "SUV Cars:\n" RESET);
-    for (unsigned int i = 0; i < (car->n_suv); ++i) {
-        printf("Modal: %u, Price: %u, Name: %s\n", car->suv[i].modal, car->suv[i].price, car->suv[i].name);
+    printf("Booked Cars: %u\n", car->booked_cars);
+    printf("\033[1;34m------------------------\033[0m\n");
+    printf("\033[1;34m          SUV Cars        \033[0m\n");
+    printf("\033[1;34m------------------------\033[0m\n");
+    printf("\033[1;32mAvailable Cars: %u\n", car->n_suv);
+    for (unsigned int i = 0; i < car->n_suv; ++i) {
+        printf("Model: %u, Price: %u, Name: %s\n", car->suv[i].modal, car->suv[i].price, car->suv[i].name);
     }
-
-    // Display Non-SUV details
-    printf("\n" YELLOW "Non-SUV Cars:\n" RESET);
-    for (unsigned int i = 0; i < (car->n_non_suv); ++i) {
-        printf("Modal: %u, Price: %u, Name: %s\n", car->non_suv[i].modal, car->non_suv[i].price, car->non_suv[i].name);
+    printf("\033[1;34m------------------------\033[0m\n");
+    printf("\033[1;34m      Non-SUV Cars       \033[0m\n");
+    printf("\033[1;34m------------------------\033[0m\n");
+    printf("\033[1;32mAvailable Cars: %u\n", car->n_non_suv);
+    for (unsigned int i = 0; i < car->n_non_suv; ++i) {
+        printf("Model: %u, Price: %u, Name: %s\n", car->non_suv[i].modal, car->non_suv[i].price, car->non_suv[i].name);
     }
-
-    // Display Premium details
-    printf("\n" RED "Premium Cars:\n" RESET);
-    for (unsigned int i = 0; i < (car->n_premium); ++i) {
-        printf("Modal: %u, Price: %u, Name: %s\n", car->premium[i].modal, car->premium[i].price, car->premium[i].name);
+    printf("\033[1;34m------------------------\033[0m\n");
+    printf("\033[1;34m      Premium Cars       \033[0m\n");
+    printf("\033[1;34m------------------------\033[0m\n");
+    printf("\033[1;32mAvailable Cars: %u\n", car->n_premium);
+    for (unsigned int i = 0; i < car->n_premium; ++i) {
+        printf("Model: %u, Price: %u, Name: %s\n", car->premium[i].modal, car->premium[i].price, car->premium[i].name);
     }
 }
 
@@ -49,7 +54,7 @@ void car_read( void ) {
 
     while (!feof(cfptr)) {
         // reading the data
-        Car_Rental car = generate_empty_car();;
+        Car_Rental car = generate_empty_car();
 
         int result = fread( &car, sizeof(Car_Rental), 1, cfptr );
         // displaying the data

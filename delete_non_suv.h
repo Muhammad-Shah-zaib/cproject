@@ -4,7 +4,12 @@
 #include <string.h>
 
 
-
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
+#define YELLOW "\x1b[33m"
+#define BLUE "\x1b[34m"
+#define CYAN "\x1b[36m"
+#define RESET "\x1b[0m"
 
 
 
@@ -18,7 +23,9 @@ int non_suv_find_car_modal_index(const Car_Rental *car, const unsigned int id, c
     }
 
     // promppting and returning -1 if car modal not found
-    printf("Car with (modal=> %u\t:\tname=> %s) not found.\n", modal, modal_name );
+    printf(RED"Car with (modal=> %u\t:\tname=> %s) not found.\n"RESET, modal, modal_name );
+    getchar(); // ignoring enter 
+    getchar();
     return -1;
 }
 
@@ -44,9 +51,12 @@ void non_suv_delete_car_modal (Car_Rental *car, const unsigned int index, const 
     car->n_total_cars--; // updating the total cars
     car->available_cars--; // updating the available cars
 
+    puts (GREEN"Cars deleted successfully." RESET);
+    printf (BLUE"\nTotal non_SUVs: %d\n"RESET, car->n_non_suv);
+
     // printing the updated list of cars
     for (int i = 0; i < car->n_non_suv; i++) {
-        printf ("%d: %s\n", (car->non_suv[i].modal), car->non_suv[i].name );
+        printf (CYAN"%d.\t%d: %s\n"RESET, i+1, (car->non_suv[i].modal), car->non_suv[i].name );
     }
 
     // ! GOING TO UPDATE THE FILE 
@@ -58,7 +68,7 @@ void non_suv_delete_car_modal (Car_Rental *car, const unsigned int index, const 
 
     fclose (cfptr); // closing the file
 
-    puts("Press Enter to continue.");
+    puts(YELLOW"\nPress Enter to continue."RESET);
     getchar();
     getchar();
 }
@@ -71,15 +81,26 @@ void non_suv_delete_car_modal (Car_Rental *car, const unsigned int index, const 
 void delete_non_suv( Car_Rental *car, const unsigned int id){
     // ! dont need to read the data as it is already passed in the function
 
+    if ( 0 == car->n_non_suv ) {
+        puts (RED"non_SUVs can not be deleted, as there is no non_SUV added yet");
+        printf(RED"=>Total non_SUVs: %d\n"RESET, car->n_non_suv);
+        puts (YELLOW "Press Enter to conitnue."RESET);
+        getchar(); // ignoring enter
+        getchar();
+        return;
+    }
+
     // decaliring the variables
     unsigned int modal;
     char modal_name[30];
 
     // reading mdoal
-    printf ("Enter modal");
+    printf ("Enter model: ");
     scanf ("%d", &modal);
+    modal = abs( modal ); // keeping the modal value a positive int
+
     // reading modal name
-    printf ("Enter modal name: ");
+    printf ("Enter model name: ");
     scanf ("%s", modal_name);
 
 

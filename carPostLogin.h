@@ -9,7 +9,9 @@
 #define GREEN "\x1b[32m"
 #define YELLOW "\x1b[33m"
 #define BLUE "\x1b[34m"
+#define CYAN "\x1b[36m"
 #define RESET "\x1b[0m"
+
 
 
 
@@ -281,52 +283,58 @@ void add_car (unsigned int id){
 
 
 
-void car_details( unsigned int id ) {
+void car_details(int id) {
+    clearScreen(); // Assuming you have a function to clear the screen
 
-    clearScreen();
     FILE *fptr;
 
     if ((fptr = fopen("cars.dat", "rb+")) == NULL) {
         puts("File cannot be opened.");
+        puts ("Press Enter to exit.");
+        getchar();
+        getchar();
+
         return;
     }
 
-    Car_Rental car = generate_empty_car();
+    Car_Rental carRental = generate_empty_car();
 
     fseek(fptr, (id - 1) * sizeof(Car_Rental), SEEK_SET);
-    fread( &car, sizeof(Car_Rental), 1, fptr);
+    fread(&carRental, sizeof(Car_Rental), 1, fptr);
 
-    
-
-    printf(BLUE "Car Rental Details:\n" RESET);
-    printf("ID: %u\n", car.id);
-    printf("Username: %s\n", car.username);
-    printf("Company Name: %s\n", car.company_name);
-    printf("City Name: %s\n", car.city_name);
-    printf("Total Cars: %u\n", car.n_total_cars);
-    printf("Booked Cars: %u\n", car.booked_cars);
-    printf("Available Cars: %u\n", car.available_cars);
-
-    // Display SUV details
-    printf("\n" GREEN "SUV Cars:\n" RESET);
-    for (unsigned int i = 0; i < (car.n_suv); ++i) {
-        printf("Modal: %u, Price: %u, Name: %s\n", car.suv[i].modal, car.suv[i].price, car.suv[i].name);
+    printf(BLUE"\n+------------------------------+\n"RESET);
+    printf(BLUE"|      Car Rental Details      |\n"RESET);
+    printf(BLUE"+------------------------------+\n"RESET);
+    printf("\n\033[1;32mTotal Cars: %u\n", carRental.n_total_cars);
+    printf("Available Cars: %u\n", carRental.available_cars);
+    printf("Booked Cars: %u\n", carRental.booked_cars);
+    printf(BLUE"------------------------------\n");
+    printf(BLUE"            SUV Cars           \n"RESET);
+    printf(BLUE"------------------------------\n"RESET);
+    printf(CYAN"Available Cars: %u\n\n", carRental.n_suv);
+    for (unsigned int i = 0; i < carRental.n_suv; ++i) {
+        printf(GREEN"=>%d.\tModel: %u, Price: %u, Name: %s\n"RESET, i+1, carRental.suv[i].modal, carRental.suv[i].price, carRental.suv[i].name);
+    }
+    printf(BLUE"------------------------------\n"RESET);
+    printf(BLUE"         Non-SUV Cars          \n"RESET);
+    printf(BLUE"------------------------------\n"RESET);
+    printf(CYAN"Available Cars: %u\n\n", carRental.n_non_suv);
+    for (unsigned int i = 0; i < carRental.n_non_suv; ++i) {
+        printf(GREEN"=>%d.\tModel: %u, Price: %u, Name: %s\n"RESET, i+1, carRental.non_suv[i].modal, carRental.non_suv[i].price, carRental.non_suv[i].name);
+    }
+    printf(BLUE"------------------------------\n"RESET);
+    printf(BLUE"         Premium Cars          \n"RESET);
+    printf(BLUE"------------------------------\n"RESET);
+    printf(CYAN"Available Cars: %u\n\n"RESET, carRental.n_premium);
+    for (unsigned int i = 0; i < carRental.n_premium; ++i) {
+        printf(GREEN"=>%d.\tModel: %u, Price: %u, Name: %s\n"RESET, i+1, carRental.premium[i].modal, carRental.premium[i].price, carRental.premium[i].name);
     }
 
-    // Display Non-SUV details
-    printf("\n" YELLOW "Non-SUV Cars:\n" RESET);
-    for (unsigned int i = 0; i < (car.n_non_suv); ++i) {
-        printf("Modal: %u, Price: %u, Name: %s\n", car.non_suv[i].modal, car.non_suv[i].price, car.non_suv[i].name);
-    }
+    getchar(); // ignoring enter
 
-    // Display Premium details
-    printf("\n" RED "Premium Cars:\n" RESET);
-    for (unsigned int i = 0; i < (car.n_premium); ++i) {
-        printf("Modal: %u, Price: %u, Name: %s\n", car.premium[i].modal, car.premium[i].price, car.premium[i].name);
-    }
-    puts ("Press Enter to continue.");
+    printf(YELLOW"\n\n Press enter to continue.\n"RESET);
     getchar();
-    getchar();
+    fclose(fptr);
 }
 
 

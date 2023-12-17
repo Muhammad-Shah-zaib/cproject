@@ -322,16 +322,300 @@ void car_details( const Car_Rental *car ) {
     }
 }
 
+
+int suv_find_car_modal_index(const Car_Rental *car, const unsigned int id, const char *modal_name, const unsigned int modal) {
+    for (unsigned int i = 0; i < car->n_suv; ++i) {
+        if ( car->suv[i].modal == modal && (strcmp((car->suv[i].name), modal_name) == 0) ) {
+            return i;
+        }
+    }
+
+    printf("Car with modal number (%u : %s) not found.\n", modal, car->suv->name );
+    return -1;
+}
+
+void suv_delete_car_modal (Car_Rental *car, const unsigned int index, const unsigned int id){
+
+    // making a file pointer for "cars.dat"
+    FILE *cfptr;
+
+    // cehcking for file openeing
+    if ( (cfptr = fopen ("cars.dat", "rb+")) == NULL ){
+        puts ("The file can not be opened.");
+        exit (1);
+    }
+
+    // printing the updated list
+    for  (unsigned int i = index ; i < car->n_suv; i++ ){
+            car->suv[i] = car->suv [i+1];
+    }
+    car->n_suv--; // updating suv cars
+    car->n_total_cars--; // updating total cars
+    car->available_cars--; // updating available cars
+
+    for (int i = 0; i < car->n_suv; i++) {
+        printf ("%d: %s\n", (car->suv[i].modal), car->suv[i].name );
+    }
+    rewind(cfptr);
+    fseek ( cfptr, (id-1) * sizeof (Car_Rental), SEEK_SET );
+    fwrite( car, sizeof(Car_Rental), 1, cfptr );
+    fflush(cfptr);
+    fclose(cfptr);
+}
+
+void delete_suv(Car_Rental *car, const unsigned int id){
+
+    // decaliring the variables
+    unsigned int modal;
+    char modal_name[30];
+
+    // reading mdoal
+    printf ("Enter modal");
+    scanf ("%d", &modal);
+    // reading modal name
+    printf ("Enter modal name: ");
+    scanf ("%s", modal_name);
+
+
+    // dont need to read the data as it is already passed in the function
+    const unsigned short int indexToDelete = suv_find_car_modal_index(car, id, modal_name, modal); 
+
+    // checking for valid indexToDelete
+    if ( -1 == indexToDelete ) {
+        puts ("Car not found.");
+        exit (0);
+    }else
+        // deleting the suv car only if the indexToDelete is valid
+        suv_delete_car_modal (car, indexToDelete, id);
+
+    exit (0);
+}
+
+
+
+
+
+int non_suv_find_car_modal_index(const Car_Rental *car, const unsigned int id, const char *modal_name, const unsigned int modal) {
+
+    // getting the index
+    for ( unsigned int i = 0; i < car->n_non_suv; i++ ) {
+        if ( car->non_suv[i].modal == modal && (strcmp((car->non_suv[i].name), modal_name) == 0) ) {
+            return i;
+        }
+    }
+
+    // promppting and returning -1 if index not ofund
+    printf("Car with modal number (%u : %s) not found.\n", modal, modal_name );
+    return -1;
+}
+
+
+void non_suv_delete_car_modal (Car_Rental *car, const unsigned int index, const unsigned int id){
+
+    // making a file pointer for "cars.dat"
+    FILE *cfptr;
+
+    // checking the file openeing
+    if ( (cfptr = fopen ("cars.dat", "rb+")) == NULL ){
+        puts ("The file can not be opened.");
+        exit (1);
+    }
+
+    // deleting the given car
+    for  ( unsigned int i = index ; i < car->n_non_suv; i++ ){
+            car->non_suv[i] = car->suv[i+1]; // just reducing all the further index after indexToDelete
+    }
+    car->n_non_suv--; // updating the total non_suv_cars
+    car->n_total_cars--; // updating the total cars
+    car->available_cars--; // updating the available cars
+
+    // printing the updated list of cars
+    for (int i = 0; i < car->n_non_suv; i++) {
+        printf ("%d: %s\n", (car->non_suv[i].modal), car->suv[i].name );
+    }
+
+    // ! GOING TO UPDATE THE FILE 
+    rewind(cfptr); // just rewindin the pointer to the start, for surrety
+    
+    fseek ( cfptr, (id-1) * sizeof (Car_Rental), SEEK_SET );// off setting the poitner
+    fwrite( car, sizeof(Car_Rental), 1, cfptr ); // updating the files ( in buffer )
+    fflush(cfptr); // flushing the content into file for surety
+
+    fclose (cfptr); // closing the file
+}
+
+
+
+
+void delete_non_suv( Car_Rental *car, const unsigned int id){
+
+    // decaliring the variables
+    unsigned int modal;
+    char modal_name[30];
+
+    // reading mdoal
+    printf ("Enter modal");
+    scanf ("%d", &modal);
+    // reading modal name
+    printf ("Enter modal name: ");
+    scanf ("%s", modal_name);
+
+    // dont need to read the data as it is already passed in the function
+    const short int indexToDelete = non_suv_find_car_modal_index(car, id, modal_name, modal); 
+    printf ("This is your car index %u\n\n", indexToDelete);
+
+    if ( -1 == indexToDelete ) {
+        puts ("Car not found.");
+        exit (0);
+    }
+
+    non_suv_delete_car_modal ( car, indexToDelete, id );
+
+    exit (0);
+}
+
+
+
+short int premium_find_car_modal_index(const Car_Rental *car, const unsigned int id, const char *modal_name, const unsigned int modal) {
+
+    // getting the index
+    for ( unsigned int i = 0; i < car->n_premium; i++ ) {
+        if ( (car->premium[i].modal == modal) && (strcmp((car->premium[i].name), modal_name) == 0) ) {
+            return i;
+        }
+    }
+
+    // promppting and returning -1 if index not ofund
+    printf("Car with modal number (%u : %s) not found.\n", modal, modal_name );
+    return -1;
+}
+
+
+void premium_delete_car_modal (Car_Rental *car, const unsigned int index, const unsigned int id){
+
+    // making a file pointer for "cars.dat"
+    FILE *cfptr;
+
+    // checking the file openeing
+    if ( (cfptr = fopen ("cars.dat", "rb+")) == NULL ){
+        puts ("The file can not be opened.");
+        exit (1);
+    }
+
+    // deleting the given car
+    for  ( unsigned int i = index ; i < car->n_non_suv; i++ ){
+            car->premium[i] = car->premium[i+1]; // just reducing all the further index after indexToDelete
+    }
+    car->n_premium--; // updating the total premium cars
+    car->n_total_cars--; // updating the total cars
+    car->available_cars--; // updating the available cars
+
+    // printing the updated list of cars
+    for (int i = 0; i < car->n_premium; i++) {
+        printf ("%d: %s\n", (car->premium[i].modal), car->premium[i].name );
+    }
+
+    // ! GOING TO UPDATE THE FILE 
+    rewind(cfptr); // just rewinding the pointer to the start,( for surrety )
+    
+    fseek ( cfptr, (id-1) * sizeof (Car_Rental), SEEK_SET );// off setting the poitner
+    fwrite( car, sizeof(Car_Rental), 1, cfptr ); // updating the files ( in buffer )
+    fflush(cfptr); // flushing the content into file ( for surety )
+
+    fclose (cfptr); // closing the file
+}
+
+
+
+
+void delete_premium( Car_Rental *car, const unsigned int id){
+
+    // decaliring the variables
+    unsigned int modal;
+    char modal_name[30];
+
+    // reading mdoal
+    printf ("Enter modal");
+    scanf ("%d", &modal);
+    // reading modal name
+    printf ("Enter modal name: ");
+    scanf ("%s", modal_name);
+
+    // dont need to read the data as it is already passed in the function
+    const short int indexToDelete = premium_find_car_modal_index(car, id, modal_name, modal); 
+    printf ("This is your car index %u\n\n", indexToDelete);
+
+    if ( -1 == indexToDelete ) {
+        puts ("Car not found.");
+        exit (0);
+    }
+
+    premium_delete_car_modal ( car, indexToDelete, id );
+
+    exit (0);
+}
+
+
+
+void delete_car ( unsigned int id ){
+    // creating a file pointe rto open cars.dat
+    FILE *cfptr;
+
+    // chekcing for file opening
+    if ( (cfptr = fopen ("cars.dat", "rb")) == NULL ){
+        puts ("File can not be opened.");
+        exit (1); // termimnating the program with 1
+    }
+
+    // making ampty car to stor data
+    Car_Rental car = generate_empty_car();
+
+    // offsetting and reading the data
+    fseek (cfptr, (id-1) * sizeof (Car_Rental), SEEK_SET);
+    fread (&car, sizeof (Car_Rental), 1, cfptr);
+
+    fclose (cfptr); // closing the pointer 
+
+    char choice; // for car type to delete 
+    printf ("%s: %u\n", car.username, car.id);
+    do{
+
+        // prompt the user
+        printf("Please Select the Car Type (to Delete):\n"
+                "0.\tExit\n"
+                "1.\tDelete SUV\n"
+                "2.\tDelete non-SUV\n"
+                "3.\tDelete premium\n");
+        choice = getchar (); // reading the choice
+        choice = getchar (); // reading the choice
+
+        switch (choice)
+        {
+        case '1':
+            delete_suv( &car, car.id );
+            break;
+
+        case '2':
+            delete_non_suv( &car, id);
+            break;
+        case'3':
+            delete_premium( &car, id);
+            break;
+        default:
+            break;
+        }
+    }while(1);
+
+}
+
 int main (){
 
     Car_Rental empty_car = generate_empty_car();
 
     car_details ( &empty_car );
+    add_car( 7 );
+    delete_car ( 7 );
 
-    add_car ( 7 );
-
-        
-
-    
+    return 0;
 
 }

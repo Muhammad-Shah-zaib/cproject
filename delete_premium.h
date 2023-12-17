@@ -4,7 +4,12 @@
 #include <string.h>
 #include <math.h>
 
-
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
+#define YELLOW "\x1b[33m"
+#define BLUE "\x1b[34m"
+#define CYAN "\x1b[36m"
+#define RESET "\x1b[0m"
 
 
 short int premium_find_car_modal_index(const Car_Rental *car, const unsigned int id, const char *modal_name, const unsigned int modal) {
@@ -17,7 +22,9 @@ short int premium_find_car_modal_index(const Car_Rental *car, const unsigned int
     }
 
     // promppting and returning -1 if index not ofund
-    printf("Car with modal number (%u : %s) not found.\n", modal, modal_name );
+    printf(RED"Car with modal number (%u : %s) not found.\n"RESET, modal, modal_name );
+    getchar(); // ignoring enter 
+    getchar();
     return -1;
 }
 
@@ -34,16 +41,18 @@ void premium_delete_car_modal (Car_Rental *car, const unsigned int index, const 
     }
 
     // deleting the given car
-    for ( unsigned int i = index ; i < car->n_non_suv; i++ ){
+    for ( unsigned int i = index ; i < car->n_premium; i++ ){
             car->premium[i] = car->premium[i+1]; // just reducing all the further index after indexToDelete
     }
     car->n_premium--; // updating the total premium cars
     car->n_total_cars--; // updating the total cars
     car->available_cars--; // updating the available cars
 
+    puts (GREEN"Cars deleted successfully." RESET);
+    printf (BLUE"\nTotal PREMIUMs: %d\n"RESET, car->n_premium);
     // printing the updated list of cars
     for (int i = 0; i < car->n_premium; i++) {
-        printf ("%d: %s\n", (car->premium[i].modal), car->premium[i].name );
+        printf (CYAN"%d\t%d: %s\n"RESET, i+1, (car->premium[i].modal), car->premium[i].name );
     }
 
     // ! GOING TO UPDATE THE FILE 
@@ -55,7 +64,7 @@ void premium_delete_car_modal (Car_Rental *car, const unsigned int index, const 
 
     fclose (cfptr); // closing the file
 
-    puts("Press Enter to continue.");
+    puts(YELLOW"\nPress Enter to continue."RESET);
     getchar();
     getchar();
 }
@@ -65,17 +74,26 @@ void premium_delete_car_modal (Car_Rental *car, const unsigned int index, const 
 
 void delete_premium( Car_Rental *car, const unsigned int id){
 
+    if ( 0 == car->n_premium ) {
+        puts (RED"Premiums can not be deleted, as there is no premium added yet");
+        printf(RED"=>Total PREMIUMs: %d\n"RESET, car->n_premium);
+        puts (YELLOW "Press Enter to conitnue."RESET);
+        getchar(); // ignoring enter
+        getchar();
+        return;
+    }
+
     // decaliring the variables
     unsigned int modal;
     char modal_name[30];
 
     // reading mdoal
-    printf ("Enter modal");
+    printf ("Enter model: ");
     scanf ("%d", &modal);
-    modal = abs ( modal ); // making sure the modal number is always positive
-    
+    modal = abs( modal ); // keeping the modal value a positive int
+
     // reading modal name
-    printf ("Enter modal name: ");
+    printf ("Enter model name: ");
     scanf ("%s", modal_name);
 
     // dont need to read the data as it is already passed in the function
