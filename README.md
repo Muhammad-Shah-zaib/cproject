@@ -1,2 +1,2 @@
 # cproject
-This is shahzaib's directory
+This is main directory.
