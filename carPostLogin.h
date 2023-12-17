@@ -1,18 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include "structCarRental.h"
-// #include "clearScreen.h"
-// #include "emptyCarGenerator.h"
 
-// // Define color codes
-// #define RED "\x1b[31m"
-// #define GREEN "\x1b[32m"
-// #define YELLOW "\x1b[33m"
-// #define BLUE "\x1b[34m"
-// #define RESET "\x1b[0m"
-
-
+#include "car_delete.h"
 
 // Define color codes
 #define RED "\x1b[31m"
@@ -30,7 +20,17 @@
 
 
 // Function to add an SUV to the car rental
-void add_suv (Car_Rental *car) {
+void add_suv(Car_Rental *car, unsigned int id) {
+
+    FILE *cfptr;
+
+    if ( (cfptr  = fopen ("cars.dat", "rb+")) == NULL ){
+        puts ("File can not be opened.");
+        return;
+    }
+
+
+
     unsigned int n_modal;
     printf(BLUE "Total SUV cars: %d\n\n" RESET, (car->n_suv));
 
@@ -64,6 +64,13 @@ void add_suv (Car_Rental *car) {
 
     puts("\n\033[1;34mSUVs added successfully\033[0m");
     printf("\033[1;32m=> Total SUVs: %u\n\n\033[0m", (car->n_suv));
+
+    
+    fseek (cfptr, (id - 1) * sizeof (Car_Rental), SEEK_SET);
+    fwrite (car, sizeof (Car_Rental), 1, cfptr);
+    fflush (cfptr);
+
+
     puts("Press enter to continue.");
     getchar(); // Ignore the enter
     getchar();
@@ -76,7 +83,16 @@ void add_suv (Car_Rental *car) {
 
 
 // Function to add a Non-SUV to the car rental
-void add_non_suv(Car_Rental *car) {
+void add_non_suv(Car_Rental *car, unsigned int id) {
+
+    FILE *cfptr;
+
+    if ( (cfptr  = fopen ("cars.dat", "rb+")) == NULL ){
+        puts ("File can not be opened.");
+        return;
+    }
+
+
     unsigned int n_modal;
     printf(BLUE "Total Non-SUV cars: %d\n\n" RESET, (car->n_non_suv));
 
@@ -110,6 +126,13 @@ void add_non_suv(Car_Rental *car) {
 
     puts("\n\033[1;34mNon-SUVs added successfully\033[0m");
     printf("\033[1;32m=> Total Non-SUVs: %u\n\n\033[0m", (car->n_non_suv));
+
+
+    fseek (cfptr, (id - 1) * sizeof (Car_Rental), SEEK_SET);
+    fwrite (car, sizeof (Car_Rental), 1, cfptr);
+    fflush (cfptr);
+
+
     puts("Press enter to continue.");
     getchar(); // Ignore the enter
     getchar();
@@ -120,8 +143,19 @@ void add_non_suv(Car_Rental *car) {
 
 
 // Function to add a Premium car to the car rental
-void add_premium(Car_Rental *car) {
+void add_premium(Car_Rental *car, unsigned int id) {
+
+    FILE *cfptr;
+
+    if ( (cfptr  = fopen ("cars.dat", "rb+")) == NULL ){
+        puts ("File can not be opened.");
+        return;
+    }
+
+
     unsigned int n_modal;
+    printf ("username: %s\n", car->username);
+    printf ("id: %u\n", car->id);
     printf(BLUE "Total Premium cars: %d\n\n" RESET, (car->n_premium));
 
     // Reading Premium details
@@ -154,6 +188,12 @@ void add_premium(Car_Rental *car) {
 
     puts("\n\033[1;34mPremium cars added successfully\033[0m");
     printf("\033[1;32m=> Total Premium cars: %u\n\n\033[0m", (car->n_premium));
+
+    fseek (cfptr, (id - 1) * sizeof (Car_Rental), SEEK_SET);
+    fwrite (car, sizeof (Car_Rental), 1, cfptr);
+    fflush (cfptr);
+
+
     puts("Press enter to continue.");
     getchar(); // Ignore the enter
     getchar();
@@ -168,7 +208,6 @@ void add_car (unsigned int id){
     clearScreen();
 
     char choice; // selecting for car type to be added
-    unsigned int n_car, price_per_car; // n_car=> for number of cars to be added 
 
     // making a file pointer to open cars.dat
     FILE *fptr;
@@ -182,6 +221,7 @@ void add_car (unsigned int id){
     // offsetting the file pointer
     fseek(fptr, (id - 1) * sizeof(Car_Rental), SEEK_SET);
     fread(&car, sizeof(Car_Rental), 1, fptr); // reading
+    fclose(fptr);
 
     do {
         clearScreen();
@@ -203,15 +243,15 @@ void add_car (unsigned int id){
 
         switch (choice) {
             case '1': // FOR STANDARD ROOMS
-                add_suv( &car );
+                add_suv( &car, id );
                 break;
 
-            case 2: // FOR DELUX ROOMS
-                add_non_suv( &car );
+            case '2': // FOR DELUX ROOMS
+                add_non_suv( &car, id );
                 break;
-            case 3: // FOR LUXURY ROOMS
+            case '3': // FOR LUXURY ROOMS
 
-                add_premium ( &car );
+                add_premium ( &car, id );
                 break;
 
             default:
@@ -220,6 +260,25 @@ void add_car (unsigned int id){
     } while (choice != '0');
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void car_details( unsigned int id ) {
@@ -265,6 +324,9 @@ void car_details( unsigned int id ) {
     for (unsigned int i = 0; i < (car.n_premium); ++i) {
         printf("Modal: %u, Price: %u, Name: %s\n", car.premium[i].modal, car.premium[i].price, car.premium[i].name);
     }
+    puts ("Press Enter to continue.");
+    getchar();
+    getchar();
 }
 
 
@@ -284,17 +346,17 @@ void car_post_login ( unsigned int id ){
 
         switch (choice)
             {
-            case 1: // *ADD_CAR 
+            case '1': // *ADD_CAR 
                 add_car( id );
                 break;
-            case 2: // *DELETE_cAR 
-                // delete_car( id );
+            case '2': // *DELETE_cAR 
+                delete_car( id );
                 break;
-            case 3: // *CAR DETIALS
+            case '3': // *CAR DETIALS
                 car_details( id );
                 break;
 
-            case 0: // returning if '0' is encountered
+            case '0': // returning if '0' is encountered
                 return;
                 
             default: // ignoring the invalid inputs
