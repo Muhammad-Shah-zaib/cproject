@@ -7,6 +7,8 @@ int starting_prompt(){
         printf("%s","\nPlease Select: \n1.\tRegistration\n2.\tLogin\n3.\tClinet\n");
         scanf("%d",&choice);
 
+        getchar(); // claring buffer
+
         while ((choice<=0) || (choice >3)){
             puts("Invalid Input.");
 
@@ -45,7 +47,8 @@ void post_login( unsigned int id ) {
 
 
         scanf("%d", &choice); // reading choice
-
+        getchar();
+        
         switch (choice)
             {
             case 1:

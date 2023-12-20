@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#include "hotelReadClient.h"
 
 
 
@@ -17,23 +18,83 @@ bool check_name(char *location) {
     }
 
     // Array of valid city names and variations
-    const char *standard_location [][2] = {
-        {"skardu", "skardu"},
-        {"sakardo", "skardu"},
-        {"sakardu", "skardu"},
-        {"nathia gali", "nathia gali"},
-        {"nathiagali", "nathia gali"},
-        {"swat", "swat"},
-        {"sawat", "swat"},
-        {"hunza", "hunza"},
-        {"hunza valley", "hunza"},
-        {"murree", "murree"},
-        {"muree", "murree"},
-        {"murre", "murree"},
-        {"babusar", "babusar"},
-        {"babusar top", "babusar top"},
-        {"kashmir", "kashmir"},
-        {"gilgit", "gilgit"}
+    const char *standard_location[][2] = {
+    {"skardu", "skardu"},
+    {"sakardo", "skardu"},
+    {"sakardu", "skardu"},
+    {"nathia gali", "nathia gali"},
+    {"nathiagali", "nathia gali"},
+    {"swat", "swat"},
+    {"sawat", "swat"},
+    {"hunza", "hunza"},
+    {"hunza valley", "hunza"},
+    {"murree", "murree"},
+    {"muree", "murree"},
+    {"murre", "murree"},
+    {"babusar", "babusar"},
+    {"babusar top", "babusar top"},
+    {"kashmir", "kashmir"},
+    {"gilgit", "gilgit"},
+    {"lahore", "lahore"},
+    {"lhr", "lahore"},
+    {"islamabad", "islamabad"},
+    {"isb", "islamabad"},
+    {"karachi", "karachi"},
+    {"khi", "karachi"},
+    {"rawalpindi", "rawalpindi"},
+    {"rwp", "rawalpindi"},
+    {"quetta", "quetta"},
+    {"queta", "quetta"},
+    {"quetta", "quetta"},
+    {"peshawar", "peshawar"},
+    {"pshawar", "peshawar"},
+    {"peshawer", "peshawar"},
+    {"faisalabad", "faisalabad"},
+    {"fasalabad", "faisalabad"},
+    {"faislabad", "faisalabad"},
+    {"faisalabd", "faisalabad"},
+    {"fsd", "faisalabad"},
+    {"multan", "multan"},
+    {"sialkot", "sialkot"},
+    {"gujranwala", "gujranwala"},
+    {"bahawalpur", "bahawalpur"},
+    {"sargodha", "sargodha"},
+    {"abbottabad", "abbottabad"},
+    {"dera ismail khan", "dera ismail khan"},
+    {"divisions", "divisions"},
+    {"jhang", "jhang"},
+    {"kasur", "kasur"},
+    {"kharian", "kharian"},
+    {"sahiwal", "sahiwal"},
+    {"jhelum", "jhelum"},
+    {"bahawalnagar", "bahawalnagar"},
+    {"nowshera", "nowshera"},
+    {"dera ghazi khan", "dera ghazi khan"},
+    {"bannu", "bannu"},
+    {"kohat", "kohat"},
+    {"mardan", "mardan"},
+    {"chakwal", "chakwal"},
+    {"swabi", "swabi"},
+    {"jacobabad", "jacobabad"},
+    {"okara", "okara"},
+    {"dadu", "dadu"},
+    {"chaman", "chaman"},
+    {"turkham", "turkham"},
+    {"sukkur", "sukkur"},
+    {"larkana", "larkana"},
+    {"nawabshah", "nawabshah"},
+    {"mirpurkhas", "mirpurkhas"},
+    {"muzaffarabad", "muzaffarabad"},
+    {"bhimber", "bhimber"},
+    {"havelian", "havelian"},
+    {"kamra", "kamra"},
+    {"muridke", "muridke"},
+    {"pindi gheb", "pindi gheb"},
+    {"raiwind", "raiwind"},
+    {"shahdadkot", "shahdadkot"},
+    {"sibi", "sibi"},
+    {"tando adam", "tando adam"},
+    {"zhob", "zhob"}
     };
 
     // Compare the lowercase location with the valid names and update if necessary
@@ -68,6 +129,7 @@ void client_initial_prompt( void ) {
     do
     {
         // reading the DESTINATION
+        
         printf("Please enter your destination:\n");
         scanf("%29[^\n]", location); // ! Taking location as input with spaces allowed
 
@@ -75,7 +137,7 @@ void client_initial_prompt( void ) {
 
 
         if ( !(check_name(location)) ) { // Matching different variations of spellings of the location
-
+            
             clearScreen(); // clearing screen 
             puts("\tInvalid Location");
             continue; // iterating again for correct input
@@ -104,7 +166,7 @@ void client_initial_prompt( void ) {
             switch(choice){
 
                 case '1': 
-                    // hotel_read_client( location ); // location is a string
+                    hotel_read_client( location ); // location is a string
                     puts ("case 1");
                     break;
 
@@ -119,7 +181,7 @@ void client_initial_prompt( void ) {
                     break;
 
             }
-
+        getchar();
 
     } while (choice != '0'); // ! condition for the while loop (0 to exit)
 
