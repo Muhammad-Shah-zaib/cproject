@@ -12,8 +12,7 @@ void clear_input_buffer();
 // This function makes the calculations and provides the range for the hotel, the car budget and the room budget
 void make_calculations(const int *days, int *const budget_range, int *const hotel_budget, int *const car_budget, int *const istransport);
 
-int main()
-{ // Setting the values to zero
+int client_Starting_prompt() { // Setting the values to zero
     int days, budget, hotel_budget, car_budget = hotel_budget = budget = days = 0;
     // Giving transport the value of false to start with
     int istransport = 0;
