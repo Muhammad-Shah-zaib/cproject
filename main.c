@@ -12,6 +12,7 @@
 #include "carRentalRegistration.h"
 #include "carLogin.h"
 #include "carPostLogin.h"
+#include "client_initial_prompt.h"
 
 // Define color codes
 #define RED "\033[1;31m"
@@ -31,7 +32,8 @@ int main ( void) {
     clearScreen();
     int selection = starting_prompt(); // ? selection_prompt will return values (1, 2, 3)
     
-    while ( selection != 3 ) {
+
+    while ( selection != 4 ) {
         switch (selection)
         {
             case 1: {
@@ -133,15 +135,30 @@ int main ( void) {
                     }
                 
                 }while(choice != '0'); // cehcking for exit or not
-
-
                 // declairing the credentials
-                
                 break;
             }
+
+
+
+
+
+            case 3: {
+                // puts ("I am 3 ");
+                client_initial_prompt ();
+                break;
+            }
+
         }
-        clearScreen();
-        selection = starting_prompt();
+
+
+
+
+
+
+
+        // clearScreen();
+        // selection = starting_prompt();
     }
 
 
