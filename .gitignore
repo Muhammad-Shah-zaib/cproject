@@ -1,3 +1,4 @@
 *.out
+*.exe
 README.md
 temp.c
