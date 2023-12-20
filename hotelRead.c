@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "structHotel.h"
+
 
 void printHotelDetails(const Hotel *hotel) {
     printf("\n\033[1;34m+----------------------------------+\033[0m\n"); // Blue box
@@ -39,3 +41,9 @@ void hotel_read(void) {
     fclose(fptr);
 }
 
+
+int main ( void ){
+
+    hotel_read();
+    return 0;
+}
