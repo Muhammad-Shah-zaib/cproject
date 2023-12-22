@@ -25,7 +25,7 @@ bool confirm_prompt( void ){
                 break;
 
             default:
-            puts (RED"Invalid Key");
+            puts (RED"Invalid Key"RESET);
             break;
         }
     }while (1);

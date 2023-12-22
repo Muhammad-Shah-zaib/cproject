@@ -233,7 +233,7 @@ void client_initial_prompt( void ) {
                 clearScreen();
                 puts("\tWrong Input");
 
-                getchar(); // clearing input buffer
+                while('\n' != getchar()); // clearing input buffer
 
 
                 continue;

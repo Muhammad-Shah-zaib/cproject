@@ -90,7 +90,7 @@ Hotel* find_hotels(const char *location, unsigned int *hotels_count) {
 
 
 void hotel_read_client( char *location ) {
-
+    clearScreen();
     unsigned int hotels_Count = 0; // * to get total hotels at desired location
 
     // this fucntion will return a pointer of
@@ -128,16 +128,20 @@ void hotel_read_client( char *location ) {
         // ! PROMPTING USER TO EITHER SELECT OR WANT RECOMENDATIONS
         char choice;
         puts ("\nCan you choose among these:\n");
-        printf ("%s%s",
-            "1.\tSELECT.\n",
-            "2.\tWant Recommendations.\n"
-            "=> ");
+        do {
+            printf ("%s%s",
+                "1.\tSELECT.\n",
+                "2.\tWant Recommendations.\n"
+                "=> ");
 
-        // WAS FACING SOME PREVIOUS BUFFER WHEN I RUN THIS PROGRAM SO CLEARING THE BUFFER HERE FOR NOW...
-        getchar(); // 
-        scanf ("%c", &choice);
-        getchar(); // clearing buffer
-
+            // WAS FACING SOME PREVIOUS BUFFER WHEN I RUN THIS PROGRAM SO CLEARING THE BUFFER HERE FOR NOW...
+            getchar(); 
+            scanf ("%c", &choice);
+            while ( '\n' != getchar()); // clearing buffer
+            if (choice < '0' || choice > '2') {
+                puts (RED"INVALID INPUT"RESET);
+            }
+        }while( choice < '0' || choice > '2');
 
         // checking the choice...
         switch ( choice ) {
@@ -149,15 +153,15 @@ void hotel_read_client( char *location ) {
                     
                     printf ("Enter the serial number of the hotel: ");
                     scanf ("%d", &select_hotel_index); // reading the hotel user want
-                    getchar(); // ! clearing the buffer
+                    while('\n' != getchar()); // ! clearing the buffer
+
 
                     if (select_hotel_index < 0 || select_hotel_index > hotels_Count) {
-                        
                         puts (RED"INVALID HOTEL SERIAL NUMBER."RESET);
                         continue;
                     }
-                    
 
+                    clearScreen();
                     display_selected_hotel ( hotels[select_hotel_index - 1] );
 
                     if (confirm_prompt()){
@@ -165,38 +169,38 @@ void hotel_read_client( char *location ) {
                         char client_room_choice;
 
                         do {
+                            clearScreen();
                             printf (GREEN"%s",
                                 "Select room type: \n"
                                 "1.\tstandard\n"
                                 "2\tDelux\n"
                                 "3.\tLuxury\n"RESET);
                                 client_room_choice = getchar();
-                                getchar(); // clearing the buffer
+                                while ( '\n' != getchar()); // clearing the buffer
 
                             switch (client_room_choice){
 
                                 case '1':
-                                    printf (YELLOW"\nPrice: %d\n", hotels[select_hotel_index-1].p_standard_room);
+                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, NULL, "", "", location);
+                                    puts ("Thanks for using this service.");
+                                    exit (EXIT_SUCCESS);
                                     sleep(2);
-                                    printf ("Generating ticket!\n");
-                                    sleep(2);
-                                    puts ("room booked!");
                                     break;  
 
                                 case '2':
-                                    printf (YELLOW"\nPrice: %d\n", hotels[select_hotel_index-1].p_delux_room);
-                                    sleep(2);
+                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Delux Room",  hotels[select_hotel_index-1].n_delux_rooms, hotels[select_hotel_index-1].p_delux_room, NULL, "", "", location);
                                     printf ("Generating ticket!\n");
+                                    puts ("Thanks for using this service.");
+                                    exit (EXIT_SUCCESS);
                                     sleep(2);
-                                    puts ("room booked!");
                                     break;
 
                                 case '3':
-                                    printf (YELLOW"\nPrice: %d\n", hotels[select_hotel_index-1].p_luxury_room);
-                                    sleep(2);
+                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Luxury Room",  hotels[select_hotel_index-1].n_luxury_rooms, hotels[select_hotel_index-1].p_luxury_room, NULL, "", "", location);
                                     printf ("Generating ticket!\n");
+                                    puts ("Thanks for using this service.");
+                                    exit (EXIT_SUCCESS);
                                     sleep(2);
-                                    puts ("room booked!");
                                     break;
 
                                 default:

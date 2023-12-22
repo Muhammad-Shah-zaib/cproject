@@ -43,7 +43,13 @@ void display_selected_car_rental (Car_Rental *car) {
 
 }
 
-void display_cars ( Car_Modal *car, int car_count ){
+
+
+
+
+
+
+void display_cars ( const char *car_type, const char *company_name, Car_Modal *car, int car_count, const char *location ){
     puts(BLUE"---------------------------------------------------------");
 
     for (int i = 0 ; i < car_count ; i++ ){
@@ -55,15 +61,28 @@ void display_cars ( Car_Modal *car, int car_count ){
     int car_index;
     printf ("Enter the serial number of the car you want to book: ");
     scanf ("%d", &car_index);
+
     getchar(); // clearing the buffer
-
-    printf (GREEN"Car booked.\n"
-        "=> Price: %d, Car: %s ( %d ), \n"RESET
-        , car[car_index - 1].price, car[car_index - 1].name, car[car_index-1].modal);
-
     puts (YELLOW"Press Enter to Proceed to generate ticket."RESET);
-    getchar();
+    while( '\n' != getchar() ); // clearing the buffer
+
+
+
+    // !GENERATING THE TICKET
+    generate_ticket("", "", 0, 0, &car[car_index - 1], company_name, car_type, location);
+    puts ("Thanks for using our service.");
+    sleep(2);
+    exit (EXIT_SUCCESS);
 }
+
+
+
+
+
+
+
+
+
 
 
 Car_Rental* find_cars(const char *location, unsigned int *car_rentals_count) {
@@ -175,6 +194,8 @@ void car_read_client(const char *location) {
 
 
     char choice;
+
+    do {
         puts ("\nCan you choose among these:\n");
         printf ("%s%s",
             "1.\tSELECT.\n",
@@ -184,8 +205,13 @@ void car_read_client(const char *location) {
         // WAS FACING SOME PREVIOUS BUFFER WHEN I RUN THIS PROGRAM SO CLEARING THE BUFFER HERE FOR NOW...
         getchar();
         scanf ("%c", &choice);
-        getchar(); // clearing buffer
+        while('\n' != getchar()); // clearing buffer
 
+        if (choice < '0' || choice > '2') {
+            puts (RED"INVALID INPUT"RESET);
+        }
+
+    }while (choice < '0' || choice > '2');
 
         // checking the choice...
         switch ( choice ) {
@@ -225,7 +251,7 @@ void car_read_client(const char *location) {
                             switch (client_car_choice){
 
                                 case '1':
-                                    display_cars( cars[select_car_index - 1].suv, cars[select_car_index - 1].n_suv );
+                                    display_cars( "SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].suv, cars[select_car_index - 1].n_suv, location );
                                     sleep(2);
                                     printf ("Generating ticket!\n");
                                     sleep(2);
@@ -233,7 +259,7 @@ void car_read_client(const char *location) {
                                     break;  
 
                                 case '2':
-                                    display_cars( cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv );
+                                    display_cars( "non-SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv, location );
                                     sleep(2);
                                     printf ("Generating ticket!\n");
                                     sleep(2);
@@ -241,7 +267,7 @@ void car_read_client(const char *location) {
                                     break;
 
                                 case '3':
-                                    display_cars( cars[select_car_index - 1].premium, cars[select_car_index - 1].n_premium );
+                                    display_cars( "Premium", cars[select_car_index - 1].company_name, cars[select_car_index - 1].premium, cars[select_car_index - 1].n_premium, location );
                                     printf ("Generating ticket!\n");
                                     sleep(2);
                                     puts ("Car booked!");

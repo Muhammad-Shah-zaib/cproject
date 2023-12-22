@@ -4,6 +4,7 @@
 #include "clearScreen.h"
 #include "structHotel.h"
 #include "structCarRental.h"
+#include "ticketGenerator.h"
 #include "emptyCarGenerator.h"
 #include "postLogin.h"
 #include "prompts.h"
