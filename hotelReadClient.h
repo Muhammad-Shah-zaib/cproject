@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <unistd.h>
 
 // Define color codes
 #define RED "\033[1;31m"
@@ -10,7 +12,36 @@
 #define CYAN "\033[1;36m"
 #define RESET "\033[1;0m"
 
+bool confirm_prompt( void ){
+    char confirm;
 
+    do {
+        puts ("Do you conifrm?[Y\\n]");
+        confirm = getchar();
+        getchar();
+        
+        switch ( confirm ) {
+            case 'Y':
+            case 'y':
+            case '1':
+                return true;
+                break;
+
+            case 'n':
+            case 'N':
+            case '0':
+                return false;
+                break;
+
+            default:
+            puts (RED"Invalid Key");
+            break;
+        }
+    }while (1);
+
+    return true;
+    
+}
 void display_selected_hotel ( Hotel selected_hotel ) {
     printf(BLUE"\n---------------------------------\n");
     printf("Hotel Details - Cost per Room\n");
@@ -141,6 +172,52 @@ void hotel_read_client( char *location ) {
                     
 
                     display_selected_hotel ( hotels[select_hotel_index - 1] );
+
+                    if (confirm_prompt()){
+
+                        char client_room_choice;
+
+                        do {
+                            printf (GREEN"%s",
+                                "Select room type: \n"
+                                "1.\tstandard\n"
+                                "2\tDelux\n"
+                                "3.\tLuxury\n"RESET);
+                                client_room_choice = getchar();
+                                getchar(); // clearing the buffer
+
+                            switch (client_room_choice){
+
+                                case '1':
+                                    printf (YELLOW"\nPrice: %d\n", hotels[select_hotel_index-1].p_standard_room);
+                                    sleep(2);
+                                    printf ("Generating ticket!\n");
+                                    sleep(2);
+                                    puts ("room booked!");
+                                    break;  
+
+                                case '2':
+                                    printf (YELLOW"\nPrice: %d\n", hotels[select_hotel_index-1].p_delux_room);
+                                    sleep(2);
+                                    printf ("Generating ticket!\n");
+                                    sleep(2);
+                                    puts ("room booked!");
+                                    break;
+
+                                case '3':
+                                    printf (YELLOW"\nPrice: %d\n", hotels[select_hotel_index-1].p_luxury_room);
+                                    sleep(2);
+                                    printf ("Generating ticket!\n");
+                                    sleep(2);
+                                    puts ("room booked!");
+                                    break;
+
+                                default:
+                                    puts ("Wrong input.");
+                                    break;
+                            }
+                        }while (client_room_choice < '0' || client_room_choice > '3');
+                    }
                 }while ( select_hotel_index < 0 || select_hotel_index > hotels_Count );
                 
                 break;
