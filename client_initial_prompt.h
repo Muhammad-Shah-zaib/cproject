@@ -242,7 +242,7 @@ void client_initial_prompt( void ) {
             switch(choice){
 
                 case '1': 
-                    hotel_read_client( location ); // location is a string
+                    hotel_reselect_hotel_index < 0 || select_hotel_index > hotels_Countad_client( location ); // location is a string
                     puts ("case 1");
                     break;
 
