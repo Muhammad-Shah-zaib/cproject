@@ -224,8 +224,8 @@ void client_initial_prompt( void ) {
             printf("What are you looking for:\n" 
                     "1.\tHotel Bookings\n"
                     "2.\tCar Rental\n"
-                    "3.\tBoth\n\n"
-                    "\t0 to Exit\n");
+                    "3.\tBoth\n"
+                    "\t0 to Exit\n=> ");
             if (scanf("%c", &choice) != 1) {// checking for valid int input
 
                 clearScreen();
@@ -242,7 +242,7 @@ void client_initial_prompt( void ) {
             switch(choice){
 
                 case '1': 
-                    hotel_reselect_hotel_index < 0 || select_hotel_index > hotels_Countad_client( location ); // location is a string
+                    hotel_read_client( location ); // location is a string
                     puts ("case 1");
                     break;
 

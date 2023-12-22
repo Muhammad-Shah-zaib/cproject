@@ -132,28 +132,41 @@ void hotel_read_client( char *location ) {
 
             if (hotels[i].id != 0){ // just an extra check
                 // pringting the hotels
-                printf ("%d.\thotel_name: %s, location: %s\n",
+                printf(BLUE"-------------------------------------------------------------------------------------------------------------------------------------\n");
+
+                printf (YELLOW"=> %d.\t"BLUE"hotel_name: %s, location: %s, ",
                 i+1, hotels[i].hotel_name, hotels[i].city_name);
+
+                // Display cost for STANDARD room
+                printf(YELLOW"Standard Room: $%u per night, ", hotels[i].p_standard_room);
+                // Display cost for DELUXE room
+                printf("Deluxe Room: $%u per night, ", hotels[i].p_delux_room);
+                // Display cost for LUXURY room
+                printf("Luxury Room: $%u per night\n"RESET, hotels[i].p_luxury_room);
+
+                printf(BLUE"-------------------------------------------------------------------------------------------------------------------------------------\n" RESET);
+
             }
 
 
         }
 
         // ! PROMPTING USER TO EITHER SELECT OR WANT RECOMENDATIONS
-        char c;
-        puts ("\nCan you decide among these: ");
+        char choice;
+        puts ("\nCan you choose amougn these:\n");
         printf ("%s%s",
-            "1.\t SELECT.\n",
-            "2.\tWant Recommendations.\n=> ");
+            "1.\tSELECT.\n",
+            "2.\tWant Recommendations.\n"
+            "=> ");
 
         // WAS FACING SOME PREVIOUS BUFFER WHEN I RUN THIS PROGRAM SO CLEARING THE BUFFER HERE FOR NOW...
         getchar(); // 
-        scanf ("%c", &c);
+        scanf ("%c", &choice);
         getchar(); // clearing buffer
-        // printf ("\n (%c: %d)\n\n", c, sizeof (c ));
 
-        // checking the c...
-        switch ( c ) {
+
+        // checking the choice...
+        switch ( choice ) {
             case '1': {
 
                 int select_hotel_index; // for getting the hotel user want

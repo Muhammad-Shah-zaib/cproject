@@ -24,41 +24,55 @@
 
 
 
-
-
 int main ( void) {
 
     // ? prompting user to select among the options
-    clearScreen();
+    //clearScreen();
     int selection = starting_prompt(); // ? selection_prompt will return values (1, 2, 3)
     
-
+    // clearScreen();
     while ( selection != 4 ) {
         switch (selection)
         {
             case 1: {
                 
-                char choice; // checking for hotel_registration or car_rental_registration
+                int choice; // checking for hotel_registration or car_rental_registration
 
                 do{
-                    clearScreen(); // clearing th eterminal screen
 
                     puts ("Select among the followings: ");
                     printf ("%s\n%s\n%s\n", // pompting suer
                         "0.\tExit",
                         "1.\tHotel registration.",
                         "2.\tCar Rental registratoin.");
-                    choice = getchar(); // reading the choice
 
+                     // reading the choice
+                    if (scanf("%d", &choice) != 1) {
+                        clearScreen();
+
+                        puts ("Wrong Input!"); 
+                        int c; // to store and discard invalid characters
+                        while ((c = getchar()) != '\n' && c != EOF); // clearing the buffer
+                        continue;
+                    }
+
+                    if (choice < 0 || choice > 3 ){
+                        clearScreen();
+                        while (getchar()!= '\n'); 
+                        puts("Wrong Input"); // clearing buffer
+                        continue;    
+                        }
                     switch (choice) {
-                        case '0': // to exit
+                        case 0: // to exit
                             break;
 
-                        case '1': // for hotel
+                        case 1: // for hotel
+                            clearScreen();
                             hotel_registration();
                             break;
 
-                        case '2': // for car_rental
+                        case 2: // for car_rental
+                            clearScreen();
                             car_rental_registration();
                             break;
 
@@ -67,34 +81,44 @@ int main ( void) {
                             break;
                     }
                 
-                }while(choice != '0'); // cehcking for exit or not
+                }while(choice != 0); // cehcking for exit or not
 
                 break;
 
             }
-
-
-
-
-
             case 2:{
 
-                char choice; // checking for hotel_login or car_login
+                int choice_login; // checking for hotel_login or car_login
 
                 do{
-                    clearScreen(); // clearing th eterminal screen
+                    // clearScreen(); // clearing th eterminal screen
                     puts ("Choose among the following");
                     printf ("%s\n%s\n%s\n", // pompting suer
                         "0.\tExit",
                         "1.\tHotel Login.",
                         "2.\tCar Rental Login.");
-                    choice = getchar(); // reading the choice
-
-                    switch (choice) {
-                        case '0': // to exit
+                    if (scanf("%d", &choice_login) != 1) {
+                        clearScreen();
+                        puts ("Wrong Input! Please input a valid number.");
+                        int c; // to store and discard invalid characters
+                        while ((c = getchar()) != '\n' && c != EOF);
+                        continue;
+                    }
+                    if (choice_login < 0 || choice_login > 2 ){
+                        clearScreen();
+                        puts("Wrong Input! Please choose a valid selection.");
+                        while (getchar()!= '\n'); 
+                        continue;    
+                        }
+                    
+                    
+                    
+                    switch (choice_login) {
+                        case 0: // to exit
+                            // return 0;
                             break;
 
-                        case '1':{ // for hotel
+                        case 1:{ // for hotel
                             unsigned int id;
                             char name[20];
 
@@ -111,7 +135,7 @@ int main ( void) {
                             break;
                         }
 
-                        case '2': { // for car_rental
+                        case 2: { // for car_rental
                             unsigned int id;
                             char name[20];
 
@@ -134,7 +158,7 @@ int main ( void) {
                             break;
                     }
                 
-                }while(choice != '0'); // cehcking for exit or not
+                }while(choice_login != 0); // cehcking for exit or not
                 // declairing the credentials
                 break;
             }
@@ -151,14 +175,8 @@ int main ( void) {
 
         }
 
-
-
-
-
-
-
-        // clearScreen();
-        // selection = starting_prompt();
+        clearScreen();
+        selection = starting_prompt();
     }
 
 
