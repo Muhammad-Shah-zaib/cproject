@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#include "carConfirmPrompt.h"
 #include "hotelReadClient.h"
+#include "carReadClient.h"
 
 
 
@@ -247,7 +249,7 @@ void client_initial_prompt( void ) {
                     break;
 
                 case '2': 
-                    // car_read_client(location); // location is a string
+                    car_read_client( location ); // location is a string
                     puts ("case 2");
                     break;
 

@@ -12,36 +12,10 @@
 #define CYAN "\033[1;36m"
 #define RESET "\033[1;0m"
 
-bool confirm_prompt( void ){
-    char confirm;
 
-    do {
-        puts ("Do you conifrm?[Y\\n]");
-        confirm = getchar();
-        getchar();
-        
-        switch ( confirm ) {
-            case 'Y':
-            case 'y':
-            case '1':
-                return true;
-                break;
 
-            case 'n':
-            case 'N':
-            case '0':
-                return false;
-                break;
 
-            default:
-            puts (RED"Invalid Key");
-            break;
-        }
-    }while (1);
 
-    return true;
-    
-}
 void display_selected_hotel ( Hotel selected_hotel ) {
     printf(BLUE"\n---------------------------------\n");
     printf("Hotel Details - Cost per Room\n");
@@ -153,7 +127,7 @@ void hotel_read_client( char *location ) {
 
         // ! PROMPTING USER TO EITHER SELECT OR WANT RECOMENDATIONS
         char choice;
-        puts ("\nCan you choose amougn these:\n");
+        puts ("\nCan you choose among these:\n");
         printf ("%s%s",
             "1.\tSELECT.\n",
             "2.\tWant Recommendations.\n"
