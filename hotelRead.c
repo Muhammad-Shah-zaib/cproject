@@ -4,7 +4,7 @@
 
 void printHotelDetails(const Hotel *hotel) {
     printf("\n\033[1;34m+----------------------------------+\033[0m\n"); // Blue box
-    printf("\033[1;34m|            Hotel Details         |\033[0m\n"); // Blue box
+    printf("\033[1;34m|            %s                      |\033[0m\n", hotel->username); // Blue box
     printf("\033[1;34m+----------------------------------+\033[0m\n"); // Blue box
     printf("\033[1;32mHotel ID: %u\n", hotel->id);
     printf("Username: %s\n", hotel->username);
