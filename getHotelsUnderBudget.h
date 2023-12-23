@@ -47,6 +47,12 @@ bool add_budget( unsigned int *budget, const Hotel *hotel, const char check_room
     } while ( 1 );
 }
 
+
+
+
+
+
+
 bool check_for_room_budget( const Hotel *least_expensive_hotel, const unsigned int budget, const char choice ){
     switch ( choice ){
         case '1': {
@@ -76,16 +82,46 @@ bool check_for_room_budget( const Hotel *least_expensive_hotel, const unsigned i
     return true;
 }
 
-Hotel find_least_expensive_hotel (Hotel *hotels, const unsigned int hotels_count, const unsigned int b_lowest_point, const unsigned int b_highest_point){
-    
-    int least_expensive  = hotels[0].p_standard_room, index = 0;
-    for (int i = 1; i < hotels_count ; i++) {
 
-        if ( least_expensive > hotels[i].p_standard_room && hotels[i].p_standard_room > b_lowest_point && hotels[i].p_standard_room < b_highest_point ){
-            least_expensive = hotels[i].p_standard_room;
-            index = i;
+
+
+
+
+
+Hotel find_least_expensive_hotel (Hotel *hotels, const unsigned int hotels_count, const unsigned int b_per_day){
+    
+    int least_expensive  = 999999999, index = 0;
+
+    // getting the budget
+    int b_offset_value = b_per_day * .1;
+
+    // getting the range according to our budget
+    int b_lowest_point = b_per_day - b_offset_value;
+    int b_highest_point = b_per_day + b_offset_value;
+
+    do {
+        for (int i = 0; i < hotels_count ; i++) {
+
+            if ( least_expensive > hotels[i].p_standard_room && hotels[i].p_standard_room > b_lowest_point && hotels[i].p_standard_room < b_highest_point ){
+                least_expensive = hotels[i].p_standard_room;
+                index = i;
+            }
         }
-    }
+
+        // this condition will only be true if the hotels are in the range lowest and highest point 
+        if ( least_expensive != 999999999 ){
+            break; // this will break our looop
+        } 
+        // if the hotels are not in our range then we are going to decrese our offset value until we get the hotels
+        b_lowest_point -= b_offset_value;
+
+        if (b_lowest_point < 0) {
+            puts ("Not sufficient balance.");
+            exit (8);
+        }
+
+    }while (1);
+
 
     return hotels[index];
 }
@@ -97,7 +133,7 @@ Hotel find_least_expensive_hotel (Hotel *hotels, const unsigned int hotels_count
 
 void get_hotels_under_budegt( Hotel *hotels, const unsigned int hotels_count,  unsigned int b_per_day, const unsigned int n_rooms, const char *location ) {
 
-    Hotel least_expesive_hotel = find_least_expensive_hotel ( hotels, hotels_count, (b_per_day - (b_per_day * .3)), (b_per_day + (b_per_day * .3)) );
+    Hotel least_expesive_hotel = find_least_expensive_hotel ( hotels, hotels_count, b_per_day );
 
     if ( b_per_day >= least_expesive_hotel.p_standard_room) {
 
@@ -133,7 +169,7 @@ void get_hotels_under_budegt( Hotel *hotels, const unsigned int hotels_count,  u
             
             if ( !check_for_room_budget( &least_expesive_hotel, b_per_day, choice )){
                 if ( !add_budget( &b_per_day, &least_expesive_hotel, choice ) ){
-                    choice = -1;
+                    choice = -1; 
                     continue;
                 }
                 
