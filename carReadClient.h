@@ -128,7 +128,11 @@ void car_read_client(const char *location) {
     clearScreen();
 
     unsigned int car_count = 0;
-    Car_Rental *cars = find_cars(location, &car_count);
+    char user_location[30];
+    puts ("Enter your city name.");
+    printf ("=> ");
+    scanf ("%s", user_location);
+    Car_Rental *cars = find_cars( user_location, &car_count );
 
     // Handle the case where no cars are found
     if (cars == NULL) {
