@@ -49,7 +49,7 @@ void display_selected_car_rental (Car_Rental *car) {
 
 
 
-void display_cars ( const char *car_type, const char *company_name, Car_Modal *car, int car_count, const char *location ){
+Car_Modal display_cars ( const char *car_type, const char *company_name, Car_Modal *car, int car_count, const char *location ){
     puts(BLUE"---------------------------------------------------------");
 
     for (int i = 0 ; i < car_count ; i++ ){
@@ -67,12 +67,7 @@ void display_cars ( const char *car_type, const char *company_name, Car_Modal *c
     while( '\n' != getchar() ); // clearing the buffer
 
 
-
-    // !GENERATING THE TICKET
-    generate_ticket("", "", 0, 0, &car[car_index - 1], company_name, car_type, location);
-    puts ("Thanks for using our service.");
-    sleep(2);
-    exit (EXIT_SUCCESS);
+    return car[car_index - 1];
 }
 
 
@@ -250,29 +245,41 @@ void car_read_client(const char *location) {
 
                             switch (client_car_choice){
 
-                                case '1':
-                                    display_cars( "SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].suv, cars[select_car_index - 1].n_suv, location );
+                                case '1': {
+                                    Car_Modal car = display_cars( "SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].suv, cars[select_car_index - 1].n_suv, location );
+
+
+                                    // !GENERATIGN TICKET
+                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "SUV", location);
+                                    puts ("Thanks for using our service.");
                                     sleep(2);
-                                    printf ("Generating ticket!\n");
-                                    sleep(2);
-                                    puts ("room booked!");
+
+
+                                    exit (EXIT_SUCCESS);
                                     break;  
+                                }
+                                case '2': {
+                                    Car_Modal car = display_cars( "non-SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv, location );
 
-                                case '2':
-                                    display_cars( "non-SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv, location );
+                                    // !GENERATIGN TICKET
+                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "non-SUV", location);
+                                    puts ("Thanks for using our service.");
                                     sleep(2);
-                                    printf ("Generating ticket!\n");
-                                    sleep(2);
-                                    puts ("room booked!");
+
+                                    exit (EXIT_SUCCESS);
                                     break;
+                                }
+                                case '3':{
+                                    Car_Modal car = display_cars( "Premium", cars[select_car_index - 1].company_name, cars[select_car_index - 1].premium, cars[select_car_index - 1].n_premium, location );
 
-                                case '3':
-                                    display_cars( "Premium", cars[select_car_index - 1].company_name, cars[select_car_index - 1].premium, cars[select_car_index - 1].n_premium, location );
-                                    printf ("Generating ticket!\n");
+                                    // !GENERATIGN TICKET
+                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "Premium", location);
+                                    puts ("Thanks for using our service.");
                                     sleep(2);
-                                    puts ("Car booked!");
-                                    break;
 
+                                    exit (EXIT_SUCCESS);
+                                    break;
+                                }
                                 default:
                                     puts ("Wrong input.");
                                     break;

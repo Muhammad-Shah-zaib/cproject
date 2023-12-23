@@ -38,6 +38,12 @@ void display_selected_hotel ( Hotel selected_hotel ) {
     printf(BLUE"---------------------------------\n"RESET);
 }
 
+
+
+
+
+
+
 Hotel* find_hotels(const char *location, unsigned int *hotels_count) {
     FILE *file = fopen("hotels.dat", "rb"); // opening the file
     
