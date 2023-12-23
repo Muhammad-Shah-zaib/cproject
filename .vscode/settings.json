@@ -6,6 +6,8 @@
         "emptycargenerator.h": "c",
         "hotelregistration.h": "c",
         "carrentalregistration.h": "c",
-        "postlogin.h": "c"
+        "postlogin.h": "c",
+        "new_function.h": "c",
+        "recommendationgetbudget.h": "c"
     }
 }
