@@ -3,17 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-// #include "structCarRental.h"
-// #include "structHotel.h"
-// #include "hotelReadClient.h"
-// #include "carReadClient.h"
 
-
-
-
-
-
-// this function will display all the cars at pprovided locationa nd will allow user t select among them
 void select_car ( Car_Modal *car, char *car_company_name, char *car_type, const char *location ) {
 
     clearScreen();

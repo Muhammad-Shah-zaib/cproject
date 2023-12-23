@@ -129,9 +129,22 @@ void car_read_client(const char *location) {
 
     unsigned int car_count = 0;
     char user_location[30];
-    puts ("Enter your city name.");
-    printf ("=> ");
-    scanf ("%s", user_location);
+    do {
+        puts (GREEN"Enter your city name."RESET);
+        printf ("=> ");
+        scanf ("%s", user_location);
+        while ('\n' != getchar() ); // ! clearing buffer
+
+        // cehcking location and breaing the loop
+        if ( !(check_name( user_location )) ) { // Matching different variations of spellings of the location
+
+            clearScreen(); // clearing screen 
+            puts("\tInvalid Location");
+            continue; // iterating again for correct input
+        }else 
+            break;
+    }while ( 1 );
+
     Car_Rental *cars = find_cars( user_location, &car_count );
 
     // Handle the case where no cars are found
@@ -201,8 +214,6 @@ void car_read_client(const char *location) {
             "2.\tWant Recommendations.\n"
             "=> ");
 
-        // WAS FACING SOME PREVIOUS BUFFER WHEN I RUN THIS PROGRAM SO CLEARING THE BUFFER HERE FOR NOW...
-        getchar();
         scanf ("%c", &choice);
         while('\n' != getchar()); // clearing buffer
 
