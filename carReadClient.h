@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 // #include "structCarRental.h"
+#include "getCarRentalUnderBudget.h"
 
 // Define color codes
 #define RED "\033[1;31m"
@@ -129,6 +130,8 @@ void car_read_client(const char *location) {
 
     unsigned int car_count = 0;
     char user_location[30];
+
+    // ! READING THE USER LOCATION AND MATCHING IT WITH AVILABLE PLACES
     do {
         puts (GREEN"Enter your city name."RESET);
         printf ("=> ");
@@ -305,6 +308,20 @@ void car_read_client(const char *location) {
                 
                 break;
             }
+
+            case '2':
+                int days, budget, hotel_budget, car_budget = hotel_budget = budget = days = 0;
+
+                get_info(&days, &budget); // this function read days and budget
+                make_calculations(&days, &budget, &car_budget, &hotel_budget, (false) ); // this will update my budget 
+                // ! NOW ME CAR BUDGET IS ZERO IS USER DONT WANT ANY TRANSPORT
+                // ! ALL THE BUDGET IS OPTED FOR DAYS
+
+
+                printf(" Days : %d \n Total budget : %d \n Hotel Budget: %d \n Car_budget : %d \n ", days, budget, hotel_budget, car_budget);
+
+                get_carRentals_under_budegt (cars, car_count, car_budget, location);
+                exit (EXIT_SUCCESS);
 
 
             default :
