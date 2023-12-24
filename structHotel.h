@@ -24,6 +24,6 @@ typedef struct {
     // Booked Roams
     unsigned int booked_rooms;
     // Available Roams
-    unsigned int available_roams;
+    unsigned int available_roams;  
     char city_name[25];
 } Hotel;

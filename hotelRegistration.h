@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+// #include "client_initial_prompt.h"
 // #include "structHotel.h"
 
 
@@ -72,22 +73,33 @@ void hotel_registration( void ) {
     update_id( id );
 
 
-
+    while (getchar()!= '\n');
     // ? GETTING THE username and hotel name from user
-    printf ("Enter userName (dont put white-space): ");
-    scanf ("%s", hotel.username);
-
-    printf ("%s", "Enter Hotel name (dont put white-space): ");
-    scanf ("%s", hotel.hotel_name);
-
-    printf ("%s", "Enter the city name(dont push white-space): ");
-    scanf ("%s", hotel.city_name);
+    printf ("Enter userName: ");
+    scanf ("%29[^\n]", hotel.username);
+    while (getchar()!= '\n');
+    printf ("%s", "Enter Hotel name: ");
+    scanf ("%29[^\n]", hotel.hotel_name);
+    while (getchar()!= '\n');
+    while (1){
+    printf ("%s", "Enter the city name: ");
+    scanf ("%24[^\n]", hotel.city_name);
+    if (check_name(hotel.city_name))
+        break;
+        clearScreen();
+    puts("Invalid/Currently We Are Not In This Area!");
+    puts("Please Re-Enter:");
+    while(getchar()!= '\n');
+    }
     // Pointing the correct place and reserving bytes accordingly
     fseek (fptr, (hotel.id - 1) * sizeof (Hotel), SEEK_SET);
     fwrite (&hotel, sizeof (Hotel), 1, fptr); // writing the data
     fflush (fptr);
 
-    printf ("%d %s %s\n",hotel.id, hotel.username, hotel.hotel_name);
-    printf ("Rememebr your id (id : %d), you will login using thiss id!\n", hotel.id);
+    printf("Hotel ID: %d\n", hotel.id);
+    printf("Username: %s\n", hotel.username);
+    printf("Hotel Name: %s\n", hotel.hotel_name);
+
+    printf ("Rememebr your id (%d), you will login using this id!\n", hotel.id);
     fclose (fptr);
 }

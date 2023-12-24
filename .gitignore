@@ -1,4 +1,6 @@
 *.out
 *.exe
+*.csv
+*.gch
 README.md
 temp.c

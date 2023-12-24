@@ -1,33 +1,39 @@
 #include <stdio.h>
 
+
+
+
 int starting_prompt(){
     int choice;
     puts ("\tWelcome");
-    
-        printf("%s","\nPlease Select: \n1.\tRegistration\n2.\tLogin\n3.\tClinet\n");
-        scanf("%d",&choice);
 
+        while(1){
+        printf("%s\n%s\n%s\n%s\n%s\n","Please Select:",
+                "1.\tRegistration",
+                "2.\tLogin",
+                "3.\tClinet",
+                "\n\t0 to Exit");
+        if (scanf("%d",&choice)==1)
+        break;
+        clearScreen();
+        puts("Wrong Input Please Make a Valid Selection!");
+        while(getchar()!='\n');
+        }
         getchar(); // claring buffer
 
-        while ((choice<=0) || (choice >3)){
+        while ((choice<0) || (choice >3)){
             puts("Invalid Input.");
 
-            printf("%s","\nPlease Select: \n1.\tRegistration\n2.\tLogin\n3.\tClinet\n");
+            printf("%s\n%s\n%s\n%s\n%s","Please Select: ",
+                    "1.\tRegistration",
+                    "2.\tLogin",
+                    "3.\tClinet",
+                    "\n\t0 to Exit.");
             scanf("%d",&choice);
         }
-
-    // do{
-
-    //     printf("%s","\nPlease Select: \n1.\tRegistration\n2.\tLogin\n3.\tClinet\n");
-    //     scanf("%d",&choice);
-
-    //     if () 
-    //         printf("Invalid Input.\n");
-
-    // }while ();
+    if (choice == 0) return 0;
     return choice;
 }
-
 
 
 void post_login( unsigned int id ) {
