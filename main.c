@@ -8,12 +8,12 @@
 #include "emptyCarGenerator.h"
 #include "postLogin.h"
 #include "prompts.h"
-#include "hotelRegistration.h"
+#include "carLogin.h"
 #include "hotelLogin.h"
 #include "carRentalRegistration.h"
-#include "carLogin.h"
-#include "carPostLogin.h"
 #include "client_initial_prompt.h"
+#include "hotelRegistration.h"
+#include "carPostLogin.h"
 
 
 // Define color codes
@@ -31,7 +31,10 @@ int main ( void) {
     // ? prompting user to select among the options
     //clearScreen();
     int selection = starting_prompt(); // ? selection_prompt will return values (1, 2, 3)
-    
+    // if (selection == 0) {
+    //     puts("Have A Good Day!");
+    //     return 0;
+    // }
     // clearScreen();
     while ( selection != 4 ) {
         switch (selection)
@@ -41,12 +44,12 @@ int main ( void) {
                 int choice; // checking for hotel_registration or car_rental_registration
 
                 do{
-
+                        // clearScreen(); // clearing screen
                     puts ("Select among the followings: ");
                     printf ("%s\n%s\n%s\n", // pompting suer
-                        "0.\tExit",
                         "1.\tHotel registration.",
-                        "2.\tCar Rental registratoin.");
+                        "2.\tCar Rental registratoin.",
+                        "  \t0 to Exit.");
 
                      // reading the choice
                     if (scanf("%d", &choice) != 1) {
@@ -173,6 +176,11 @@ int main ( void) {
                 // puts ("I am 3 ");
                 client_initial_prompt ();
                 break;
+            }
+            case 0:{
+                clearScreen(); 
+                puts ("Have a Good Day!");
+                return 0;
             }
 
         }
