@@ -1,19 +1,13 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
-#include <stdlib.h>
 #include <ctype.h>
 
-#include "check_location.h"
-#include "recommendationGetBudget.h"
-#include "carConfirmPrompt.h"
-#include "hotelReadClient.h"
-#include "carReadClient.h"
-#include "CarxHotelReadClient.h"
 
+bool check_name(char *location) {
+    char lowercase_name[30];  // Assuming a maximum length for the location
+    strcpy(lowercase_name, location);
 
-
-<<<<<<< HEAD
     // Convert the location to lowercase for case-insensitive comparison
     for (int i = 0; lowercase_name[i]; i++) {
         lowercase_name[i] = tolower(lowercase_name[i]);
@@ -172,44 +166,7 @@
         {"shahdadkot", "shahdadkot"},
         {"sibi", "sibi"},
         {"tando adam", "tando adam"},
-        {"zhob", "zhob"},    {"naran kaghan", "naran kaghan"},
-        {"narankaghan", "naran kaghan"},
-        {"naraan kaghan", "naran kaghan"},
-        {"kaghan naran", "naran kaghan"},
-        {"kagan naran", "naran kaghan"},
-        {"kaghan", "naran kaghan"},
-        {"chilas", "chilas"},
-        {"chillas", "chilas"},
-        {"narrowal", "narowal"},
-        {"naroowal", "narowal"},
-        {"narruwal", "narowal"},
-        {"mianwali", "mianwali"},
-        {"mianwaali", "mianwali"},
-        {"mianwalee", "mianwali"},
-        {"fort munro", "fort munro"},
-        {"fortmanro", "fort munro"},
-        {"kala kahar", "kala kahar"},
-        {"kala kaar", "kala kahar"},
-        {"mohenjodaro", "mohenjodaro"},
-        {"mohenjodaro", "mohenjodaro"},
-        {"nathiagali", "nathia gali"},
-        {"nathiagaali", "nathia gali"},
-        {"nathya gali", "nathia gali"},
-        {"nathiyagali", "nathia gali"},
-        {"nathiya gali", "nathia gali"},
-        {"nathyagali", "nathia gali"},
-        {"nathia gallee", "nathia gali"},
-        {"swat valley", "swat"},
-        {"sawwat", "swat"},
-        {"hunza valley", "hunza"},
-        {"murre", "murree"},
-        {"babusar top", "babusar top"},
-        {"babusartop", "babusar top"},
-        {"kashmir", "kashmir"},
-        {"gilgit baltistan", "gilgit"},
-        {"gilgitbaltistan", "gilgit"},
-        {"lhr", "lahore"},
-
+        {"zhob", "zhob"}
     };
 
     // Compare the lowercase location with the valid names and update if necessary
@@ -224,83 +181,3 @@
 
     return false;
 }
-=======
->>>>>>> 5f9982729c947f2fc3dd05c45f01f47d1f925daf
-
-
-
-
-
-
-
-
-void client_initial_prompt( void ) {
-
-    
-    char choice = '\0', location[30]; 
-
-    clearScreen();
-
-    puts("\n\tWelcome"); // WELCOME PROMPT
-
-    do
-    {
-        // reading the DESTINATION
-        
-        printf("Please enter your destination:\n");
-        scanf("%29[^\n]", location); // ! Taking location as input with spaces allowed
-
-        while (getchar() != '\n'); // ! Clearing buffer
-
-
-        if ( !(check_name(location)) ) { // Matching different variations of spellings of the location
-            
-            clearScreen(); // clearing screen 
-            puts("\tInvalid Location");
-            continue; // iterating again for correct input
-        }
-
-        while (choice < '0' || choice > '3') {
-
-            printf("What are you looking for:\n" 
-                    "1.\tHotel Bookings\n"
-                    "2.\tCar Rental\n"
-                    "3.\tBoth\n"
-                    "\t0 to Exit\n=> ");
-            if (scanf("%c", &choice) != 1) {// checking for valid int input
-
-                clearScreen();
-                puts("\tWrong Input");
-
-                while('\n' != getchar()); // clearing input buffer
-
-
-                continue;
-            }
-        }
-
-
-            switch(choice){
-
-                case '1': 
-                    hotel_read_client( location ); // location is a string
-                    puts ("case 1");
-                    break;
-
-                case '2': 
-                    car_read_client( location ); // location is a string
-                    puts ("case 2");
-                    break;
-
-                case '3':
-                    both_read_client ( location ); // location is a string
-                    puts ("case 3");
-                    break;
-
-            }
-        getchar();
-
-    } while (choice != '0'); // ! condition for the while loop (0 to exit)
-
-}
-
