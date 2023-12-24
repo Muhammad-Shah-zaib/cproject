@@ -8,6 +8,9 @@
         "carrentalregistration.h": "c",
         "postlogin.h": "c",
         "new_function.h": "c",
-        "recommendationgetbudget.h": "c"
+        "recommendationgetbudget.h": "c",
+        "carxhotelreadclient.h": "c",
+        "hotelreadclient.h": "c",
+        "carconfirmprompt.h": "c"
     }
 }
