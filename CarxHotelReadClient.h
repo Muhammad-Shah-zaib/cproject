@@ -316,6 +316,24 @@ void both_read_client ( const char *location ) {
             }
 
 
+
+            case '2':{
+                int days, budget, hotel_budget, car_budget = hotel_budget = budget = days = 0;
+
+                get_info(&days, &budget); // this function read days and budget
+                make_calculations(&days, &budget, &hotel_budget, &car_budget, (true) ); // this will update my budget 
+
+                // ! NOW ME CAR BUDGET IS ZERO IS USER DONT WANT ANY TRANSPORT
+                // ! ALL THE BUDGET IS OPTED FOR DAYS
+                printf(" Days : %d \n Total budget : %d \n Hotel Budget: %d \n Car_budget : %d \n ", days, budget, hotel_budget, car_budget);
+                _get_hotels_under_budegt ( hotels, hotels_count, hotel_budget,car_budget,  days, location);
+
+                exit (EXIT_SUCCESS);
+                break;
+
+            }
+
+
             default :
                 puts ("INVALID!");
         }        

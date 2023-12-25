@@ -9,6 +9,7 @@
 #include "carConfirmPrompt.h"
 #include "hotelReadClient.h"
 #include "carReadClient.h"
+#include "getHotels_UnderBudget.h"
 #include "CarxHotelReadClient.h"
 
 
