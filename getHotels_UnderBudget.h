@@ -199,7 +199,8 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
         // }
     } while (choice < '0' || choice > '3');
     while (1)
-    {
+    {   
+        int check = 1;
         printf("Please Enter Number of Rooms: ");
         if (scanf("%d", &n_rooms) != 1)
         {
@@ -208,9 +209,32 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
             continue;
         }
         break;
+    
+    switch (choice){
+
+    case '1':
+        if (least_expesive_hotel.available_standard_room - n_rooms < 0){
+            puts("Number of Rooms Not Available");
+            check = 0;
+        }
+            break;
+    case '2':
+        if (least_expesive_hotel.available_delux_room - n_rooms < 0){
+            puts("Number Of Rooms Not Available");
+            check = 0;
+        }
+            break;
+    case '3':
+        if (least_expesive_hotel.available_luxury_room - n_rooms < 0){
+            puts("Number of Rooms Not Available");
+            check = 0; 
+        }
     }
+        if (choice == 0)
+            continue;
 
-
+        else break;
+    }
 
     // GOING TO FIND CARS NOW
     clearScreen();
@@ -251,13 +275,27 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
 
         case '1':  
             
-            _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room);
+            // _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room);
+
+            least_expesive_hotel.available_roams = least_expesive_hotel.n_total_rooms- least_expesive_hotel.booked_rooms; 
+            least_expesive_hotel.booked_rooms += n_rooms; 
+
+            least_expesive_hotel.booked_standard_room += n_rooms;
+            least_expesive_hotel.available_standard_room = least_expesive_hotel.n_standard_rooms - least_expesive_hotel.booked_standard_room;
+
             break;
 
         case '2':
 
             // _get_carRentals_under_budegt (cars, car_count, car_budget, location);
             generate_ticket(least_expesive_hotel.hotel_name, "Delux Room", n_rooms, least_expesive_hotel.p_delux_room, NULL, "", "", location);
+
+            least_expesive_hotel.available_roams = least_expesive_hotel.n_total_rooms- least_expesive_hotel.booked_rooms; 
+            least_expesive_hotel.booked_rooms += n_rooms; 
+
+            least_expesive_hotel.booked_delux_room += n_rooms;
+            least_expesive_hotel.available_delux_room = least_expesive_hotel.n_delux_rooms - least_expesive_hotel.booked_delux_room;
+
             puts("Thank You For Using Our Service!");
             sleep(2);
             exit(EXIT_SUCCESS);
@@ -265,6 +303,14 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
 
         case '3':
             generate_ticket(least_expesive_hotel.hotel_name, "Luxury Room", n_rooms, least_expesive_hotel.p_luxury_room, NULL, "", "", location);
+
+            least_expesive_hotel.available_roams = least_expesive_hotel.n_total_rooms- least_expesive_hotel.booked_rooms; 
+            least_expesive_hotel.booked_rooms += n_rooms; 
+
+            least_expesive_hotel.booked_luxury_room += n_rooms;
+            least_expesive_hotel.available_luxury_room = least_expesive_hotel.n_luxury_rooms - least_expesive_hotel.booked_luxury_room;
+
+
             puts("Thank You For Using Our Service!");
             sleep(2);
             exit(EXIT_SUCCESS);

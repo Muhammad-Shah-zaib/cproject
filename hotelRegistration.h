@@ -62,7 +62,7 @@ void hotel_registration( void ) {
     } 
 
     // ? Creating a hotel object
-    Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, ""};
+    Hotel hotel = {0};
 
 
     // ! EXTRACT ID AND THEN UPDATE IT FROM Id.txt

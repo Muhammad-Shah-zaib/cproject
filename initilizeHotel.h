@@ -11,7 +11,7 @@ void hotel_init ( int max_hotels) {
         return;
     }
 
-    Hotel empty_hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Hotel empty_hotel = {0};
 
     for ( unsigned int i = 0 ; i < max_hotels; i++) {
         fwrite (&empty_hotel, sizeof (Hotel), 1, fptr);

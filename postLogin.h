@@ -13,7 +13,7 @@ void room_details(int id) {
         return;
     }
 
-    Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Hotel hotel = {0};
 
     fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
     fread(&hotel, sizeof(Hotel), 1, fptr);
@@ -66,7 +66,7 @@ void add_room(int id) {
     }
 
     // making an empty hotel
-    Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Hotel hotel = {0};
 
     // offsetting the file pointer
     fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
@@ -212,7 +212,7 @@ void delete_room(int id) {
 
     while ( choice ) {
         
-        Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0}; // making an empty Hotel object
+        Hotel hotel = {0}; // making an empty Hotel object
 
         rewind (fptr); // rewinding fptr to make sure we are at correct place
         // off-setting he file pointer

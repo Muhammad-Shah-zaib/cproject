@@ -67,7 +67,7 @@ void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int 
 
     fprintf(fptr, "\nTotal Cost: %d\n", total_cost);
     // fprintf(fptr, "Number of Days: %d\n", days/);
-
+    
     fclose(fptr);
 
 }
