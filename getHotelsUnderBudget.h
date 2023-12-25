@@ -56,11 +56,13 @@ bool add_budget(unsigned int *budget, const Hotel *hotel, const char check_room)
 
     do
     {
+        // break the loop if budget is sufficient
+        if (budget_to_add <= 0) return true;
         printf("Do you want to add %d more budget?[Y\\n]", budget_to_add);
         printf("=>");
 
-        clear_input_buffer();
         choice = getchar();
+        clear_input_buffer();
         // while ('\n' != getchar()); // ! clearing buffer
 
         switch (choice)
@@ -292,6 +294,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
         int i;
         printf("Please Enter Hotel Name: ");
         scanf("%29[^\n]", choose_name);
+        while ( '\n' != getchar() );
 
         for (i = 0; i < 3; i++)
         {
@@ -301,7 +304,6 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
         }
         if (i != 3) break;
         puts(RED "Invalid! Please Select From The Recommended List" RESET);
-        clear_input_buffer();
     }
     least_expesive_hotel = find_hotel_by_name(hotels, hotels_count, choose_name);
     char choice;
@@ -312,8 +314,8 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
         printf("2.\tDelux Room\n");
         printf("3.\tLuxury Room\n=> ");
 
-        clear_input_buffer(); // Clearing input buffer
         choice = getchar();   // reading the room type he want to select
+        clear_input_buffer(); // Clearing input buffer
 
         // pormpting for wrong input
         if (choice < '0' || choice > '3')
