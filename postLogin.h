@@ -1,6 +1,20 @@
 #include <stdio.h>
 // #include "structHotel.h"
-
+int input_valid(){
+    int valid_int;
+    while(1){
+        if (scanf("%d", &valid_int)!=1) 
+        {
+            clearScreen();
+            puts("Invalid Input!");
+            puts("Please Re-Enter:");
+            while('\n'!= getchar());
+            continue; 
+        }
+        break;
+    }
+return valid_int;
+}
 
 
 // This will show room details
@@ -13,7 +27,7 @@ void room_details(int id) {
         return;
     }
 
-    Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Hotel hotel = {0};
 
     fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
     fread(&hotel, sizeof(Hotel), 1, fptr);
@@ -27,23 +41,25 @@ void room_details(int id) {
     printf("\033[1;34m---------------------------\033[0m\n");
     printf("\033[1;34m        Standard Room      \033[0m\n");
     printf("\033[1;34m---------------------------\033[0m\n");
-    printf("\033[1;32mAvailable Rooms: %u\n", hotel.n_standard_rooms);
+    printf("\033[1;32mTotal: %u\n", hotel.n_standard_rooms);
+    printf("\033[1;32mAvailable Rooms: %u\n", hotel.available_standard_room);
     printf("Price per Room: %u\n", hotel.p_standard_room);
     printf("\033[1;34m---------------------------\033[0m\n");
     printf("\033[1;34m         Deluxe Rooms       \033[0m\n");
     printf("\033[1;34m---------------------------\033[0m\n");
-    printf("\033[1;32mAvailable Rooms: %u\n", hotel.n_delux_rooms);
+    printf("\033[1;32mTotal: %u\n", hotel.n_delux_rooms);
+    printf("\033[1;32mAvailable Rooms: %u\n", hotel.available_delux_room);
     printf("Price per Room: %u\n", hotel.p_delux_room);
     printf("\033[1;34m---------------------------\033[0m\n");
     printf("\033[1;34m         Luxury Rooms       \033[0m\n");
     printf("\033[1;34m---------------------------\033[0m\n");
-    printf("\033[1;32mAvailable Rooms: %u\n", hotel.n_luxury_rooms);
+    printf("\033[1;32mTotal: %u\n", hotel.n_luxury_rooms);
+    printf("\033[1;32mAvailable Rooms: %u\n", hotel.available_luxury_room);
     printf("Price per Room: %u\n", hotel.p_luxury_room);
     printf("\033[1;34m---------------------------\033[0m\n");
 
 
     getchar(); // ignoring enter
-
     printf ("\n\n Press enter to conitnue.\n");
     getchar();
     fclose(fptr);
@@ -66,7 +82,7 @@ void add_room(int id) {
     }
 
     // making an empty hotel
-    Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Hotel hotel = {0};
 
     // offsetting the file pointer
     fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
@@ -76,6 +92,7 @@ void add_room(int id) {
 
     do {
         clearScreen();
+        while (1){
         printf("Please Select the Room Type (to add):\n"
                 "0.\tExit\n"
                 "1.\tStandard Room\n"
@@ -83,8 +100,14 @@ void add_room(int id) {
                 "3.\tLuxury Room\n");
 
         // reading the user choice
-        scanf("%d", &choice);
-
+        if (scanf("%d", &choice)!= 1){
+            clearScreen();
+            puts("Invalid Input!");
+            while('\n'!=getchar());
+            continue;
+        }
+        break;
+        }
         if (choice == 0)
             return;
 
@@ -102,12 +125,29 @@ void add_room(int id) {
                 printf ("\033[1;32mTotal Standard rooms: %d\n\n\033[0m", hotel.n_standard_rooms);
 
                 // reading rooms and price_per_room per room
+                while(1){
                 printf("Enter number of rooms to add:\n");
-                scanf("%d", &n_room);
-                printf("Enter price per room:\n");
-                scanf("%d", &price_per_room);
+                if (scanf("%d", &n_room)!= 1){
+                    clearScreen();
+                    puts("Invalid Input!");
+                    while('\n'!=getchar());
+                    continue;
+                }
+                break;
+                }
 
+                while(1){
+                printf("Enter price per room:\n");
+                if (scanf("%d", &price_per_room)!= 1){
+                    clearScreen();
+                    puts("Invalid Input!");
+                    while('\n'!=getchar());
+                    continue;                
+                }
+                break;
+                }
                 hotel.n_standard_rooms += n_room;
+                hotel.available_standard_room += n_room;
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
                 hotel.p_standard_room = price_per_room;
@@ -124,11 +164,28 @@ void add_room(int id) {
                 printf ("\033[1;32mTotal Deluxe rooms: %d\n\n\033[0m", hotel.n_delux_rooms);
 
                 // reading rooms and price_per_room per room
+                while (1){
                 printf("Enter number of rooms to add:\n");
-                scanf("%d", &n_room);
+                if (scanf("%d", &n_room)!= 1){
+                    clearScreen();
+                    puts("Invalid Input!");
+                    while('\n'!=getchar());
+                    continue;}
+                break;
+                
+                }
+                while(1){
                 printf("Enter price per room:\n");
-                scanf("%d", &price_per_room);
-
+                
+                if (scanf("%d", &price_per_room)!= 1){
+                    clearScreen();
+                    puts("Invalid Input!");
+                    while('\n'!=getchar());
+                    continue;}
+                break;
+                
+                }
+                hotel.available_delux_room += n_room;
                 hotel.n_delux_rooms += n_room;
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
@@ -147,11 +204,27 @@ void add_room(int id) {
                 printf ("\033[1;32mTotal luxury rooms: %d\n\n\033[0m", hotel.n_luxury_rooms);
 
                 // reading rooms and price_per_room per room
+                while(1){
                 printf("Enter number of rooms to add:\n");
-                scanf("%d", &n_room);
+                if (scanf("%d", &n_room)!= 1){
+                    clearScreen();
+                    puts("Invalid Input!");
+                    while('\n'!=getchar());
+                    continue;}
+                break;
+                
+                }
+                while(1){
                 printf("Enter price per room:\n");
-                scanf("%d", &price_per_room);
-
+                if (scanf("%d", &price_per_room)!= 1){
+                    clearScreen();
+                    puts("Invalid Input!");
+                    while('\n'!=getchar());
+                    continue;}
+                break;
+                
+                }
+                hotel.available_luxury_room += n_room;
                 hotel.n_luxury_rooms += n_room;
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
@@ -208,11 +281,12 @@ void delete_room(int id) {
         "1.\tStandard Rooms\n"
         "2.\tDeluxe Rooms\n"
         "3.\tLuxury Rooms\n");
-    scanf("%d", &choice); // ! reading the choice
 
+    choice = input_valid(); // ! reading the choice
+    while('\n'!= getchar());
     while ( choice ) {
         
-        Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0}; // making an empty Hotel object
+        Hotel hotel = {0}; // making an empty Hotel object
 
         rewind (fptr); // rewinding fptr to make sure we are at correct place
         // off-setting he file pointer
@@ -228,7 +302,8 @@ void delete_room(int id) {
                 "1.\tStandard Rooms.\n"
                 "2.\tDeluxe Rooms.\n"
                 "3.\tLuxury Rooms.\n");
-            scanf("%d", &choice);
+            choice = input_valid();
+            while('\n'!= getchar());
 
             continue;
         }
@@ -243,7 +318,8 @@ void delete_room(int id) {
 
                     printf ("\033[1;34mTotal standard rooms: %d\n\033[0m", hotel.n_standard_rooms);
                     printf ("%s", "Enter no of rooms to delete: ");
-                    scanf ("%d", &n_room);
+                    n_room = input_valid();
+                    while('\n'!= getchar());
 
                     if ( n_room > hotel.n_standard_rooms ) { // checking whether the rooms enough to delete or not
                         puts ("\nNumber of rooms exceeds than the original number."); 
@@ -255,7 +331,7 @@ void delete_room(int id) {
                     hotel.n_standard_rooms -= n_room;
                     hotel.n_total_rooms -= n_room;
                     hotel.available_roams -= n_room;
-                    printf ("\033[1;32mrooms Deleted successfully\n"
+                    printf ("\033[1;32mRooms Deleted Successfully\n"
                     "=>Updated number of standard-rooms: %d\n\n\033[0m", hotel.n_standard_rooms);
                     puts("Press enter to continue.");
                     getchar();// ignoring the enter
@@ -290,10 +366,11 @@ void delete_room(int id) {
 
                     printf ("\033[1;34mTotal luxury rooms: %d\n\033[0m", hotel.n_luxury_rooms);
                     printf ("%s", "Enter no of rooms to delete: ");
-                    scanf ("%d", &n_room);
+                    n_room = input_valid();
+                    while('\n'!= getchar());
 
                     if ( n_room > hotel.n_luxury_rooms ) { // checking whether the rooms enough to delete or not
-                        puts ("number of rooms exceeds than the original number."); 
+                        puts ("Number of Rooms Exceeds Existing Rooms."); 
                         printf ("=>already existing rooms: %d\n"
                             "=>no of rooms to delete: %d\n\n",
                             hotel.n_luxury_rooms, n_room );
@@ -328,7 +405,8 @@ void delete_room(int id) {
             "1.\tStandard Rooms\n"
             "2.\tDeluxe Rooms\n"
             "3.\tLuxury Rooms\n");
-        scanf("%d", &choice);
+        choice = input_valid();
+        while('\n'!= getchar());
     }
 
     fclose(fptr); // close file pointer at the end of the program

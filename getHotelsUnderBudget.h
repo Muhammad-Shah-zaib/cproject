@@ -335,8 +335,8 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
 
         // }
     } while (choice < '0' || choice > '3');
-    while (1)
-    {   
+    while (1){
+    // {   while('\n'!= getchar());
         int check = 1;
         printf("Please Enter Number of Rooms:");
         if (scanf("%d", &n_rooms) != 1)
@@ -345,15 +345,18 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
             clear_input_buffer();
             continue;
         }
-        // break;
-        puts("Check 1");
+    
+    if (n_rooms <=0){ //! If entered room to book is less than or 0 then exit
+        puts("Thank You For Using Our Service!");
+        exit(10);
+    }
+
     switch (choice){
 
     case '1':
-            puts("Check 2");
         if (least_expesive_hotel.available_standard_room < n_rooms  ){
+            printf("%d\n", least_expesive_hotel.available_standard_room);
             puts("Number of Rooms Not Available");
-            puts("Check 3");
             check = 0;
         }
             break;
@@ -381,6 +384,8 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
         {
 
         case '1':
+       
+            update_rooms(least_expesive_hotel.id, 1 , n_rooms); // ! passing to update the rooms
             generate_ticket(least_expesive_hotel.hotel_name, "Standard Room", n_rooms, least_expesive_hotel.p_standard_room, NULL, "", "", location);
             puts("Thank You For Using Our Service!");
             sleep(2);
@@ -388,6 +393,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
             break;
 
         case '2':
+            update_rooms(least_expesive_hotel.id, 2, n_rooms); // ! passing to update the rooms
             generate_ticket(least_expesive_hotel.hotel_name, "Delux Room", n_rooms, least_expesive_hotel.p_delux_room, NULL, "", "", location);
             puts("Thank You For Using Our Service!");
             sleep(2);
@@ -395,6 +401,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
             break;
 
         case '3':
+            update_rooms(least_expesive_hotel.id, 3, n_rooms); // ! passing to update the rooms
             generate_ticket(least_expesive_hotel.hotel_name, "Luxury Room", n_rooms, least_expesive_hotel.p_luxury_room, NULL, "", "", location);
             puts("Thank You For Using Our Service!");
             sleep(2);

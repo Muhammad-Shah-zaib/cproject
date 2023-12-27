@@ -3,6 +3,7 @@
 
 #include "clearScreen.h"
 #include "structHotel.h"
+#include "update_rooms.h"
 #include "structCarRental.h"
 #include "ticketGenerator.h"
 #include "emptyCarGenerator.h"
@@ -14,7 +15,6 @@
 #include "client_initial_prompt.h"
 #include "hotelRegistration.h"
 #include "carPostLogin.h"
-
 
 // Define color codes
 #define RED "\033[1;31m"
@@ -129,8 +129,17 @@ int main ( void) {
 
                             do {
                                 // reading the credentials
+                                while (1){
                                 printf ("Enter id: ");
-                                scanf ("%d", &id);
+                                if (scanf ("%d", &id)!= 1){
+                                    clearScreen();
+                                    puts ("Invalid Input!");
+                                    while('\n'!=getchar());
+                                    continue;
+                                    } 
+                                    break;
+                                }
+                                while('\n'!=getchar());
                                 printf ("Enter username: ");
                                 scanf ("%19s", name);
 
@@ -146,8 +155,15 @@ int main ( void) {
 
                             do {
                                 // reading the credentials
+                                while (1){
                                 printf ("Enter Car-Rental id: ");
-                                scanf ("%d", &id);
+                                if (scanf ("%d", &id)!= 1){
+                                    clearScreen(); 
+                                    puts("Wrong Input!");
+                                    while('\n'!=getchar());
+                                    continue;}
+                                    break;
+                                }
                                 printf ("Enter username: ");
                                 scanf ("%19s", name);
 
