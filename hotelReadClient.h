@@ -66,7 +66,7 @@ Hotel* find_hotels(const char *location, unsigned int *hotels_count) {
 
 
         // ! NOW WE NEED TO CHECK WHETHER THE HOTEL WE READ IS THE WE NEED OR NOT...
-        if (result != 0 && hotel.id != 0){ // chekcing for valid hotel 
+        if (result != 0 && hotel.id != 0 && hotel.n_total_rooms != 0){ // chekcing for valid hotel 
 
             if (strcmp (location, hotel.city_name) == 0) { // compairing the locaiton name with hotel's city name
                 (*hotels_count)++; // increase total hotel count

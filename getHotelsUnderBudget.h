@@ -266,7 +266,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
             else
                 continue;
         }
-
+        if (least_expesive_hotel.n_total_rooms!= 0){
         printf(BLUE "\nHotel name: %s\n", least_expesive_hotel.hotel_name);
         printf("Location: %s\n\n" RESET, least_expesive_hotel.city_name);
 
@@ -288,7 +288,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
         else if ((budget_gap = budget_difference(&b_per_day, &least_expesive_hotel, '3')) > 0)
             printf(RED "\t%15s : %8d\t : %4s %-5d%13s\n" RESET, "Luxury Room", least_expesive_hotel.p_luxury_room, "PKR.", budget_gap, "Out Of Range");
     }
-
+    }
     while (1)
     {
         int i;
@@ -309,7 +309,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
     char choice;
     do
     {
-        puts("Select among the followings.");
+        puts("Select among the followings.(C1)");
         printf("1.\tStandard Room\n");
         printf("2.\tDelux Room\n");
         printf("3.\tLuxury Room\n=> ");
@@ -336,15 +336,43 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
         // }
     } while (choice < '0' || choice > '3');
     while (1)
-    {
-        printf("Please Enter Number of Rooms: ");
+    {   
+        int check = 1;
+        printf("Please Enter Number of Rooms:");
         if (scanf("%d", &n_rooms) != 1)
         {
             puts(RED "Wrong Input!" RESET);
             clear_input_buffer();
             continue;
         }
-        break;
+        // break;
+        puts("Check 1");
+    switch (choice){
+
+    case '1':
+            puts("Check 2");
+        if (least_expesive_hotel.available_standard_room < n_rooms  ){
+            puts("Number of Rooms Not Available");
+            puts("Check 3");
+            check = 0;
+        }
+            break;
+    case '2':
+        if (least_expesive_hotel.available_delux_room < n_rooms ){
+            puts("Number Of Rooms Not Available");
+            check = 0;
+        }
+            break;
+    case '3':
+        if (least_expesive_hotel.available_luxury_room < n_rooms ){
+            puts("Number of Rooms Not Available");
+            check = 0; 
+        }
+    }
+        if (check == 0)
+            continue;
+
+        else break;
     }
 
     do
