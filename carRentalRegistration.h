@@ -52,12 +52,7 @@ void update_car_id ( int id ) {
 
 void car_rental_registration ( void ){
 
-    FILE *cfptr; // car file pointer
-
-    if ( (cfptr = fopen("cars.dat", "rb+")) == NULL ) {
-        puts ("FIle can not be opened!");
-        return;
-    }
+    
 
     Car_Rental car = generate_empty_car();
     
@@ -70,23 +65,36 @@ void car_rental_registration ( void ){
 
     update_car_id( id );
 
-
+    while ( '\n' != getchar() );
     printf ("Enter your user name: ");
-    scanf("%s", car.username);
+    scanf("%29[^\n]", car.username);
     while ('\n' != getchar());
     
 
     printf ("Enter your company name: ");
-    scanf("%s", car.company_name);
+    scanf("%29[^\n]", car.company_name);
     while ('\n' != getchar());
 
     printf ("Enter your city name: ");
-    scanf("%s", car.city_name);
+    scanf("%29[^\n]", car.city_name);
     while ('\n' != getchar());
 
+
+
+    // ! UPADTING THE FILE HERE
+    FILE *cfptr; // car file pointer
+
+    if ( (cfptr = fopen("cars.dat", "rb+")) == NULL ) { // opening the file
+        puts ("FIle can not be opened!");
+        return;
+    }
+
+    // writing the changes
     fseek ( cfptr, (car.id - 1) * sizeof (Car_Rental), SEEK_SET );
     fwrite( &car, sizeof (Car_Rental), 1, cfptr );
     fflush (cfptr);
+
+    fclose ( cfptr ); // closing file
 
     puts (BLUE"+--------------------------------------------------------------------+"RESET);
     printf (BLUE"|"CYAN"Remember your following credentials, you need them while logging in."BLUE"|\n"RESET);
@@ -97,6 +105,5 @@ void car_rental_registration ( void ){
     press_enter_to_continue();
     clearScreen();
 
-    fclose ( cfptr );
 }
 

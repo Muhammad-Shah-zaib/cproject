@@ -10,11 +10,12 @@
 
 
 int starting_prompt(){
+    clearScreen();
     int choice;
     puts ("\tWelcome");
 
     while(1){
-        printf("%s\n%s\n%s\n%s\n%s\n","Please Select:",
+        printf("%s\n%s\n%s\n%s\n%s\n"GREEN"=> "RESET,"Please Select:",
                 "1.\tRegistration",
                 "2.\tLogin",
                 "3.\tClinet",
@@ -48,17 +49,19 @@ int starting_prompt(){
 
 void post_login( unsigned int id ) {
 
-    // clearScreen();
+    clearScreen();
 
     int choice; // will store the user choice in this var
     // prompting user
     do {
         clearScreen();
-        printf("\n1.\tAdd Rooms\n"
+        printf("%s"GREEN"=> "RESET,
+            "\nPLease select...\n"
+            "1.\tAdd Rooms\n"
             "2.\tChange or Delete Rooms\n"
             "3.\tView Room Details\n"
             " *or enter zero to exit*\n\n"
-            "Please Select: ");
+            );
 
 
 

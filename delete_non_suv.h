@@ -23,8 +23,7 @@ int non_suv_find_car_modal_index(const Car_Rental *car, const unsigned int id, c
 
     // promppting and returning -1 if car modal not found
     printf(RED"Car with (modal=> %u\t:\tname=> %s) not found.\n"RESET, modal, modal_name );
-    getchar(); // ignoring enter 
-    getchar();
+    press_enter_to_continue();
     return -1;
 }
 
@@ -67,9 +66,7 @@ void non_suv_delete_car_modal (Car_Rental *car, const unsigned int index, const 
 
     fclose (cfptr); // closing the file
 
-    puts(YELLOW"\nPress Enter to continue."RESET);
-    getchar();
-    getchar();
+    press_enter_to_continue();
 }
 
 
@@ -81,26 +78,26 @@ void delete_non_suv( Car_Rental *car, const unsigned int id){
     // ! dont need to read the data as it is already passed in the function
 
     if ( 0 == car->n_non_suv ) {
-        puts (RED"non_SUVs can not be deleted, as there is no non_SUV added yet");
+        puts (RED"Sedans can not be deleted, as there is no Sedan added yet");
         printf(RED"=>Total non_SUVs: %d\n"RESET, car->n_non_suv);
-        puts (YELLOW "Press Enter to conitnue."RESET);
-        getchar(); // ignoring enter
-        getchar();
+        press_enter_to_continue();
         return;
     }
 
     // decaliring the variables
-    unsigned int modal;
+    int modal;
     char modal_name[30];
 
     // reading mdoal
     printf ("Enter model: ");
     scanf ("%d", &modal);
     modal = abs( modal ); // keeping the modal value a positive int
+    while ( '\n' != getchar() );
 
     // reading modal name
     printf ("Enter model name: ");
-    scanf ("%s", modal_name);
+    scanf ("%[^\n]", modal_name);
+    while ( '\n' != getchar() );
 
 
     //getting the index of the given modal

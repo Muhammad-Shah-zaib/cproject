@@ -67,7 +67,7 @@ Hotel *find_hotels(const char *location, unsigned int *hotels_count) {
     fclose(file); // closing the file
 
     if ((*hotels_count) == 0) { // if the total hotel count is 0
-        printf(RED"No hotels found in %s\n", location, RESET);
+        printf(RED"No hotels found in %s\n"RESET, location);
         return NULL;
     }
 
@@ -113,7 +113,7 @@ void hotel_read_client(char *location) {
             printf("%s%s",
                    "1.\tChoose From The Given.\n",
                    "2.\tSuggest Me.\n"
-                   "=> ");
+                   GREEN"=> "RESET);
 
             // WAS FACING SOME PREVIOUS BUFFER WHEN I RUN THIS PROGRAM SO CLEARING THE BUFFER HERE FOR NOW...
             getchar();

@@ -24,8 +24,7 @@ short int premium_find_car_modal_index(const Car_Rental *car, const unsigned int
 
     // promppting and returning -1 if index not ofund
     printf(RED"Car with modal number (%u : %s) not found.\n"RESET, modal, modal_name );
-    getchar(); // ignoring enter 
-    getchar();
+    press_enter_to_continue();
     return -1;
 }
 
@@ -38,6 +37,7 @@ void premium_delete_car_modal (Car_Rental *car, const unsigned int index, const 
     // checking for file openeing
     if ( (cfptr = fopen ("cars.dat", "rb+")) == NULL ){
         puts ("The file can not be opened.");
+        press_enter_to_continue();
         exit (1);
     }
 
@@ -65,9 +65,7 @@ void premium_delete_car_modal (Car_Rental *car, const unsigned int index, const 
 
     fclose (cfptr); // closing the file
 
-    puts(YELLOW"\nPress Enter to continue."RESET);
-    getchar();
-    getchar();
+    press_enter_to_continue();
 }
 
 
@@ -78,24 +76,24 @@ void delete_premium( Car_Rental *car, const unsigned int id){
     if ( 0 == car->n_premium ) {
         puts (RED"Premiums can not be deleted, as there is no premium added yet");
         printf(RED"=>Total PREMIUMs: %d\n"RESET, car->n_premium);
-        puts (YELLOW "Press Enter to conitnue."RESET);
-        getchar(); // ignoring enter
-        getchar();
+        press_enter_to_continue();
         return;
     }
 
     // decaliring the variables
-    unsigned int modal;
+    int modal;
     char modal_name[30];
 
     // reading mdoal
     printf ("Enter model: ");
     scanf ("%d", &modal);
     modal = abs( modal ); // keeping the modal value a positive int
+    while ( '\n' !=getchar() );
 
     // reading modal name
     printf ("Enter model name: ");
-    scanf ("%s", modal_name);
+    scanf ("%[^\n]", modal_name);
+    while ( '\n' != getchar() );
 
     // dont need to read the data as it is already passed in the function
     const short int indexToDelete = premium_find_car_modal_index(car, id, modal_name, modal); 

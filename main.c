@@ -43,7 +43,7 @@ int main ( void) {
                 do{
                     // clearScreen(); // clearing screen
                     puts ("Select among the followings: ");
-                    printf ("%s\n%s\n%s\n", // pompting suer
+                    printf ("%s\n%s\n%s\n"GREEN"=> "RESET, // pompting suer
                         "1.\tHotel registration.",
                         "2.\tCar Rental registratoin.",
                         "\t0 to Exit.");
@@ -72,11 +72,13 @@ int main ( void) {
                         case 1: // for hotel
                             clearScreen();
                             hotel_registration();
+                            choice = 0;
                             break;
 
                         case 2: // for car_rental
                             clearScreen();
                             car_rental_registration();
+                            choice = 0;
                             break;
 
                         // ! IGNORING MISTAKES
@@ -90,23 +92,23 @@ int main ( void) {
 
             }
             case 2:{
-
+                clearScreen();
                 int choice_login; // checking for hotel_login or car_login
 
                 do{
                     // clearScreen(); // clearing th eterminal screen
                     puts ("Choose among the following");
-                    printf ("%s\n%s\n%s\n", // pompting suer
+                    printf ("%s\n%s\n%s\n"GREEN"=> "RESET, // pompting suer
                         "0.\tExit",
                         "1.\tHotel Login.",
                         "2.\tCar Rental Login.");
                     if (scanf("%d", &choice_login) != 1) {
                         clearScreen();
-                        puts ("Wrong Input! Please input a valid number.");
-                        int c; // to store and discard invalid characters
-                        while ((c = getchar()) != '\n' && c != EOF);
+                        puts (RED"Wrong Input! Please input a valid number."RESET);
+                        while ('\n' != getchar());
                         continue;
                     }
+                    while ('\n' != getchar());
                     if (choice_login < 0 || choice_login > 2 ){
                         clearScreen();
                         puts("Wrong Input! Please choose a valid selection.");
@@ -139,7 +141,8 @@ int main ( void) {
                                 }
                                 while('\n'!=getchar());
                                 printf ("Enter username: ");
-                                scanf ("%19s", name);
+                                scanf ("%19[^\n]", name);
+                            while ('\n' != getchar());
 
                             } while ( !(hotel_login(id, name)) );
                             
@@ -154,6 +157,8 @@ int main ( void) {
                             do {
                                 // reading the credentials
                                 while (1){
+
+                                // ! reading id
                                 printf ("Enter Car-Rental id: ");
                                 if (scanf ("%d", &id)!= 1){
                                     clearScreen(); 
@@ -162,8 +167,12 @@ int main ( void) {
                                     continue;}
                                     break;
                                 }
+                                while('\n'!=getchar());
+
+                                // ! reading user-name
                                 printf ("Enter username: ");
-                                scanf ("%19s", name);
+                                scanf ("%19[^\n]", name);
+                                while('\n'!= getchar());
 
                             } while ( !(car_login(id, name)) );
                             
@@ -187,13 +196,16 @@ int main ( void) {
 
 
             case 3: {
-                // puts ("I am 3 ");
                 client_initial_prompt ();
                 break;
             }
+
+
             case 0:{
                 clearScreen(); 
-                puts ("Have a Good Day!");
+                puts (CYAN"Thanks for using our service.");
+                puts ("=>   Have a Good Day!"RESET);
+                sleep(1);
                 return 0;
             }
 

@@ -15,6 +15,9 @@
         "structcarrental.h": "c",
         "clearscreen.h": "c",
         "carlogin.h": "c",
-        "prompts.h": "c"
+        "prompts.h": "c",
+        "pressentertocontinue.h": "c",
+        "ticketgenerator.h": "c",
+        "car_delete.h": "c"
     }
 }

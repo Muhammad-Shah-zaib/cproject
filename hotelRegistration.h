@@ -61,13 +61,13 @@ void update_id ( int id ) {
 
 
 
-void hotel_registration( void ) {
+bool hotel_registration( void ) {
     // ? making a file poitner to open  hotels.dat
     FILE *fptr;
 
     if ( (fptr = fopen ("hotels.dat", "rb+")) == NULL ) {
         puts ("FIle can not be opened.");
-        return;
+        return false;
     } 
 
     // ? Creating a hotel object
@@ -91,6 +91,7 @@ void hotel_registration( void ) {
     printf ("%s", "Enter Hotel name: ");
     scanf ("%29[^\n]", hotel.hotel_name);
     while (getchar()!= '\n'); // ! clearing the buffer
+    
     while (1){
     printf ("%s", "Enter the city name: ");
     scanf ("%24[^\n]", hotel.city_name);
@@ -106,8 +107,8 @@ void hotel_registration( void ) {
     fseek (fptr, (hotel.id - 1) * sizeof (Hotel), SEEK_SET);
     fwrite (&hotel, sizeof (Hotel), 1, fptr); // writing the data
     fflush (fptr);
-
-    printf("Hotel Name: %s\n"RESET, hotel.hotel_name);
+    puts (BLUE"----------------------------------------------------------------");
+    printf(CYAN"\t\tHotel Name: %s\n", hotel.hotel_name);
     puts (BLUE"----------------------------------------------------------------");
     printf (CYAN"Rememebr your fllowing credentials, you will login using this id!\n"RESET);
     puts (BLUE"----------------------------------------------------------------");
@@ -117,4 +118,5 @@ void hotel_registration( void ) {
 
     press_enter_to_continue();
     fclose (fptr);
+    return true;
 }

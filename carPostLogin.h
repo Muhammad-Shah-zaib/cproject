@@ -28,6 +28,7 @@ void add_suv(Car_Rental *car, unsigned int id) {
 
     if ( (cfptr  = fopen ("cars.dat", "rb+")) == NULL ){
         puts ("File can not be opened.");
+        press_enter_to_continue();
         return;
     }
 
@@ -39,6 +40,7 @@ void add_suv(Car_Rental *car, unsigned int id) {
     // Reading SUV details
     printf("Enter the number of SUVs to add:\n");
     scanf("%u", &n_modal);
+    while ('\n' != getchar());
 
     // Check if there is enough space to add SUVs
     if ((car->n_suv) + n_modal > 50) {
@@ -48,15 +50,18 @@ void add_suv(Car_Rental *car, unsigned int id) {
 
     // Adding SUVs
     for (unsigned int i = (car->n_suv); i < (car->n_suv) + n_modal; ++i) {
-        printf("Enter details for SUV %u:\n", i + 1);
-        printf("Modal Number: ");
+        printf(YELLOW"\nEnter details for SUV %u...\n", i + 1);
+        printf(GREEN"\nModal Number: "RESET);
         scanf("%u", &car->suv[i].modal);
+        while ('\n' != getchar());
 
-        printf("Price: ");
+        printf(GREEN"Price: "RESET);
         scanf("%u", &car->suv[i].price);
+        while ('\n' != getchar());
 
-        printf("Name: ");
-        scanf("%s", car->suv[i].name);
+        printf(GREEN"\nName: "RESET);
+        scanf("%[^\n]", car->suv[i].name);
+        while ('\n' != getchar());
     }
 
     // Update the total number of SUVs
@@ -64,18 +69,16 @@ void add_suv(Car_Rental *car, unsigned int id) {
     car->n_total_cars += n_modal;
     car->available_cars += n_modal;
 
-    puts("\n\033[1;34mSUVs added successfully\033[0m");
+    puts("\n\n\033[1;34mSUVs added successfully\033[0m");
     printf("\033[1;32m=> Total SUVs: %u\n\n\033[0m", (car->n_suv));
 
     
     fseek (cfptr, (id - 1) * sizeof (Car_Rental), SEEK_SET);
     fwrite (car, sizeof (Car_Rental), 1, cfptr);
     fflush (cfptr);
+    fclose(cfptr);
 
-
-    puts("Press enter to continue.");
-    getchar(); // Ignore the enter
-    getchar();
+    press_enter_to_continue();
 }
 
 
@@ -91,34 +94,39 @@ void add_non_suv(Car_Rental *car, unsigned int id) {
 
     if ( (cfptr  = fopen ("cars.dat", "rb+")) == NULL ){
         puts ("File can not be opened.");
+        press_enter_to_continue();
         return;
     }
 
 
     unsigned int n_modal;
-    printf(BLUE "Total Non-SUV cars: %d\n\n" RESET, (car->n_non_suv));
+    printf(BLUE "Total Sedans cars: %d\n\n" RESET, (car->n_non_suv));
 
     // Reading Non-SUV details
-    printf("Enter the number of Non-SUVs to add:\n");
+    printf("Enter the number of Sedans to add:\n");
     scanf("%u", &n_modal);
+    while ('\n' != getchar());
 
     // Check if there is enough space to add Non-SUVs
     if ((car->n_non_suv) + n_modal > 50) {
-        printf("\033[1;31mError: Not enough space to add Non-SUVs.\033[0m\n");
+        printf(RED"Error: Not enough space to add more Sedans.\n"RESET);
         return;
     }
 
     // Adding Non-SUVs
     for (unsigned int i = (car->n_non_suv); i < (car->n_non_suv) + n_modal; ++i) {
-        printf("Enter details for Non-SUV %u:\n", i + 1);
-        printf("Modal Number: ");
+        printf(YELLOW"\nEnter details for Sedan %u...\n", i + 1);
+        printf(GREEN"\nModal Number: "RESET);
         scanf("%u", &car->non_suv[i].modal);
+        while ('\n' != getchar());
 
-        printf("Price: ");
+        printf(GREEN"Price: "RESET);
         scanf("%u", &car->non_suv[i].price);
+        while ('\n' != getchar());
 
-        printf("Name: ");
-        scanf("%s", car->non_suv[i].name);
+        printf(GREEN"Name: "RESET);
+        scanf("%[^\n]", car->non_suv[i].name);
+        while ('\n' != getchar());
     }
 
     // Update the total number of Non-SUVs
@@ -126,18 +134,17 @@ void add_non_suv(Car_Rental *car, unsigned int id) {
     car->n_total_cars += n_modal;
     car->available_cars += n_modal;
 
-    puts("\n\033[1;34mNon-SUVs added successfully\033[0m");
+    puts("\n\n\033[1;34mNon-SUVs added successfully\033[0m");
     printf("\033[1;32m=> Total Non-SUVs: %u\n\n\033[0m", (car->n_non_suv));
 
 
     fseek (cfptr, (id - 1) * sizeof (Car_Rental), SEEK_SET);
     fwrite (car, sizeof (Car_Rental), 1, cfptr);
     fflush (cfptr);
+    fclose(cfptr);
 
 
-    puts("Press enter to continue.");
-    getchar(); // Ignore the enter
-    getchar();
+    press_enter_to_continue();
 }
 
 
@@ -151,18 +158,19 @@ void add_premium(Car_Rental *car, unsigned int id) {
 
     if ( (cfptr  = fopen ("cars.dat", "rb+")) == NULL ){
         puts ("File can not be opened.");
+        press_enter_to_continue();
         return;
     }
 
 
     unsigned int n_modal;
-    printf ("username: %s\n", car->username);
-    printf ("id: %u\n", car->id);
+    
     printf(BLUE "Total Premium cars: %d\n\n" RESET, (car->n_premium));
 
     // Reading Premium details
     printf("Enter the number of Premium cars to add:\n");
     scanf("%u", &n_modal);
+    while ('\n' != getchar());
 
     // Check if there is enough space to add Premium cars
     if ((car->n_premium) + n_modal > 50) {
@@ -172,15 +180,17 @@ void add_premium(Car_Rental *car, unsigned int id) {
 
     // Adding Premium cars
     for (unsigned int i = (car->n_premium); i < (car->n_premium) + n_modal; ++i) {
-        printf("Enter details for Premium car %u:\n", i + 1);
-        printf("Modal Number: ");
+        printf(YELLOW"\nEnter details for Premium car %u...\n", i + 1);
+        printf(GREEN"\nModal Number: "RESET);
         scanf("%u", &car->premium[i].modal);
 
-        printf("Price: ");
+        printf(GREEN"Price: "RESET);
         scanf("%u", &car->premium[i].price);
+        while ('\n' != getchar());
 
-        printf("Name: ");
-        scanf("%s", car->premium[i].name);
+        printf(GREEN"Name: "RESET);
+        scanf("%[^\n]", car->premium[i].name);
+        while ('\n' != getchar());
     }
 
     // Update the total number of Premium cars
@@ -188,17 +198,16 @@ void add_premium(Car_Rental *car, unsigned int id) {
     car->n_total_cars += n_modal;
     car->available_cars += n_modal;
 
-    puts("\n\033[1;34mPremium cars added successfully\033[0m");
+    puts("\n\n\033[1;34mPremium cars added successfully\033[0m");
     printf("\033[1;32m=> Total Premium cars: %u\n\n\033[0m", (car->n_premium));
 
     fseek (cfptr, (id - 1) * sizeof (Car_Rental), SEEK_SET);
     fwrite (car, sizeof (Car_Rental), 1, cfptr);
     fflush (cfptr);
+    fclose(cfptr);
 
 
-    puts("Press enter to continue.");
-    getchar(); // Ignore the enter
-    getchar();
+    press_enter_to_continue();
 }
 
 
@@ -213,8 +222,9 @@ void add_car (unsigned int id){
 
     // making a file pointer to open cars.dat
     FILE *fptr;
-    if ((fptr = fopen("cars.dat", "rb+")) == NULL) {
+    if ((fptr = fopen("cars.dat", "rb")) == NULL) {
         puts("File Not Found!");
+        press_enter_to_continue();
         return;
     }
 
@@ -227,14 +237,16 @@ void add_car (unsigned int id){
 
     do {
         clearScreen();
-        printf("Please Select the Room Type (to add):\n"
+        printf (BLUE"username: %s\n", car.username);
+        printf ("id: %u\n\n"RESET, car.id);
+        printf("%s"GREEN"=> "RESET,
+                "Please Select the Car Type (to add):\n"
                 "0.\tExit\n"
                 "1.\tAdd SUV\n"
-                "2.\tAdd non-SUV\n"
+                "2.\tAdd Sedan\n"
                 "3.\tAdd premium\n");
-
         choice  = getchar();
-
+        while ('\n' != getchar());
         if (choice == '0')
             return;
 
@@ -289,11 +301,8 @@ void car_details(int id) {
     FILE *fptr;
 
     if ((fptr = fopen("cars.dat", "rb+")) == NULL) {
-        puts("File cannot be opened.");
-        puts ("Press Enter to exit.");
-        getchar();
-        getchar();
-
+        puts(RED"File cannot be opened."RESET);
+        press_enter_to_continue();
         return;
     }
 
@@ -330,10 +339,8 @@ void car_details(int id) {
         printf(GREEN"=>%d.\tModel: %u, Price: %u, Name: %s\n"RESET, i+1, carRental.premium[i].modal, carRental.premium[i].price, carRental.premium[i].name);
     }
 
-    getchar(); // ignoring enter
 
-    printf(YELLOW"\n\n Press enter to continue.\n"RESET);
-    getchar();
+    press_enter_to_continue();
     fclose(fptr);
 }
 
@@ -351,6 +358,7 @@ void car_post_login ( unsigned int id ){
             "Please Select: ");
 
         choice = getchar();
+        while ('\n'!= getchar());
 
         switch (choice)
             {

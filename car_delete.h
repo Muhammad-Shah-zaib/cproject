@@ -13,6 +13,7 @@ void delete_car ( unsigned int id ){
     // checking for file opening
     if ( (cfptr = fopen ("cars.dat", "rb")) == NULL ){ // ! OPENING ONLY IN READ-BINARY ( rb ) 
         puts ("File can not be opened.");
+        press_enter_to_continue();
         exit (1); // termimnating the program with 1
     }
 
@@ -35,12 +36,14 @@ void delete_car ( unsigned int id ){
         printf ("Id: %u\nUsername: %s\n", car.id, car.username); 
 
         // prompt the user
-        printf("Please Select the Car Type (to Delete):\n"
+        printf("%s"GREEN"=> "RESET,
+                "Please Select the Car Type (to Delete):\n"
                 "0.\tExit\n"
                 "1.\tDelete SUV\n"
                 "2.\tDelete non-SUV\n"
                 "3.\tDelete premium\n");
         choice = getchar (); // reading the choice
+        while ( '\n' != getchar() );
 
         switch (choice)
         {

@@ -1,5 +1,6 @@
 #include <stdio.h>
-// #include "structHotel.h"
+
+
 int input_valid(){
     int valid_int;
     while(1){
@@ -37,6 +38,7 @@ void room_details(int id) {
     printf("\033[1;34m+-------------------------+\033[0m\n");
     printf("\n\033[1;32mTotal rooms: %u\n", hotel.n_total_rooms);
     printf("Available rooms: %u\n", hotel.available_roams);
+    printf("Booked rooms: %u\n", hotel.booked_rooms);
     printf("Total rooms booked: %u\n", hotel.booked_rooms);
     printf("\033[1;34m---------------------------\033[0m\n");
     printf("\033[1;34m        Standard Room      \033[0m\n");
@@ -59,9 +61,8 @@ void room_details(int id) {
     printf("\033[1;34m---------------------------\033[0m\n");
 
 
-    getchar(); // ignoring enter
-    printf ("\n\n Press enter to conitnue.\n");
-    getchar();
+    press_enter_to_continue();
+
     fclose(fptr);
 }
 
@@ -100,12 +101,8 @@ void add_room(int id) {
                 "3.\tLuxury Room\n");
 
         // reading the user choice
-        if (scanf("%d", &choice)!= 1){
-            clearScreen();
-            puts("Invalid Input!");
-            while('\n'!=getchar());
-            continue;
-        }
+        choice = input_valid();
+        while('\n'!=getchar());
         break;
         }
         if (choice == 0)
@@ -127,23 +124,15 @@ void add_room(int id) {
                 // reading rooms and price_per_room per room
                 while(1){
                 printf("Enter number of rooms to add:\n");
-                if (scanf("%d", &n_room)!= 1){
-                    clearScreen();
-                    puts("Invalid Input!");
-                    while('\n'!=getchar());
-                    continue;
-                }
+                n_room = input_valid();
+                while('\n'!=getchar());
                 break;
                 }
 
                 while(1){
                 printf("Enter price per room:\n");
-                if (scanf("%d", &price_per_room)!= 1){
-                    clearScreen();
-                    puts("Invalid Input!");
-                    while('\n'!=getchar());
-                    continue;                
-                }
+                price_per_room = input_valid();
+                while('\n'!=getchar());
                 break;
                 }
                 hotel.n_standard_rooms += n_room;
@@ -151,14 +140,11 @@ void add_room(int id) {
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
                 hotel.p_standard_room = price_per_room;
-                hotel.available_standard_room += n_room;
 
                 puts("\n\033[1;34mrooms added successfully\033[0m");
                 printf("\033[1;32m=>total standard rooms: %d\n\033[0m", hotel.n_standard_rooms);
                 printf("\033[1;32m=>price per standard rooms: %d\n\n\033[0m", hotel.p_standard_room);
-                puts("Press enter to continue.");
-                getchar(); // ignoring the enter
-                getchar();
+                press_enter_to_continue();
                 break;
 
             case 2: // FOR DELUX ROOMS
@@ -167,22 +153,16 @@ void add_room(int id) {
                 // reading rooms and price_per_room per room
                 while (1){
                 printf("Enter number of rooms to add:\n");
-                if (scanf("%d", &n_room)!= 1){
-                    clearScreen();
-                    puts("Invalid Input!");
-                    while('\n'!=getchar());
-                    continue;}
+                n_room = input_valid();
+                while('\n'!=getchar());
                 break;
                 
                 }
                 while(1){
                 printf("Enter price per room:\n");
                 
-                if (scanf("%d", &price_per_room)!= 1){
-                    clearScreen();
-                    puts("Invalid Input!");
-                    while('\n'!=getchar());
-                    continue;}
+                price_per_room = input_valid();
+                while('\n'!=getchar());
                 break;
                 
                 }
@@ -191,14 +171,11 @@ void add_room(int id) {
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
                 hotel.p_delux_room = price_per_room;
-                hotel.available_delux_room += n_room;
 
                 puts("\n\033[1;34mrooms added successfully\033[0m");
                 printf("\033[1;32m=>total delux rooms: %d\n\033[0m", hotel.n_delux_rooms);
                 printf("\033[1;32m=>price per delux rooms: %d\n\n\033[0m", hotel.p_delux_room);
-                puts("Press enter to continue.");
-                getchar(); // ignoring the enter
-                getchar();
+                press_enter_to_continue();
                 break;
 
             case 3: // FOR LUXURY ROOMS
@@ -218,11 +195,8 @@ void add_room(int id) {
                 }
                 while(1){
                 printf("Enter price per room:\n");
-                if (scanf("%d", &price_per_room)!= 1){
-                    clearScreen();
-                    puts("Invalid Input!");
-                    while('\n'!=getchar());
-                    continue;}
+                price_per_room = input_valid();
+                while('\n'!=getchar());
                 break;
                 
                 }
@@ -231,14 +205,12 @@ void add_room(int id) {
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
                 hotel.p_luxury_room = price_per_room;
-                hotel.available_luxury_room += n_room;
 
                 puts("\n\033[1;34mrooms added successfully\033[0m");
                 printf("\033[1;32m=>total luxury rooms: %d\n\033[0m", hotel.n_luxury_rooms);
                 printf("\033[1;32m=>price per luxury rooms: %d\n\n\033[0m", hotel.p_luxury_room);
-                puts("Press enter to continue.");
-                getchar();// ignoring the enter
-                getchar();
+                press_enter_to_continue();
+
                 break;
 
             default:
@@ -279,14 +251,15 @@ void delete_room(int id) {
     
        // prompting to enter tpye
     clearScreen();
-    printf("Please Choose Room Type (to DELETE): \n"
+    printf("%s"GREEN"=> "RESET,
+        "Please Choose Room Type (to DELETE): \n"
         "0.\tExit.\n"
         "1.\tStandard Rooms\n"
         "2.\tDeluxe Rooms\n"
         "3.\tLuxury Rooms\n");
 
     choice = input_valid(); // ! reading the choice
-    while('\n'!= getchar());
+    while('\n'!= getchar()); // ! clearing th eniput buffer
     while ( choice ) {
         
         Hotel hotel = {0}; // making an empty Hotel object
@@ -300,7 +273,8 @@ void delete_room(int id) {
         if (choice < 0 || choice > 3) {
             clearScreen();
             puts("Wrong Input");
-            printf("Please Choose Room Type:\n"
+            printf("%s"RED"=> "RESET,
+                "Please Choose Room Type:\n"
                 "0.\tExit.\n"
                 "1.\tStandard Rooms.\n"
                 "2.\tDeluxe Rooms.\n"
@@ -321,48 +295,49 @@ void delete_room(int id) {
 
                     printf ("\033[1;34mTotal standard rooms: %d\n\033[0m", hotel.n_standard_rooms);
                     printf ("%s", "Enter no of rooms to delete: ");
-                    n_room = input_valid();
-                    while('\n'!= getchar());
+                    n_room = input_valid(); // if this returns then there will be a buffer
+                    while('\n'!= getchar()); // ! clearing the buffer
 
                     if ( n_room > hotel.n_standard_rooms ) { // checking whether the rooms enough to delete or not
-                        puts ("\nNumber of rooms exceeds than the original number."); 
+                        puts (RED"\n\nnNumber of rooms exceeds than the original number."); 
                         printf ("=>Number of rooms already existing: %d\n"
-                            "=>Number of rooms to delete: %d\n\n",
+                            "=>Number of rooms to delete: %d\n\n"RESET,
                             hotel.n_standard_rooms, n_room );
-                            continue;
+                        press_enter_to_continue();
+                        continue;
                     }
                     hotel.n_standard_rooms -= n_room;
                     hotel.n_total_rooms -= n_room;
                     hotel.available_roams -= n_room;
+                    hotel.available_standard_room -= n_room;
                     printf ("\033[1;32mRooms Deleted Successfully\n"
                     "=>Updated number of standard-rooms: %d\n\n\033[0m", hotel.n_standard_rooms);
-                    puts("Press enter to continue.");
-                    getchar();// ignoring the enter
-                    getchar();
+                    press_enter_to_continue();
                     break;
 
                 case 2: // FOR DELUX ROOMS
 
                     printf ("\033[1;34mTotal delux rooms: %d\n\033[0m", hotel.n_delux_rooms);
                     printf ("%s", "Enter no of rooms to delete: ");
-                    scanf ("%d", &n_room);
+                    n_room = input_valid(); // if this returns then there will be a buffer
+                    while('\n'!= getchar()); // ! clearing the buffer
 
                     if ( n_room > hotel.n_delux_rooms ) { // checking whether the rooms enough to delete or not
-                        puts ("number of rooms exceeds than the original number."); 
+                        puts (RED"\n\nnumber of rooms exceeds than the original number."); 
                         printf ("=>already existing rooms: %d\n"
-                            "=>no of rooms to delete: %d\n\n",
+                            "=>no of rooms to delete: %d\n\n"RESET,
                             hotel.n_delux_rooms, n_room );
-                            continue;
+                        press_enter_to_continue();
+                        continue;
                     }
 
                     hotel.n_delux_rooms -= n_room;
                     hotel.n_total_rooms -= n_room;
                     hotel.available_roams -= n_room;
+                    hotel.available_delux_room-= n_room;
                     printf ("\033[1;32mrooms Deleted successfully\n"
                     "=>Updated number of delux-rooms: %d\n\n\033[0m", hotel.n_delux_rooms);
-                    puts("Press enter to continue.");
-                    getchar();// ignoring the enter
-                    getchar();
+                    press_enter_to_continue();
                     break;
 
                 case 3: // FOR LUXURY ROOMS
@@ -373,20 +348,20 @@ void delete_room(int id) {
                     while('\n'!= getchar());
 
                     if ( n_room > hotel.n_luxury_rooms ) { // checking whether the rooms enough to delete or not
-                        puts ("Number of Rooms Exceeds Existing Rooms."); 
+                        puts (RED"\n\nNumber of Rooms Exceeds Existing Rooms."); 
                         printf ("=>already existing rooms: %d\n"
-                            "=>no of rooms to delete: %d\n\n",
+                            "=>no of rooms to delete: %d\n\n"RESET,
                             hotel.n_luxury_rooms, n_room );
-                            continue;
+                        press_enter_to_continue();
+                        continue;
                     }
                     hotel.n_luxury_rooms -= n_room;
                     hotel.n_total_rooms -= n_room;
                     hotel.available_roams -= n_room;
+                    hotel.available_luxury_room -= n_room;
                     printf ("\033[1;32mrooms Deleted successfully\n"
                     "=>Updated number of luxury-rooms: %d\n\n\033[0m", hotel.n_luxury_rooms);
-                    puts("Press enter to continue.");
-                    getchar();// ignoring the enter
-                    getchar();
+                    press_enter_to_continue();
                     break;
 
                 default:
