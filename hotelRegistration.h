@@ -4,6 +4,15 @@
 // #include "structHotel.h"
 
 
+// Define color codes
+#define RED "\033[1;31m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define BLUE "\033[1;34m"
+#define CYAN "\033[1;36m"
+#define RESET "\033[1;0m"
+
+
 
 
 
@@ -77,29 +86,35 @@ void hotel_registration( void ) {
     // ? GETTING THE username and hotel name from user
     printf ("Enter userName: ");
     scanf ("%29[^\n]", hotel.username);
-    while (getchar()!= '\n');
+    while (getchar()!= '\n'); // ! clearing the buffer
+
     printf ("%s", "Enter Hotel name: ");
     scanf ("%29[^\n]", hotel.hotel_name);
-    while (getchar()!= '\n');
+    while (getchar()!= '\n'); // ! clearing the buffer
     while (1){
     printf ("%s", "Enter the city name: ");
     scanf ("%24[^\n]", hotel.city_name);
+    while (getchar()!= '\n'); // ! clearing the buffer
+
     if (check_name(hotel.city_name))
         break;
-        clearScreen();
-    puts("Invalid/Currently We Are Not In This Area!");
+    // if the check_name returns false =>
+    puts(RED"Invalid/Currently We Are Not In This Area!"RESET);
     puts("Please Re-Enter:");
-    while(getchar()!= '\n');
     }
     // Pointing the correct place and reserving bytes accordingly
     fseek (fptr, (hotel.id - 1) * sizeof (Hotel), SEEK_SET);
     fwrite (&hotel, sizeof (Hotel), 1, fptr); // writing the data
     fflush (fptr);
 
-    printf("Hotel ID: %d\n", hotel.id);
-    printf("Username: %s\n", hotel.username);
-    printf("Hotel Name: %s\n", hotel.hotel_name);
+    printf("Hotel Name: %s\n"RESET, hotel.hotel_name);
+    puts (BLUE"----------------------------------------------------------------");
+    printf (CYAN"Rememebr your fllowing credentials, you will login using this id!\n"RESET);
+    puts (BLUE"----------------------------------------------------------------");
 
-    printf ("Rememebr your id (%d), you will login using this id!\n", hotel.id);
+    printf(GREEN"\nHotel ID: %d\n", hotel.id);
+    printf("Username: %s\n"RESET, hotel.username);
+
+    press_enter_to_continue();
     fclose (fptr);
 }

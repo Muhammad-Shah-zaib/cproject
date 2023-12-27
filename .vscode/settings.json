@@ -11,6 +11,10 @@
         "recommendationgetbudget.h": "c",
         "carxhotelreadclient.h": "c",
         "hotelreadclient.h": "c",
-        "carconfirmprompt.h": "c"
+        "carconfirmprompt.h": "c",
+        "structcarrental.h": "c",
+        "clearscreen.h": "c",
+        "carlogin.h": "c",
+        "prompts.h": "c"
     }
 }

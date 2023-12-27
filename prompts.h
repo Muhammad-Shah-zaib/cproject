@@ -1,36 +1,46 @@
 #include <stdio.h>
 
-
+// Define color codes
+#define RED "\033[1;31m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define BLUE "\033[1;34m"
+#define CYAN "\033[1;36m"
+#define RESET "\033[1;0m"
 
 
 int starting_prompt(){
     int choice;
     puts ("\tWelcome");
 
-        while(1){
+    while(1){
         printf("%s\n%s\n%s\n%s\n%s\n","Please Select:",
                 "1.\tRegistration",
                 "2.\tLogin",
                 "3.\tClinet",
                 "\n\t0 to Exit");
-        if (scanf("%d",&choice)==1)
+
+        // checking for integer input
+        if ( scanf("%d",&choice) != 1 ) {
+            while ( '\n' != getchar() ); // ! clearing the input buffer
+            clearScreen();
+            puts (RED"Wrong input."RESET);
+            continue;
+        }
+        while ( '\n' != getchar() ); // ! clearing the input buffer
+
+        // checking for right int iput
+        if ( (choice < 0 || choice > 3) ){
+            clearScreen();
+            puts (RED"Wrong input."RESET);
+            continue;
+        }
+
+
         break;
-        clearScreen();
-        puts("Wrong Input Please Make a Valid Selection!");
-        while(getchar()!='\n');
-        }
-        getchar(); // claring buffer
 
-        while ((choice<0) || (choice >3)){
-            puts("Invalid Input.");
-
-            printf("%s\n%s\n%s\n%s\n%s","Please Select: ",
-                    "1.\tRegistration",
-                    "2.\tLogin",
-                    "3.\tClinet",
-                    "\n\t0 to Exit.");
-            scanf("%d",&choice);
-        }
+        
+    }
     if (choice == 0) return 0;
     return choice;
 }

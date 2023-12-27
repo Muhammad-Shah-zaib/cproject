@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "pressEnterToContinue.h"
 #include "clearScreen.h"
 #include "structHotel.h"
 #include "structCarRental.h"
@@ -29,44 +30,41 @@
 int main ( void) {
 
     // ? prompting user to select among the options
-    //clearScreen();
+    clearScreen();
     int selection = starting_prompt(); // ? selection_prompt will return values (1, 2, 3)
-    // if (selection == 0) {
-    //     puts("Have A Good Day!");
-    //     return 0;
-    // }
-    // clearScreen();
-    while ( selection != 4 ) {
+
+    while (1) {
         switch (selection)
         {
             case 1: {
-                
+                clearScreen();
                 int choice; // checking for hotel_registration or car_rental_registration
 
                 do{
-                        // clearScreen(); // clearing screen
+                    // clearScreen(); // clearing screen
                     puts ("Select among the followings: ");
                     printf ("%s\n%s\n%s\n", // pompting suer
                         "1.\tHotel registration.",
                         "2.\tCar Rental registratoin.",
-                        "  \t0 to Exit.");
+                        "\t0 to Exit.");
 
                      // reading the choice
                     if (scanf("%d", &choice) != 1) {
-                        clearScreen();
+                        while ( getchar() != '\n'); // ! clearing the buffer
 
+                        clearScreen();
                         puts ("Wrong Input!"); 
                         int c; // to store and discard invalid characters
-                        while ((c = getchar()) != '\n' && c != EOF); // clearing the buffer
                         continue;
                     }
 
                     if (choice < 0 || choice > 3 ){
+                        while (getchar()!= '\n'); // ! clearing the buffer 
+
                         clearScreen();
-                        while (getchar()!= '\n'); 
                         puts("Wrong Input"); // clearing buffer
                         continue;    
-                        }
+                    }
                     switch (choice) {
                         case 0: // to exit
                             break;

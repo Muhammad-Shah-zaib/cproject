@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-// #include "structCarRental.h"
-// #include "emptyCarGenerator.h"
 
 // Define color codes
 #define RED "\033[1;31m"
@@ -75,29 +73,30 @@ void car_rental_registration ( void ){
 
     printf ("Enter your user name: ");
     scanf("%s", car.username);
+    while ('\n' != getchar());
+    
 
     printf ("Enter your company name: ");
     scanf("%s", car.company_name);
+    while ('\n' != getchar());
 
     printf ("Enter your city name: ");
     scanf("%s", car.city_name);
+    while ('\n' != getchar());
 
     fseek ( cfptr, (car.id - 1) * sizeof (Car_Rental), SEEK_SET );
     fwrite( &car, sizeof (Car_Rental), 1, cfptr );
     fflush (cfptr);
 
     puts (BLUE"+--------------------------------------------------------------------+"RESET);
-    puts (BLUE"|                                                                    |"RESET);
-    printf (BLUE"|"RED"Remember your following credentials, you need them while logging in."BLUE"|\n"RESET);
-    puts (BLUE"|                                                                    |"RESET);
+    printf (BLUE"|"CYAN"Remember your following credentials, you need them while logging in."BLUE"|\n"RESET);
     puts (BLUE"+--------------------------------------------------------------------+"RESET);
 
     printf (GREEN"=>id: %d\n"RESET, car.id);
     printf (GREEN"=>username: %s\n\n"RESET, car.username);
+    press_enter_to_continue();
+    clearScreen();
 
-    printf (YELLOW "Press enter to continue.\n" RESET   );
-    getchar(); // ignoring enter
-    getchar();
     fclose ( cfptr );
 }
 

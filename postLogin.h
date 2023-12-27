@@ -66,7 +66,7 @@ void add_room(int id) {
     }
 
     // making an empty hotel
-    Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Hotel hotel = {0};
 
     // offsetting the file pointer
     fseek(fptr, (id - 1) * sizeof(Hotel), SEEK_SET);
@@ -111,6 +111,7 @@ void add_room(int id) {
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
                 hotel.p_standard_room = price_per_room;
+                hotel.available_standard_room += n_room;
 
                 puts("\n\033[1;34mrooms added successfully\033[0m");
                 printf("\033[1;32m=>total standard rooms: %d\n\033[0m", hotel.n_standard_rooms);
@@ -133,6 +134,7 @@ void add_room(int id) {
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
                 hotel.p_delux_room = price_per_room;
+                hotel.available_delux_room += n_room;
 
                 puts("\n\033[1;34mrooms added successfully\033[0m");
                 printf("\033[1;32m=>total delux rooms: %d\n\033[0m", hotel.n_delux_rooms);
@@ -156,6 +158,7 @@ void add_room(int id) {
                 hotel.n_total_rooms += n_room;
                 hotel.available_roams += n_room;
                 hotel.p_luxury_room = price_per_room;
+                hotel.available_luxury_room += n_room;
 
                 puts("\n\033[1;34mrooms added successfully\033[0m");
                 printf("\033[1;32m=>total luxury rooms: %d\n\033[0m", hotel.n_luxury_rooms);

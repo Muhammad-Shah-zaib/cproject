@@ -345,29 +345,34 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
             clear_input_buffer();
             continue;
         }
-        // break;
-        puts("Check 1");
+        clear_input_buffer();
+
     switch (choice){
 
     case '1':
-            puts("Check 2");
         if (least_expesive_hotel.available_standard_room < n_rooms  ){
             puts("Number of Rooms Not Available");
-            puts("Check 3");
             check = 0;
+        }else {
+            least_expesive_hotel.available_standard_room -= n_rooms;
+            least_expesive_hotel.available_roams -= n_rooms;
+            least_expesive_hotel.booked_standard_room += n_rooms;
+            least_expesive_hotel.booked_rooms += n_rooms;
         }
-            break;
+
+        break;
     case '2':
         if (least_expesive_hotel.available_delux_room < n_rooms ){
             puts("Number Of Rooms Not Available");
             check = 0;
-        }
-            break;
+        }else least_expesive_hotel.available_delux_room -= n_rooms;
+        
+        break;
     case '3':
         if (least_expesive_hotel.available_luxury_room < n_rooms ){
             puts("Number of Rooms Not Available");
             check = 0; 
-        }
+        }else least_expesive_hotel.available_luxury_room -= n_rooms;
     }
         if (check == 0)
             continue;
