@@ -18,7 +18,7 @@ int starting_prompt(){
         printf("%s\n%s\n%s\n%s\n%s\n"GREEN"=> "RESET,"Please Select:",
                 "1.\tRegistration",
                 "2.\tLogin",
-                "3.\tClinet",
+                "3.\tClient",
                 "\n\t0 to Exit");
 
         // checking for integer input
