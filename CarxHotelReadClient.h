@@ -145,8 +145,8 @@ void select_car ( Car_Modal *car, char *car_company_name, char *car_type, const 
                                     break;  
 
                                 case '2':
-                                    strcpy (car_type, "non-SUV");
-                                    (*car) = display_cars( "non-SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv, location );
+                                    strcpy (car_type, "Sedan");
+                                    (*car) = display_cars( "Sedan", cars[select_car_index - 1].company_name, cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv, location );
 
 
                                     break;

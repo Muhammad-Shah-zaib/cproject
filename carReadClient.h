@@ -27,14 +27,20 @@ void display_selected_car_rental (Car_Rental *car) {
     printf("Location: %s\n", car->city_name);
     printf(BLUE"------------SUV Cars------------\n"RESET);
     printf(CYAN"Available Cars: %u\n\n", car->n_suv);
+
+    // displaying suvs
     for (unsigned int i = 0; i < car->n_suv; ++i) {
         printf(GREEN"=>%d.\tModel: %u, Price: %u, Name: %s\n"RESET, i+1, car->suv[i].modal, car->suv[i].price, car->suv[i].name);
     }
-    printf(BLUE"---------Non-SUV Cars---------\n"RESET);
+    
+    // displaying sedans
+    printf(BLUE"---------Sedan Cars---------\n"RESET);
     printf(CYAN"Available Cars: %u\n\n", car->n_non_suv);
     for (unsigned int i = 0; i < car->n_non_suv; ++i) {
         printf(GREEN"=>%d.\tModel: %u, Price: %u, Name: %s\n"RESET, i+1, car->non_suv[i].modal, car->non_suv[i].price, car->non_suv[i].name);
     }
+
+    // displaying premiums
     printf(BLUE"---------Premium Cars---------\n"RESET);
     printf(CYAN"Available Cars: %u\n\n"RESET, car->n_premium);
     for (unsigned int i = 0; i < car->n_premium; ++i) {
@@ -51,6 +57,11 @@ void display_selected_car_rental (Car_Rental *car) {
 
 
 Car_Modal display_cars ( const char *car_type, const char *company_name, Car_Modal *car, int car_count, const char *location ){
+    if (car_count == 0){
+        puts (RED"No car found"RESET);
+        puts (YELLOW"Thank you for using our service."RESET);
+        exit(0);
+    }
     puts(BLUE"---------------------------------------------------------");
 
     for (int i = 0 ; i < car_count ; i++ ){
@@ -62,8 +73,8 @@ Car_Modal display_cars ( const char *car_type, const char *company_name, Car_Mod
     int car_index;
     printf ("Enter the serial number of the car you want to book: ");
     scanf ("%d", &car_index);
-
-    getchar(); // clearing the buffer
+    while ( '\n' != getchar() );
+    
     puts (YELLOW"Press Enter to Proceed to generate ticket."RESET);
     while( '\n' != getchar() ); // clearing the buffer
 
@@ -169,7 +180,7 @@ void car_read_client(const char *location) {
             // Print SUVs information if available
             if (0 != cars[i].n_suv) {
                 printf(BLUE"------------- SUVs -------------\n");
-                // Loop through each SUV
+                // Loop through each SUV-
                 for (int j = 0; j < cars[i].n_suv; j++) {
                     // Print details of each SUV
                     printf(YELLOW"model: %5d| modal name: %10s| price: %6d\n"RESET, 
@@ -179,7 +190,7 @@ void car_read_client(const char *location) {
 
             // Print non-SUVs information if available
             if (0 != cars[i].n_non_suv) {
-                printf(BLUE"---------- non-SUVs ----------\n");
+                printf(BLUE"---------- Sedans ----------\n");
                 // Loop through each non-SUV
                 for (int j = 0; j < cars[i].n_non_suv; j++) {
                     // Print details of each non-SUV
@@ -248,7 +259,6 @@ void car_read_client(const char *location) {
                     display_selected_car_rental ( &cars[select_car_index - 1] );
 
                     if (confirm_prompt()){
-                        clearScreen();
 
                         char client_car_choice;
 
@@ -256,25 +266,23 @@ void car_read_client(const char *location) {
                             printf (GREEN"%s",
                                 "Select car type: \n"
                                 "1.\tSUV\n"
-                                "2\tnon-SUV\n"
+                                "2\tSedan\n"
                                 "3.\tPremium\n=> "RESET);
                                 client_car_choice = getchar();
                                 getchar(); // clearing the buffer
 
-                                // reading the nuumber of days
-                                int days;
-                                printf("%s"GREEN"=> "RESET,
-                                    "Enter number of days...");
-                                scanf("%d", &days);
-                                while ( '\n' != getchar() );
+                                
 
                             switch (client_car_choice){
 
                                 case '1': {
                                     Car_Modal car = display_cars( "SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].suv, cars[select_car_index - 1].n_suv, location );
-
-
-                                    // !GENERATIGN TICKET
+                                    // reading the nuumber of days
+                                int days;
+                                printf("%s\n"GREEN"=> "RESET,
+                                    "Enter number of days...");
+                                scanf("%d", &days);
+                                while ( '\n' != getchar() );
                                     generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "SUV", location, days);
                                     puts ("Thanks for using our service.");
                                     sleep(2);
@@ -284,10 +292,15 @@ void car_read_client(const char *location) {
                                     break;  
                                 }
                                 case '2': {
-                                    Car_Modal car = display_cars( "non-SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv, location );
-
+                                    Car_Modal car = display_cars( "Sedan", cars[select_car_index - 1].company_name, cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv, location );
+                                    // reading the nuumber of days
+                                    int days;
+                                    printf("%s\n"GREEN"=> "RESET,
+                                        "Enter number of days...");
+                                    scanf("%d", &days);
+                                while ( '\n' != getchar() );
                                     // !GENERATIGN TICKET
-                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "non-SUV", location, days);
+                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "Sedan", location, days);
                                     puts ("Thanks for using our service.");
                                     sleep(2);
 
@@ -296,7 +309,12 @@ void car_read_client(const char *location) {
                                 }
                                 case '3':{
                                     Car_Modal car = display_cars( "Premium", cars[select_car_index - 1].company_name, cars[select_car_index - 1].premium, cars[select_car_index - 1].n_premium, location );
-
+                                    // reading the nuumber of days
+                                    int days;
+                                    printf("%s\n"GREEN"=> "RESET,
+                                        "Enter number of days...");
+                                    scanf("%d", &days);
+                                    while ( '\n' != getchar() );
                                     // !GENERATIGN TICKET
                                     generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "Premium", location, days);
                                     puts ("Thanks for using our service.");

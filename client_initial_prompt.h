@@ -60,17 +60,20 @@ void client_initial_prompt( void ) {
 
                 case '1': 
                     hotel_read_client( location ); // location is a string
-                    puts ("case 1");
+                    puts (YELLOW"Thanks for using our service."RESET);
+                    exit (EXIT_SUCCESS);
                     break;
 
                 case '2': 
                     car_read_client( location ); // location is a string
-                    puts ("case 2");
+                    puts (YELLOW"Thanks for using our service."RESET);
+                    exit (EXIT_SUCCESS);
                     break;
 
                 case '3':
                     both_read_client ( location ); // location is a string
-                    puts ("case 3");
+                    puts (YELLOW"Thanks for using our service."RESET);
+                    exit (EXIT_SUCCESS);
                     break;
                 case '0':
                     clearScreen();

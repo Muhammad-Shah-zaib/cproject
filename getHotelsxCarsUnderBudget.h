@@ -62,7 +62,7 @@ void _get_carRentals_under_budegt ( Car_Rental *cars, unsigned int cars_count, u
         return;
     
 
-
+    press_enter_to_continue();
     generate_ticket ( hotel_name, room_tpye, n_rooms, p_room, &car ,car_company_name, car_type, location, days);
     puts (GREEN"Thank you for using our service."RESET);
     free (car_type);
@@ -254,15 +254,17 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
         {
 
         case '1':  
+            press_enter_to_continue();
             _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room, days);
             break;
 
         case '2':
-
+            press_enter_to_continue();
             _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room, days);
             break;
 
         case '3':
+            press_enter_to_continue();
             _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room , days);
             break;
 
