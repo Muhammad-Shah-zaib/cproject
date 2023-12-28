@@ -60,7 +60,7 @@ bool car_add_budget (unsigned int *b_per_day, int *b_lowest_p, int *b_highest_p)
     char choice;
     do {
         // asking for adding 2500/- more or not
-        printf (RED"%s"RESET, "Want to add RS-2500 more in your budget?\n=> ");
+        printf (RED"%s"RESET, "Want to add RS-2500 more in your per day budget?\n=> ");
         choice = getchar();
         while ( '\n' != getchar() );// ! clearing buffer
 
@@ -302,11 +302,16 @@ void get_carRentals_under_budegt ( Car_Rental *cars, unsigned int cars_count, un
     char *car_type;
 
     car_type = get_car_type ( choice_car_type );
-
+    
     if ( 0 == strcmp(car.name, "") )
         return;
-    
-    generate_ticket ("", '\0',0,0, &car ,car_company_name, car_type, location);
+    // reading the nuumber of days
+    int days;
+    printf("%s"GREEN"=> "RESET,
+        "Enter number of days...");
+    scanf("%d", &days);
+    while ( '\n' != getchar() );
+    generate_ticket ("", '\0',0,0, &car ,car_company_name, car_type, location, days);
 
     free (car_type);
     exit (EXIT_SUCCESS);

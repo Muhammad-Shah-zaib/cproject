@@ -115,8 +115,7 @@ void hotel_read_client(char *location) {
                    "2.\tSuggest Me.\n"
                    GREEN"=> "RESET);
 
-            // WAS FACING SOME PREVIOUS BUFFER WHEN I RUN THIS PROGRAM SO CLEARING THE BUFFER HERE FOR NOW...
-            getchar();
+
             scanf("%c", &choice);
             while ('\n' != getchar()); // clearing buffer
             if (choice < '0' || choice > '2') {
@@ -149,7 +148,6 @@ void hotel_read_client(char *location) {
                         char client_room_choice;
 
                         do {
-                            clearScreen();
                             printf(GREEN"%s",
                                    "Select room type: \n"
                                    "1.\tstandard\n"
@@ -180,7 +178,12 @@ void hotel_read_client(char *location) {
                                 }
                                 break;
                             }
-
+                            // reading the nuumber of days
+                                    int days;
+                                    printf("%s"GREEN"=> "RESET,
+                                        "Enter number of days...");
+                                    scanf("%d", &days);
+                                    while ( '\n' != getchar() );
                             switch (client_room_choice) {
 
                                 case '1':
@@ -189,11 +192,14 @@ void hotel_read_client(char *location) {
 
                                         exit(11);
                                     }
+                                    clearScreen();
                                     update_rooms(hotels->id, 1, n_room);
+                                    puts (GREEN"\nPress Enter to Proceed to generate ticket."RESET);
+                                    while ( '\n' != getchar() );
                                     generate_ticket(hotels[select_hotel_index - 1].hotel_name, "Standard Room",
-                                                    hotels[select_hotel_index - 1].n_standard_rooms,
+                                                    n_room,
                                                     hotels[select_hotel_index - 1].p_standard_room, NULL, "", "",
-                                                    location);
+                                                    location, days);
                                     puts("Thank You For Using Our Service!");
                                     exit(EXIT_SUCCESS);
                                     sleep(2);
@@ -204,11 +210,14 @@ void hotel_read_client(char *location) {
                                         puts("Number of Rooms Not Available!");
                                         exit(12);
                                     }
+                                    clearScreen();
                                     update_rooms(hotels->id, 2, n_room);
+                                    puts (GREEN"\nPress Enter to Proceed to generate ticket."RESET);
+                                    while ( '\n' != getchar() );
                                     generate_ticket(hotels[select_hotel_index - 1].hotel_name, "Delux Room",
-                                                    hotels[select_hotel_index - 1].n_delux_rooms,
+                                                    n_room,
                                                     hotels[select_hotel_index - 1].p_delux_room, NULL, "", "",
-                                                    location);
+                                                    location, days);
                                     printf("Generating ticket!\n");
                                     puts("Thank You For Using Our Service!");
                                     exit(EXIT_SUCCESS);
@@ -216,15 +225,20 @@ void hotel_read_client(char *location) {
                                     break;
 
                                 case '3':
-                                    update_rooms(hotels->id, 3, n_room);
                                     if (hotels->available_luxury_room < n_room) {
                                         puts("Number of Rooms Not Available!");
                                         exit(13);
                                     }
+                                    clearScreen();
+                                    update_rooms(hotels->id, 3, n_room);
+                                    puts (GREEN"\nPress Enter to Proceed to generate ticket."RESET);
+                                    while ( '\n' != getchar() );
+
+                                    
                                     generate_ticket(hotels[select_hotel_index - 1].hotel_name, "Luxury Room",
-                                                    hotels[select_hotel_index - 1].n_luxury_rooms,
+                                                    n_room,
                                                     hotels[select_hotel_index - 1].p_luxury_room, NULL, "", "",
-                                                    location);
+                                                    location, days);
                                     printf("Generating ticket!\n");
                                     puts("Thank You For Using Our Service!");
                                     exit(EXIT_SUCCESS);
@@ -244,17 +258,12 @@ void hotel_read_client(char *location) {
 
             case '2': {
 
-                int days, budget, hotel_budget, car_budget = hotel_budget = budget = days = 0;
+                int days, budget, hotel_budget, car_budget = hotel_budget = budget = days = -1;
 
                 get_info(&days, &budget); // this function read days and budget
                 make_calculations(&days, &budget, &hotel_budget, &car_budget, (false)); // this will update my budget
-                // ! NOW ME CAR BUDGET IS ZERO IS USER DONT WANT ANY TRANSPORT
-                // ! ALL THE BUDGET IS OPTED FOR DAYS
 
-                printf(" Days : %d \n Total budget : %d \n Hotel Budget: %d \n Car_budget : %d \n ", days, budget,
-                       hotel_budget, car_budget);
-
-                get_hotels_under_budegt(hotels, hotels_Count, budget, days, location);
+                get_hotels_under_budegt(hotels, hotels_Count, budget, n_room, location, days);
                 exit(EXIT_SUCCESS);
                 break;
             }

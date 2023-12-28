@@ -48,8 +48,7 @@ bool add_budget(unsigned int *budget, const Hotel *hotel, const char check_room)
     else if (check_room == '2')
     {
         budget_to_add = hotel->p_delux_room - (*budget);
-        printf("\n%d\n", hotel->p_delux_room);
-        printf("\n%d\n", hotel->p_luxury_room);
+;
     }
     else if (check_room == '3')
         budget_to_add = hotel->p_luxury_room - (*budget);
@@ -58,8 +57,8 @@ bool add_budget(unsigned int *budget, const Hotel *hotel, const char check_room)
     {
         // break the loop if budget is sufficient
         if (budget_to_add <= 0) return true;
-        printf("Do you want to add %d more budget?[Y\\n]", budget_to_add);
-        printf("=>");
+        printf("Do you want to add %d more in your per day budget?[Y\\n]", budget_to_add);
+        printf(GREEN"=>"RESET);
 
         choice = getchar();
         clear_input_buffer();
@@ -230,7 +229,11 @@ Hotel find_least_expensive_hotel(Hotel *hotels, const unsigned int hotels_count,
     }
 }
 
-void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, unsigned int b_per_day, unsigned int n_rooms, const char *location)
+
+
+
+
+void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, unsigned int b_per_day, unsigned int n_rooms, const char *location, int days)
 {
 
     int budget_gap;
@@ -309,7 +312,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
     char choice;
     do
     {
-        puts("Select among the followings.(C1)");
+        puts("Select among the followings.");
         printf("1.\tStandard Room\n");
         printf("2.\tDelux Room\n");
         printf("3.\tLuxury Room\n=> ");
@@ -324,8 +327,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
             continue;
         }
 
-        // if ( !check_for_room_budget( &least_expesive_hotel, b_per_day, choice )){
-        printf("\n%d\n", b_per_day);
+
 
         if (!add_budget(&b_per_day, &least_expesive_hotel, choice))
         {
@@ -345,6 +347,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
             clear_input_buffer();
             continue;
         }
+        clear_input_buffer();
     
     if (n_rooms <=0){ //! If entered room to book is less than or 0 then exit
         puts("Thank You For Using Our Service!");
@@ -355,8 +358,8 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
 
     case '1':
         if (least_expesive_hotel.available_standard_room < n_rooms  ){
-            printf("%d\n", least_expesive_hotel.available_standard_room);
-            puts("Number of Rooms Not Available");
+            puts(RED"Number of Rooms Not Available"RESET);
+            printf("Total available rooms: %d\n", least_expesive_hotel.available_standard_room);
             check = 0;
         }else {
             least_expesive_hotel.available_standard_room -= n_rooms;
@@ -368,14 +371,16 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
         break;
     case '2':
         if (least_expesive_hotel.available_delux_room < n_rooms ){
-            puts("Number Of Rooms Not Available");
+            puts(RED"Number Of Rooms Not Available"RESET);
+            printf("Total available rooms: %d\n", least_expesive_hotel.available_delux_room);
             check = 0;
         }else least_expesive_hotel.available_delux_room -= n_rooms;
         
         break;
     case '3':
         if (least_expesive_hotel.available_luxury_room < n_rooms ){
-            puts("Number of Rooms Not Available");
+            puts(RED"Number of Rooms Not Available"RESET);
+            printf("Total avilable rooms: %d\n", least_expesive_hotel.available_luxury_room);
             check = 0; 
         }else least_expesive_hotel.available_luxury_room -= n_rooms;
     }
@@ -384,7 +389,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
 
         else break;
     }
-
+    press_enter_to_continue();
     do
     {
         switch (choice)
@@ -393,7 +398,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
         case '1':
        
             update_rooms(least_expesive_hotel.id, 1 , n_rooms); // ! passing to update the rooms
-            generate_ticket(least_expesive_hotel.hotel_name, "Standard Room", n_rooms, least_expesive_hotel.p_standard_room, NULL, "", "", location);
+            generate_ticket(least_expesive_hotel.hotel_name, "Standard Room", n_rooms, least_expesive_hotel.p_standard_room, NULL, "", "", location, days);
             puts("Thank You For Using Our Service!");
             sleep(2);
             exit(EXIT_SUCCESS);
@@ -401,7 +406,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
 
         case '2':
             update_rooms(least_expesive_hotel.id, 2, n_rooms); // ! passing to update the rooms
-            generate_ticket(least_expesive_hotel.hotel_name, "Delux Room", n_rooms, least_expesive_hotel.p_delux_room, NULL, "", "", location);
+            generate_ticket(least_expesive_hotel.hotel_name, "Delux Room", n_rooms, least_expesive_hotel.p_delux_room, NULL, "", "", location, days);
             puts("Thank You For Using Our Service!");
             sleep(2);
             exit(EXIT_SUCCESS);
@@ -409,7 +414,7 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
 
         case '3':
             update_rooms(least_expesive_hotel.id, 3, n_rooms); // ! passing to update the rooms
-            generate_ticket(least_expesive_hotel.hotel_name, "Luxury Room", n_rooms, least_expesive_hotel.p_luxury_room, NULL, "", "", location);
+            generate_ticket(least_expesive_hotel.hotel_name, "Luxury Room", n_rooms, least_expesive_hotel.p_luxury_room, NULL, "", "", location, days);
             puts("Thank You For Using Our Service!");
             sleep(2);
             exit(EXIT_SUCCESS);
@@ -421,5 +426,3 @@ void get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, uns
 
     } while (1);
 }
-
-// }

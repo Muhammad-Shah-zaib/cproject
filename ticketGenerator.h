@@ -6,21 +6,22 @@
 
 
 
-void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int n_rooms, unsigned int p_per_room,  Car_Modal *car, const char *car_company_name, const char *car_type, const char *location) {
+void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int n_rooms, unsigned int p_per_room,  Car_Modal *car, const char *car_company_name, const char *car_type, const char *location, int days) {
 
     char name[30], email[30];
     char contact [15] ;
-
+    // getting the client credentils for generating the ticket
     printf("Please Enter Your Name: ");
-    // clear_input_buffer();
-    while (getchar()!='\n');
     scanf("%29[^\n]", name);
+    while (getchar()!='\n');
+    
     printf("Please Enter Your Phone Number: ");
-    while (getchar()!='\n');
     scanf("%14[^\n]", contact);
-    printf("Please Enter Your Email: ");
     while (getchar()!='\n');
+
+    printf("Please Enter Your Email: ");
     scanf("%29[^\n]", email);
+    while (getchar()!='\n');
 
 
     char filename[35];
@@ -41,6 +42,7 @@ void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int 
     fprintf(fptr, "Email: %s\n", email);
     fprintf(fptr, "\n----Booking Details----\n");
     fprintf(fptr, "Location: %s\n", location);
+    fprintf(fptr, "Number of days: %d\n", days);
 
 
     
@@ -48,7 +50,7 @@ void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int 
         fprintf(fptr, "\nhotel name: %s\n", hotel_name);
         fprintf(fptr, "Room Type: %s\n", room_tpye);
         fprintf(fptr, "Number of Rooms: %d\n", n_rooms);
-        fprintf(fptr, "Price per rrom: %d\n", p_per_room);
+        fprintf(fptr, "Price per room: %d\n", p_per_room);
         fprintf(fptr, "Total Price: %d\n ", p_per_room * n_rooms);
     }
 
@@ -61,9 +63,9 @@ void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int 
     }
     int total_cost;
     if (NULL != car)
-        total_cost = p_per_room + car->price;
+        total_cost = ((p_per_room * n_rooms) * days)  + (car->price * days);
     else 
-        total_cost = p_per_room ;
+        total_cost = ( (p_per_room * n_rooms) * days );
 
     fprintf(fptr, "\nTotal Cost: %d\n", total_cost);
     // fprintf(fptr, "Number of Days: %d\n", days/);

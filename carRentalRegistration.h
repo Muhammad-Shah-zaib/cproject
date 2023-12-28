@@ -75,8 +75,16 @@ void car_rental_registration ( void ){
     scanf("%29[^\n]", car.company_name);
     while ('\n' != getchar());
 
-    printf ("Enter your city name: ");
-    scanf("%29[^\n]", car.city_name);
+    do {
+        printf ("Enter your city name: ");
+        scanf("%29[^\n]", car.city_name);
+        if ( check_name(car.city_name) ) break;
+        else {
+            puts  ("We are not currently available here yet.");
+            continue;
+        }
+
+    }while (1);
     while ('\n' != getchar());
 
 

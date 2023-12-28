@@ -4,19 +4,16 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "check_location.h"
 #include "recommendationGetBudget.h"
-#include "carConfirmPrompt.h"
+#include "ConfirmPrompt.h"
 #include "hotelReadClient.h"
 #include "carReadClient.h"
-#include "getHotels_UnderBudget.h"
+#include "getHotelsxCarsUnderBudget.h"
 #include "CarxHotelReadClient.h"
 
 
 
 void client_initial_prompt( void ) {
-
-    
     char choice = '\0', location[30]; 
 
     clearScreen();
@@ -49,14 +46,13 @@ void client_initial_prompt( void ) {
                     "\t0 to Exit\n=> ");
             if (scanf("%c", &choice) != 1) {// checking for valid int input
 
+                while('\n' != getchar()); // clearing input buffer
                 clearScreen();
                 puts("\tWrong Input");
-
-                while('\n' != getchar()); // clearing input buffer
-
-
                 continue;
             }
+            while('\n' != getchar()); // clearing input buffer
+
         }
 
 
@@ -76,6 +72,11 @@ void client_initial_prompt( void ) {
                     both_read_client ( location ); // location is a string
                     puts ("case 3");
                     break;
+                case '0':
+                    clearScreen();
+                    puts(RED"Redirecting..."RESET);
+                    sleep(2);
+                    return;
                 default: 
                     puts("Invalid Input!");
 

@@ -135,7 +135,7 @@ void car_read_client(const char *location) {
     do {
         puts (GREEN"Enter your city name."RESET);
         printf ("=> ");
-        scanf ("%s", user_location);
+        scanf ("%[^\n]", user_location);
         while ('\n' != getchar() ); // ! clearing buffer
 
         // cehcking location and breaing the loop
@@ -261,6 +261,13 @@ void car_read_client(const char *location) {
                                 client_car_choice = getchar();
                                 getchar(); // clearing the buffer
 
+                                // reading the nuumber of days
+                                int days;
+                                printf("%s"GREEN"=> "RESET,
+                                    "Enter number of days...");
+                                scanf("%d", &days);
+                                while ( '\n' != getchar() );
+
                             switch (client_car_choice){
 
                                 case '1': {
@@ -268,7 +275,7 @@ void car_read_client(const char *location) {
 
 
                                     // !GENERATIGN TICKET
-                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "SUV", location);
+                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "SUV", location, days);
                                     puts ("Thanks for using our service.");
                                     sleep(2);
 
@@ -280,7 +287,7 @@ void car_read_client(const char *location) {
                                     Car_Modal car = display_cars( "non-SUV", cars[select_car_index - 1].company_name, cars[select_car_index - 1].non_suv, cars[select_car_index - 1].n_non_suv, location );
 
                                     // !GENERATIGN TICKET
-                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "non-SUV", location);
+                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "non-SUV", location, days);
                                     puts ("Thanks for using our service.");
                                     sleep(2);
 
@@ -291,7 +298,7 @@ void car_read_client(const char *location) {
                                     Car_Modal car = display_cars( "Premium", cars[select_car_index - 1].company_name, cars[select_car_index - 1].premium, cars[select_car_index - 1].n_premium, location );
 
                                     // !GENERATIGN TICKET
-                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "Premium", location);
+                                    generate_ticket("", "", 0, 0, &car, cars[select_car_index - 1].company_name, "Premium", location, days);
                                     puts ("Thanks for using our service.");
                                     sleep(2);
 

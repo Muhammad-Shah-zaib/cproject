@@ -28,7 +28,7 @@
 
 // make a function of get_carRentals_under_budegt() that first find out the least expensive car under a given range and then dislpay them and ask for selection
 void _get_carRentals_under_budegt ( Car_Rental *cars, unsigned int cars_count, unsigned int b_per_day, const char *location, char *hotel_name
-                                , char *room_tpye, unsigned int n_rooms, unsigned int p_room) {
+                                , char *room_tpye, unsigned int n_rooms, unsigned int p_room, int days) {
 
     // reading which type of car user wants
     char choice_car_type;
@@ -63,8 +63,8 @@ void _get_carRentals_under_budegt ( Car_Rental *cars, unsigned int cars_count, u
     
 
 
-    generate_ticket ( hotel_name,room_tpye , n_rooms , p_room, &car ,car_company_name, car_type, location);
-
+    generate_ticket ( hotel_name, room_tpye, n_rooms, p_room, &car ,car_company_name, car_type, location, days);
+    puts (GREEN"Thank you for using our service."RESET);
     free (car_type);
     exit (EXIT_SUCCESS);
     
@@ -93,9 +93,9 @@ void _get_carRentals_under_budegt ( Car_Rental *cars, unsigned int cars_count, u
 
 
 
-void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, unsigned int hotel_budget, unsigned int car_budget, unsigned int n_rooms, const char *location)
+void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, unsigned int hotel_budget, unsigned int car_budget, unsigned int days, const char *location)
 {
-
+    int n_rooms;
     int budget_gap;
     unsigned int j, index = 0;
     Hotel least_expesive_hotel = {0};
@@ -130,6 +130,7 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
                 continue;
         }
 
+        if (least_expesive_hotel.n_total_rooms!= 0){
         printf(BLUE "\nHotel name: %s\n", least_expesive_hotel.hotel_name);
         printf("Location: %s\n\n" RESET, least_expesive_hotel.city_name);
 
@@ -150,6 +151,7 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
             printf(RED "\t%15s : %8d\t : %-23s\n" RESET, "Luxury Room", least_expesive_hotel.p_luxury_room, "In Your Range");
         else if ((budget_gap = budget_difference(&hotel_budget, &least_expesive_hotel, '3')) > 0)
             printf(RED "\t%15s : %8d\t : %4s %-5d%13s\n" RESET, "Luxury Room", least_expesive_hotel.p_luxury_room, "PKR.", budget_gap, "Out Of Range");
+        }
     }
 
     while (1)
@@ -165,10 +167,14 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
                 // least_expesive_hotel = listed_hotels[i];
                 break;
         }
-        if (i != 3) break;
-        puts(RED "Invalid! Please Select From The Recommended List" RESET);
+        if ( i != 3 ) {
+            clearScreen();
+            break;
+        }
     }
+
     least_expesive_hotel = find_hotel_by_name(hotels, hotels_count, choose_name);
+    display_selected_hotel( least_expesive_hotel );
     char choice;
     do
     {
@@ -187,8 +193,6 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
             continue;
         }
 
-        // if ( !check_for_room_budget( &least_expesive_hotel, hotel_budget, choice )){
-        printf("\n%d\n", hotel_budget);
 
         if (!add_budget(&hotel_budget, &least_expesive_hotel, choice))
         {
@@ -250,24 +254,16 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
         {
 
         case '1':  
-            
-            _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room);
+            _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room, days);
             break;
 
         case '2':
 
-            // _get_carRentals_under_budegt (cars, car_count, car_budget, location);
-            generate_ticket(least_expesive_hotel.hotel_name, "Delux Room", n_rooms, least_expesive_hotel.p_delux_room, NULL, "", "", location);
-            puts("Thank You For Using Our Service!");
-            sleep(2);
-            exit(EXIT_SUCCESS);
+            _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room, days);
             break;
 
         case '3':
-            generate_ticket(least_expesive_hotel.hotel_name, "Luxury Room", n_rooms, least_expesive_hotel.p_luxury_room, NULL, "", "", location);
-            puts("Thank You For Using Our Service!");
-            sleep(2);
-            exit(EXIT_SUCCESS);
+            _get_carRentals_under_budegt (cars, car_count, car_budget, location, least_expesive_hotel.hotel_name, "Standard", n_rooms, least_expesive_hotel.p_standard_room , days);
             break;
 
         default:

@@ -18,6 +18,14 @@
         "prompts.h": "c",
         "pressentertocontinue.h": "c",
         "ticketgenerator.h": "c",
-        "car_delete.h": "c"
+        "car_delete.h": "c",
+        "client_initial_prompt.h": "c",
+        "gethotels_underbudget.h": "c",
+        "carreadclient.h": "c",
+        "check_location.h": "c",
+        "confirmprompt.h": "c",
+        "gethotelsunderbudget.h": "c",
+        "gethotelsxcarsunderbudget.h": "c",
+        "hotellogin.h": "c"
     }
 }

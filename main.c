@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "check_location.h"
 #include "pressEnterToContinue.h"
 #include "clearScreen.h"
 #include "structHotel.h"
@@ -12,9 +13,9 @@
 #include "prompts.h"
 #include "carLogin.h"
 #include "hotelLogin.h"
+#include "hotelRegistration.h"
 #include "carRentalRegistration.h"
 #include "client_initial_prompt.h"
-#include "hotelRegistration.h"
 #include "carPostLogin.h"
 
 // Define color codes
@@ -37,11 +38,10 @@ int main ( void) {
         switch (selection)
         {
             case 1: {
-                clearScreen();
                 int choice; // checking for hotel_registration or car_rental_registration
 
                 do{
-                    // clearScreen(); // clearing screen
+                    clearScreen(); // clearing screen
                     puts ("Select among the followings: ");
                     printf ("%s\n%s\n%s\n"GREEN"=> "RESET, // pompting suer
                         "1.\tHotel registration.",
@@ -92,11 +92,10 @@ int main ( void) {
 
             }
             case 2:{
-                clearScreen();
                 int choice_login; // checking for hotel_login or car_login
 
                 do{
-                    // clearScreen(); // clearing th eterminal screen
+                    clearScreen(); // clearing the terminal screen
                     puts ("Choose among the following");
                     printf ("%s\n%s\n%s\n"GREEN"=> "RESET, // pompting suer
                         "0.\tExit",

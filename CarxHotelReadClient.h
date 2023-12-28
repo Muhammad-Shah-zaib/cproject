@@ -7,9 +7,22 @@
 void select_car ( Car_Modal *car, char *car_company_name, char *car_type, const char *location ) {
 
     clearScreen();
+    printf(GREEN"=> "RESET);
+    char user_location[30];
+    do {
+        puts ("Enter your locaiton...");
+        scanf ("%[^\n]", user_location);
+        while ( '\n' != getchar() );
+        if(check_name(user_location)) break;
+        else {
+            puts ("Sorry,\n    We are not currently available here.");
+            puts ("Please, Re-Enter...");
+            continue;
+        }
 
+    }while (1);
     unsigned int car_count = 0;
-    Car_Rental *cars = find_cars(location, &car_count);
+    Car_Rental *cars = find_cars(user_location, &car_count);
 
     // Handle the case where no cars are found
     if (cars == NULL) {
@@ -74,7 +87,7 @@ void select_car ( Car_Modal *car, char *car_company_name, char *car_type, const 
         printf ("%s%s",
             "1.\tSELECT.\n",
             "2.\tWant Recommendations.\n"
-            "=> ");
+            GREEN"=> "RESET);
 
         scanf ("%c", &choice);
         while('\n' != getchar()); // clearing buffer
@@ -201,17 +214,21 @@ void both_read_client ( const char *location ) {
                 // pringting the hotels
                 printf(BLUE"-------------------------------------------------------------------------------------------------------------------------------------\n");
 
-                printf (YELLOW"=> %d.\t"BLUE"hotel_name: %s, location: %s, ",
-                i+1, hotels[i].hotel_name, hotels[i].city_name);
+                // printing the hotels
+                printf(BLUE"-------------------------------------------------------------------------------------------------------------------------------------\n");
+
+                printf(YELLOW"=> %d.\t"BLUE"Hotel Name: %s, Location: %s\n", i + 1, hotels[i].hotel_name, hotels[i].city_name);
 
                 // Display cost for STANDARD room
-                printf(YELLOW"Standard Room: /-%u per night, ", hotels[i].p_standard_room);
-                // Display cost for DELUXE room
-                printf("Deluxe Room: /-%u per night, ", hotels[i].p_delux_room);
-                // Display cost for LUXURY room
-                printf("Luxury Room: /-%u per night\n"RESET, hotels[i].p_luxury_room);
+                printf(YELLOW"   Standard Room: Rs. "RESET"%u per night\n", hotels[i].p_standard_room);
 
-                printf(BLUE"-------------------------------------------------------------------------------------------------------------------------------------\n" RESET);
+                // Display cost for DELUXE room
+                printf(YELLOW"   Deluxe Room: Rs. "RESET"%u per night\n", hotels[i].p_delux_room);
+
+                // Display cost for LUXURY room
+                printf(YELLOW"   Luxury Room: Rs. "RESET"%u per night\n", hotels[i].p_luxury_room);
+
+                printf(BLUE"-------------------------------------------------------------------------------------------------------------------------------------\n"RESET);
 
             }
 
@@ -227,8 +244,7 @@ void both_read_client ( const char *location ) {
                 "2.\tWant Recommendations.\n"
                 "=> ");
 
-            // WAS FACING SOME PREVIOUS BUFFER WHEN I RUN THIS PROGRAM SO CLEARING THE BUFFER HERE FOR NOW...
-            getchar(); 
+
             scanf ("%c", &choice);
             while ( '\n' != getchar()); // clearing buffer
             if (choice < '0' || choice > '2') {
@@ -237,7 +253,7 @@ void both_read_client ( const char *location ) {
         }while( choice < '0' || choice > '2');
 
         switch ( choice ) {
-            case '1': {
+            case '1': { // CUSTOM PLAN
 
                 int select_hotel_index; // for getting the hotel user want
 
@@ -260,9 +276,7 @@ void both_read_client ( const char *location ) {
 
                         char client_room_choice;
 
-                        do {
-                            clearScreen();
-                            printf (GREEN"%s",
+                        do {                            printf (GREEN"%s",
                                 "Select room type: \n"
                                 "1.\tstandard\n"
                                 "2\tDelux\n"
@@ -270,17 +284,23 @@ void both_read_client ( const char *location ) {
                                 client_room_choice = getchar();
                                 while ( '\n' != getchar()); // clearing the buffer
 
-
-                                // declariing the cariable to get the car credentails needed for generating the ticket
+                                // declariing the variable to get the car credentails needed for generating the ticket
                                 char car_company_name[30], car_type[8];
                                 Car_Modal car;
 
+                                // reading the nuumber of days
+                                int days;
+                                printf("%s"GREEN"=> "RESET,
+                                    "Enter number of days...");
+                                scanf("%d", &days);
+                                while ( '\n' != getchar() );
+                                
                             switch (client_room_choice){
                                 
                                 case '1':
 
                                     select_car ( &car, car_company_name, car_type, location);
-                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location);
+                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location, days);
                                     puts ("Thanks for using this service.");
                                     exit (EXIT_SUCCESS);
                                     sleep(2);
@@ -288,7 +308,7 @@ void both_read_client ( const char *location ) {
 
                                 case '2':
                                     select_car ( &car, car_company_name, car_type, location);
-                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location);
+                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location, days);
                                     printf ("Generating ticket!\n");
                                     puts ("Thanks for using this service.");
                                     exit (EXIT_SUCCESS);
@@ -297,7 +317,7 @@ void both_read_client ( const char *location ) {
 
                                 case '3':
                                     select_car ( &car, car_company_name, car_type, location);
-                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location);
+                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location, days);
                                     printf ("Generating ticket!\n");
                                     puts ("Thanks for using this service.");
                                     exit (EXIT_SUCCESS);
@@ -323,9 +343,7 @@ void both_read_client ( const char *location ) {
                 get_info(&days, &budget); // this function read days and budget
                 make_calculations(&days, &budget, &hotel_budget, &car_budget, (true) ); // this will update my budget 
 
-                // ! NOW ME CAR BUDGET IS ZERO IS USER DONT WANT ANY TRANSPORT
-                // ! ALL THE BUDGET IS OPTED FOR DAYS
-                printf(" Days : %d \n Total budget : %d \n Hotel Budget: %d \n Car_budget : %d \n ", days, budget, hotel_budget, car_budget);
+
                 _get_hotels_under_budegt ( hotels, hotels_count, hotel_budget,car_budget,  days, location);
 
                 exit (EXIT_SUCCESS);
