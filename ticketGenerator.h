@@ -51,7 +51,7 @@ void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int 
         fprintf(fptr, "Room Type: %s\n", room_tpye);
         fprintf(fptr, "Number of Rooms: %d\n", n_rooms);
         fprintf(fptr, "Price per room: %d\n", p_per_room);
-        fprintf(fptr, "Total Price: %d\n ", p_per_room * n_rooms);
+        fprintf(fptr, "Total Price: %d\n", p_per_room * n_rooms);
     }
 
     if ( NULL != car ) {

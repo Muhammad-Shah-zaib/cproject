@@ -30,7 +30,7 @@ void hotel_read(void) {
 
     while (!feof(fptr)) {
         // reading the data
-        Hotel hotel = {0, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        Hotel hotel = {0};
         int result = fread(&hotel, sizeof(Hotel), 1, fptr);
         // displaying the data
         if (result != 0 && hotel.id != 0) {
