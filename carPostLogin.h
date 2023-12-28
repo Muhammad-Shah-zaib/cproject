@@ -134,8 +134,8 @@ void add_non_suv(Car_Rental *car, unsigned int id) {
     car->n_total_cars += n_modal;
     car->available_cars += n_modal;
 
-    puts("\n\n\033[1;34mNon-SUVs added successfully\033[0m");
-    printf("\033[1;32m=> Total Non-SUVs: %u\n\n\033[0m", (car->n_non_suv));
+    puts("\n\n\033[1;34mSedans added successfully\033[0m");
+    printf("\033[1;32m=> Total Sedans: %u\n\n\033[0m", (car->n_non_suv));
 
 
     fseek (cfptr, (id - 1) * sizeof (Car_Rental), SEEK_SET);

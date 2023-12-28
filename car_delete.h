@@ -40,7 +40,7 @@ void delete_car ( unsigned int id ){
                 "Please Select the Car Type (to Delete):\n"
                 "0.\tExit\n"
                 "1.\tDelete SUV\n"
-                "2.\tDelete non-SUV\n"
+                "2.\tDelete Sedans\n"
                 "3.\tDelete premium\n");
         choice = getchar (); // reading the choice
         while ( '\n' != getchar() );

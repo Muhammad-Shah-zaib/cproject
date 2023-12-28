@@ -50,7 +50,7 @@ void non_suv_delete_car_modal (Car_Rental *car, const unsigned int index, const 
     car->available_cars--; // updating the available cars
 
     puts (GREEN"Cars deleted successfully." RESET);
-    printf (BLUE"\nTotal non_SUVs: %d\n"RESET, car->n_non_suv);
+    printf (BLUE"\nTotal Sedans: %d\n"RESET, car->n_non_suv);
 
     // printing the updated list of cars
     for (int i = 0; i < car->n_non_suv; i++) {

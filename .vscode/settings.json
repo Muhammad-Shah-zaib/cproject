@@ -26,6 +26,7 @@
         "confirmprompt.h": "c",
         "gethotelsunderbudget.h": "c",
         "gethotelsxcarsunderbudget.h": "c",
-        "hotellogin.h": "c"
+        "hotellogin.h": "c",
+        "carpostlogin.h": "c"
     }
 }
