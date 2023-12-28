@@ -11,15 +11,18 @@ void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int 
     char name[30], email[30];
     char contact [15] ;
     // getting the client credentils for generating the ticket
-    printf("Please Enter Your Name: ");
+    printf("%s\n"GREEN"=> "RESET,
+        "Please Enter Your Name: ");
     scanf("%29[^\n]", name);
     while (getchar()!='\n');
     
-    printf("Please Enter Your Phone Number: ");
+    printf("\n%s\n"GREEN"=> "RESET,
+        "Please Enter Your Phone Number: ");
     scanf("%14[^\n]", contact);
     while (getchar()!='\n');
 
-    printf("Please Enter Your Email: ");
+    printf("\n%s\n"GREEN"=> "RESET,
+        "Please Enter Your Email: ");
     scanf("%29[^\n]", email);
     while (getchar()!='\n');
 
