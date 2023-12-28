@@ -201,7 +201,7 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
     while (1)
     {   
         int check = 1;
-        printf("Please Enter Number of Rooms: ");
+        printf("Please Enter Number of Rooms:");
         if (scanf("%d", &n_rooms) != 1)
         {
             puts(RED "Wrong Input!" RESET);
@@ -209,12 +209,14 @@ void _get_hotels_under_budegt(Hotel *hotels, const unsigned int hotels_count, un
             continue;
         }
         break;
-    
+        puts("Check 1");
     switch (choice){
 
     case '1':
+            puts("Check 2");
         if (least_expesive_hotel.available_standard_room - n_rooms < 0){
             puts("Number of Rooms Not Available");
+            puts("Check 3");
             check = 0;
         }
             break;
