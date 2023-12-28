@@ -272,7 +272,7 @@ Car_Modal get_least_expensive_car ( Car_Rental *cars, unsigned int cars_count, u
 
 
 // make a function of get_carRentals_under_budegt() that first find out the least expensive car under a given range and then dislpay them and ask for selection
-void get_carRentals_under_budegt ( Car_Rental *cars, unsigned int cars_count, unsigned int b_per_day, const char *location) {
+void get_carRentals_under_budegt ( Car_Rental *cars, unsigned int cars_count, unsigned int b_per_day, const char *location, int days) {
 
     // reading which type of car user wants
     char choice_car_type;
@@ -305,15 +305,12 @@ void get_carRentals_under_budegt ( Car_Rental *cars, unsigned int cars_count, un
     
     if ( 0 == strcmp(car.name, "") )
         return;
-    // reading the nuumber of days
-    int days;
-    printf("%s"GREEN"=> "RESET,
-        "Enter number of days...");
-    scanf("%d", &days);
-    while ( '\n' != getchar() );
+    
+    press_enter_to_continue();
     generate_ticket ("", '\0',0,0, &car ,car_company_name, car_type, location, days);
-
     free (car_type);
+    puts (GREEN"Thank you for using our service..."RESET);
+    sleep(2);
     exit (EXIT_SUCCESS);
     
 }

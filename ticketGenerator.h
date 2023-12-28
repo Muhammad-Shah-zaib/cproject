@@ -2,7 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-// #include "recommendationGetBudget.h"
+// Define color codes
+#define RED "\033[1;31m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define BLUE "\033[1;34m"
+#define CYAN "\033[1;36m"
+#define RESET "\033[1;0m"
 
 
 
@@ -27,13 +33,15 @@ void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int 
     while (getchar()!='\n');
 
 
-    char filename[35];
-    strcpy(filename, name);
+    char filename[50];
+    strcpy (filename, "./tickets/");
+    strcat(filename, name);
     strcat(filename, "_receipt.csv");
+    
 
 
     FILE *fptr;
-    if ((fptr = fopen(filename, "w")) == NULL) {
+    if ((fptr = fopen( filename, "w") ) == NULL) {
         puts("FILE ERROR!");
         exit(7);
     }
@@ -54,7 +62,6 @@ void generate_ticket(const char *hotel_name,const char *room_tpye, unsigned int 
         fprintf(fptr, "Room Type: %s\n", room_tpye);
         fprintf(fptr, "Number of Rooms: %d\n", n_rooms);
         fprintf(fptr, "Price per room: %d\n", p_per_room);
-        fprintf(fptr, "Total Price: %d\n", p_per_room * n_rooms);
     }
 
     if ( NULL != car ) {

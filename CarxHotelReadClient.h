@@ -80,23 +80,9 @@ void select_car ( Car_Modal *car, char *car_company_name, char *car_type, const 
 
     }
 
-    char choice;
+    char choice = '1';
 
-    do {
-        puts ("\nCan you choose among these:\n");
-        printf ("%s%s",
-            "1.\tSELECT.\n",
-            "2.\tWant Recommendations.\n"
-            GREEN"=> "RESET);
-
-        scanf ("%c", &choice);
-        while('\n' != getchar()); // clearing buffer
-
-        if (choice < '0' || choice > '2') {
-            puts (RED"INVALID INPUT"RESET);
-        }
-
-    }while (choice < '0' || choice > '2');
+    
 
         // checking the choice...
         switch ( choice ) {
@@ -308,7 +294,7 @@ void both_read_client ( const char *location ) {
 
                                 case '2':
                                     select_car ( &car, car_company_name, car_type, location);
-                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location, days);
+                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Deluxe Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location, days);
                                     printf ("Generating ticket!\n");
                                     puts ("Thanks for using this service.");
                                     exit (EXIT_SUCCESS);
@@ -317,7 +303,7 @@ void both_read_client ( const char *location ) {
 
                                 case '3':
                                     select_car ( &car, car_company_name, car_type, location);
-                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Standard Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location, days);
+                                    generate_ticket (hotels[select_hotel_index-1].hotel_name, "Luxury Room",  hotels[select_hotel_index-1].n_standard_rooms, hotels[select_hotel_index-1].p_standard_room, &car, car_company_name, car_type, location, days);
                                     printf ("Generating ticket!\n");
                                     puts ("Thanks for using this service.");
                                     exit (EXIT_SUCCESS);

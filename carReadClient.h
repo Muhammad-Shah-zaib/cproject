@@ -334,22 +334,17 @@ void car_read_client(const char *location) {
                 break;
             }
 
-                 int days = 0;
+                int days = 0;
                 int budget = 0;
                 int hotel_budget = 0;
                 int car_budget = 0;
 
             case '2':
-               
+
                 get_info(&days, &budget); // this function read days and budget
                 make_calculations(&days, &budget, &car_budget, &hotel_budget, (false) ); // this will update my budget 
-                // ! NOW ME CAR BUDGET IS ZERO IS USER DONT WANT ANY TRANSPORT
-                // ! ALL THE BUDGET IS OPTED FOR DAYS
 
-
-                printf(" Days : %d \n Total budget : %d \n Hotel Budget: %d \n Car_budget : %d \n ", days, budget, hotel_budget, car_budget);
-
-                get_carRentals_under_budegt (cars, car_count, car_budget, location);
+                get_carRentals_under_budegt (cars, car_count, car_budget, location, days);
                 exit (EXIT_SUCCESS);
 
 
